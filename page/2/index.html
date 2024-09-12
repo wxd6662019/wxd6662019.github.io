@@ -210,143 +210,133 @@
     <div class="description">
         <div class="content" v-pre>
             
-            <h1 id="有用的命令"><a href="#有用的命令" class="headerlink" title="有用的命令"></a>有用的命令</h1><h3 id="1-基本操作"><a href="#1-基本操作" class="headerlink" title="1. 基本操作"></a>1. <strong>基本操作</strong></h3><ul>
+            <h1 id="有用的命令">有用的命令</h1>
+<h3 id="基本操作">1. <strong>基本操作</strong></h3>
+<ul>
 <li><p><strong>初始化仓库</strong></p>
-<pre><code class="bash">git init
-</code></pre>
-</li>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span></code></pre></div></li>
 <li><p><strong>克隆仓库</strong></p>
-<pre><code class="bash">git clone &lt;repository-url&gt;
-</code></pre>
-</li>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="op">&lt;</span>repository-url<span class="op">&gt;</span></span></code></pre></div></li>
 <li><p><strong>清楚git缓存</strong></p>
-<pre><code class="bash">git credential-cache exit 
-</code></pre>
-</li>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> credential-cache exit </span></code></pre></div></li>
 </ul>
-<h3 id="2-查看状态"><a href="#2-查看状态" class="headerlink" title="2. 查看状态"></a>2. <strong>查看状态</strong></h3><ul>
+<h3 id="查看状态">2. <strong>查看状态</strong></h3>
+<ul>
 <li><p><strong>查看当前状态</strong></p>
-<pre><code class="bash">git status
-</code></pre>
-</li>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div></li>
 <li><p><strong>查看提交历史</strong></p>
-<pre><code class="bash">git log
-</code></pre>
-</li>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log</span></code></pre></div></li>
 </ul>
-<h3 id="3-文件操作"><a href="#3-文件操作" class="headerlink" title="3. 文件操作"></a>3. <strong>文件操作</strong></h3><ul>
+<h3 id="文件操作">3. <strong>文件操作</strong></h3>
+<ul>
 <li><p><strong>添加文件到暂存区</strong></p>
-<pre><code class="bash">git add &lt;file&gt;
-</code></pre>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="op">&lt;</span>file<span class="op">&gt;</span></span></code></pre></div>
 <p>添加所有文件：</p>
-<pre><code class="bash">git add .
-</code></pre>
-</li>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span></code></pre></div></li>
 <li><p><strong>从暂存区移除文件</strong></p>
-<pre><code class="bash">git reset &lt;file&gt;
-</code></pre>
-</li>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="op">&lt;</span>file<span class="op">&gt;</span></span></code></pre></div></li>
 <li><p><strong>查看文件差异</strong></p>
-<pre><code class="bash">git diff
-</code></pre>
-</li>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff</span></code></pre></div></li>
 </ul>
-<h3 id="4-提交更改"><a href="#4-提交更改" class="headerlink" title="4. 提交更改"></a>4. <strong>提交更改</strong></h3><ul>
-<li><strong>提交更改</strong><pre><code class="bash">git commit -m &quot;Commit message&quot;
-</code></pre>
-</li>
+<h3 id="提交更改">4. <strong>提交更改</strong></h3>
+<ul>
+<li><p><strong>提交更改</strong></p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Commit message&quot;</span></span></code></pre></div></li>
 </ul>
-<h3 id="5-分支管理"><a href="#5-分支管理" class="headerlink" title="5. 分支管理"></a>5. <strong>分支管理</strong></h3><ul>
+<h3 id="分支管理">5. <strong>分支管理</strong></h3>
+<ul>
 <li><p><strong>查看分支</strong></p>
-<pre><code class="bash">git branch
-</code></pre>
-</li>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch</span></code></pre></div></li>
 <li><p><strong>创建新分支</strong></p>
-<pre><code class="bash">git branch &lt;branch-name&gt;
-</code></pre>
-</li>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="op">&lt;</span>branch-name<span class="op">&gt;</span></span></code></pre></div></li>
 <li><p><strong>切换分支</strong></p>
-<pre><code class="bash">git checkout &lt;branch-name&gt;
-</code></pre>
-</li>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="op">&lt;</span>branch-name<span class="op">&gt;</span></span></code></pre></div></li>
 <li><p><strong>合并分支</strong></p>
-<pre><code class="bash">git merge &lt;branch-name&gt;
-</code></pre>
-</li>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge <span class="op">&lt;</span>branch-name<span class="op">&gt;</span></span></code></pre></div></li>
 </ul>
-<h3 id="6-远程操作"><a href="#6-远程操作" class="headerlink" title="6. 远程操作"></a>6. <strong>远程操作</strong></h3><ul>
+<h3 id="远程操作">6. <strong>远程操作</strong></h3>
+<ul>
 <li><p><strong>查看远程仓库</strong></p>
-<pre><code class="bash">git remote -v
-</code></pre>
-</li>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span></code></pre></div></li>
 <li><p><strong>添加远程仓库</strong></p>
-<pre><code class="bash">git remote add origin &lt;repository-url&gt;
-</code></pre>
-</li>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin <span class="op">&lt;</span>repository-url<span class="op">&gt;</span></span></code></pre></div></li>
 <li><p><strong>推送到远程仓库</strong></p>
-<pre><code class="bash">git push origin &lt;branch-name&gt;
-</code></pre>
-</li>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin <span class="op">&lt;</span>branch-name<span class="op">&gt;</span></span></code></pre></div></li>
 <li><p><strong>拉取远程更新</strong></p>
-<pre><code class="bash">git pull origin &lt;branch-name&gt;
-</code></pre>
-</li>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin <span class="op">&lt;</span>branch-name<span class="op">&gt;</span></span></code></pre></div></li>
 <li><p><strong>重新设置远程仓库</strong></p>
-<pre><code class="bash">git remote set-url origin https://github.com/你的用户名/新的仓库名.git
-</code></pre>
-</li>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote set-url origin https://github.com/你的用户名/新的仓库名.git</span></code></pre></div></li>
 </ul>
-<h3 id="7-其他实用命令"><a href="#7-其他实用命令" class="headerlink" title="7. 其他实用命令"></a>7. <strong>其他实用命令</strong></h3><ul>
+<h3 id="其他实用命令">7. <strong>其他实用命令</strong></h3>
+<ul>
 <li><p><strong>撤销上一次提交（保留更改）</strong></p>
-<pre><code class="bash">git reset --soft HEAD~1
-</code></pre>
-</li>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--soft</span> HEAD~1</span></code></pre></div></li>
 <li><p><strong>强制推送</strong></p>
-<pre><code class="bash">git push --force
-</code></pre>
-</li>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">--force</span></span></code></pre></div></li>
 <li><p><strong>查看已追踪的文件</strong></p>
-<pre><code class="bash">git ls-files
-</code></pre>
-</li>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> ls-files</span></code></pre></div></li>
 </ul>
-<h3 id="8-标签管理"><a href="#8-标签管理" class="headerlink" title="8. 标签管理"></a>8. <strong>标签管理</strong></h3><ul>
+<h3 id="标签管理">8. <strong>标签管理</strong></h3>
+<ul>
 <li><p><strong>创建标签</strong></p>
-<pre><code class="bash">git tag &lt;tag-name&gt;
-</code></pre>
-</li>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="op">&lt;</span>tag-name<span class="op">&gt;</span></span></code></pre></div></li>
 <li><p><strong>推送标签到远程</strong></p>
-<pre><code class="bash">git push origin &lt;tag-name&gt;
-</code></pre>
-</li>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin <span class="op">&lt;</span>tag-name<span class="op">&gt;</span></span></code></pre></div></li>
 </ul>
-<h3 id="9-当你在进行合并操作时，若当前工作区中有未提交的更改，这些更改会被合并操作覆盖。Git-为了防止数据丢失，会阻止这个操作"><a href="#9-当你在进行合并操作时，若当前工作区中有未提交的更改，这些更改会被合并操作覆盖。Git-为了防止数据丢失，会阻止这个操作" class="headerlink" title="9. 当你在进行合并操作时，若当前工作区中有未提交的更改，这些更改会被合并操作覆盖。Git 为了防止数据丢失，会阻止这个操作"></a>9. 当你在进行合并操作时，若当前工作区中有未提交的更改，这些更改会被合并操作覆盖。Git 为了防止数据丢失，会阻止这个操作</h3><h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><ol>
+<h3
+id="当你在进行合并操作时若当前工作区中有未提交的更改这些更改会被合并操作覆盖git-为了防止数据丢失会阻止这个操作">9.
+当你在进行合并操作时，若当前工作区中有未提交的更改，这些更改会被合并操作覆盖。Git
+为了防止数据丢失，会阻止这个操作</h3>
+<h3 id="解决方法">解决方法</h3>
+<ol type="1">
 <li><p><strong>提交更改</strong>：</p>
 <ul>
-<li>如果你希望保留当前的更改，可以先将它们提交：<pre><code class="bash">git add .
-git commit -m &quot;Your commit message&quot;
-</code></pre>
-</li>
-</ul>
-</li>
+<li><p>如果你希望保留当前的更改，可以先将它们提交：</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Your commit message&quot;</span></span></code></pre></div></li>
+</ul></li>
 <li><p><strong>暂存更改</strong>：</p>
 <ul>
-<li>如果你不想立即提交这些更改，可以使用 <code>git stash</code> 命令将它们暂存：<pre><code class="bash">git stash
-</code></pre>
-</li>
-<li>暂存后，你可以执行合并操作。完成后，可以通过以下命令恢复暂存的更改：<pre><code class="bash">git stash pop
-</code></pre>
-</li>
-</ul>
-</li>
+<li><p>如果你不想立即提交这些更改，可以使用 <code>git stash</code>
+命令将它们暂存：</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash</span></code></pre></div></li>
+<li><p>暂存后，你可以执行合并操作。完成后，可以通过以下命令恢复暂存的更改：</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash pop</span></code></pre></div></li>
+</ul></li>
 <li><p><strong>丢弃更改</strong>：</p>
 <ul>
-<li>如果你确定不需要当前的更改，可以使用以下命令丢弃它们：<pre><code class="bash">git checkout -- fileName
-</code></pre>
-</li>
-<li>注意，这将永久删除未提交的更改，请谨慎操作。</li>
-</ul>
-</li>
+<li><p>如果你确定不需要当前的更改，可以使用以下命令丢弃它们：</p>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">--</span> fileName</span></code></pre></div></li>
+<li><p>注意，这将永久删除未提交的更改，请谨慎操作。</p></li>
+</ul></li>
 </ol>
 
             
@@ -378,81 +368,91 @@ git commit -m &quot;Your commit message&quot;
     <div class="description">
         <div class="content" v-pre>
             
-            <h1 id="排序思路总结"><a href="#排序思路总结" class="headerlink" title="排序思路总结"></a>排序思路总结</h1><h3 id="1-冒泡排序（Bubble-Sort）"><a href="#1-冒泡排序（Bubble-Sort）" class="headerlink" title="1. 冒泡排序（Bubble Sort）"></a>1. 冒泡排序（Bubble Sort）</h3><ul>
+            <h1 id="排序思路总结">排序思路总结</h1>
+<h3 id="冒泡排序bubble-sort">1. 冒泡排序（Bubble Sort）</h3>
+<ul>
 <li><strong>思路</strong>：通过重复遍历数组，比较相邻的元素并交换它们的位置，使得较大的元素逐步“冒泡”到数组的末尾。</li>
 <li><strong>适合场景</strong>：教学</li>
 <li><strong>稳定</strong></li>
 <li><strong>最佳情况：有序数组，一次遍历时间复杂度为O(n</strong>)</li>
 </ul>
-<h3 id="2-选择排序（Selection-Sort）"><a href="#2-选择排序（Selection-Sort）" class="headerlink" title="2. 选择排序（Selection Sort）"></a>2. 选择排序（Selection Sort）</h3><ul>
+<h3 id="选择排序selection-sort">2. 选择排序（Selection Sort）</h3>
+<ul>
 <li><strong>思路</strong>：每次从未排序部分中选择最小（或最大）元素，将其放到已排序部分的末尾，直到所有元素排序完成。</li>
 <li><strong>适合场景</strong>：教学</li>
 <li><strong>不稳定</strong>：排序基于跨越远距离的元素交换或赋值，会改变原来元素的相对顺序</li>
 </ul>
-<h3 id="3-插入排序（Insertion-Sort）"><a href="#3-插入排序（Insertion-Sort）" class="headerlink" title="3. 插入排序（Insertion Sort）"></a>3. 插入排序（Insertion Sort）</h3><ul>
+<h3 id="插入排序insertion-sort">3. 插入排序（Insertion Sort）</h3>
+<ul>
 <li><strong>思路</strong>：将数组分为已排序和未排序两部分，逐步将未排序部分的元素插入到已排序部分的合适位置。</li>
-<li><strong>适合场景</strong>：适合<strong>小规模数据****或部分已排序</strong>的数据，稳定性好。</li>
+<li><strong>适合场景</strong>：适合<strong>小规模数据或部分已排序</strong>的数据，稳定性好。</li>
 <li><strong>稳定</strong>：基于元素的赋值而非交换</li>
 <li><strong>缺点：当插入较小元素时，需要较多的比较次数和移动元素次数，影响性能</strong></li>
 </ul>
-<h3 id="4-希尔排序（Shell-Sort）"><a href="#4-希尔排序（Shell-Sort）" class="headerlink" title="4. 希尔排序（Shell Sort）"></a>4. 希尔排序（Shell Sort）</h3><p>​		</p>
+<h3 id="希尔排序shell-sort">4. 希尔排序（Shell Sort）</h3>
+<p>​</p>
 <ul>
 <li><strong>思路</strong>：对数组进行分组，使用插入排序对每组进行排序，然后逐步减少分组的间隔，最终对整个数组进行排序。</li>
 <li><strong>适合场景</strong>：适合<strong>中等规模数据</strong>，能有较好的性能提升。</li>
 <li><strong>优点：一次性跨越远距离将较小数据插入到前面的位置，舍弃了稳定性，提升性能</strong></li>
 <li><strong>缺点：小数据集不如插入，大数据集不如快排归并</strong></li>
 </ul>
-<h3 id="5-快速排序（Quick-Sort）"><a href="#5-快速排序（Quick-Sort）" class="headerlink" title="5. 快速排序（Quick Sort）"></a>5. 快速排序（Quick Sort）</h3><ul>
+<h3 id="快速排序quick-sort">5. 快速排序（Quick Sort）</h3>
+<ul>
 <li><strong>思路</strong>：选择一个“基准”元素，将数组分成两部分，小于基准的元素在左边，大于基准的元素在右边，递归排序两部分。</li>
 <li><strong>适合场景</strong>：适合<strong>大规模数据</strong>，常用且<strong>效率高</strong>，但<strong>不稳定</strong>。</li>
 <li>核心操作：<strong>分区</strong></li>
-<li><strong>时间复杂度</strong>:<ul>
-<li>最佳情况 O(n log n)<ul>
-<li>当每次选择的基准能够将数组均匀分割时，递归深度为 log n，每层操作需要 O(n) 的时间。</li>
-</ul>
-</li>
-<li>平均情况 O(n log n)<ul>
+<li><strong>时间复杂度</strong>:
+<ul>
+<li>最佳情况 O(n log n)
+<ul>
+<li>当每次选择的基准能够将数组均匀分割时，递归深度为 log n，每层操作需要
+O(n) 的时间。</li>
+</ul></li>
+<li>平均情况 O(n log n)
+<ul>
 <li>在随机情况下，基准选择能够比较均匀地分割数组。</li>
+</ul></li>
+<li>最坏情况 O(n²)
+<ul>
+<li>当数组已经是有序的，或者总是选择到最小或最大元素作为基准时，导致分割不均匀，递归深度达到
+n。</li>
+</ul></li>
+</ul></li>
+<li>最主要缺点：快排的性能最坏时会滑向👆，而且相比归并排序的递归实现的空间占用O(logn)，O(n)
+的空间复杂度更容易出现栈溢出</li>
 </ul>
-</li>
-<li>最坏情况 O(n²)<ul>
-<li>当数组已经是有序的，或者总是选择到最小或最大元素作为基准时，导致分割不均匀，递归深度达到 n。</li>
+<h3 id="归并排序merge-sort">6. 归并排序（Merge Sort）</h3>
+<ul>
+<li><p><strong>思路</strong>：将数组分成两半，分别排序，然后合并两个已排序的部分，形成一个完整的排序数组。</p></li>
+<li><p><strong>适合场景</strong>：适合<strong>大规模数据</strong>，<strong>稳定</strong>，适用于链表等数据结构。</p></li>
+<li><p>核心操作：<strong>合并</strong></p></li>
+<li><p><strong>时间复杂度</strong>:</p>
+<p>​ 无论输入数组的初始状态如何，归并排序都需要进行 log n
+次分割，并且每次合并操作的复杂度为 O(n)，因此时间复杂度始终是 O(n log
+n)。</p></li>
 </ul>
-</li>
+<h3 id="堆排序heap-sort">7. 堆排序（Heap Sort）</h3>
+<ul>
+<li><p><strong>思路</strong>：将数组视为一棵完全二叉树，构建一个最大堆（或最小堆），然后
+repeatedly 取出堆顶元素并重新调整堆，直到排序完成。</p></li>
+<li><p><strong>适合场景</strong>：适合大规模数据，<strong>不稳定</strong>，且不需要额外的空间。</p></li>
+<li><p>时间复杂度：与归并类似，都是按照既定的流程完成数组的排序，所以输入数据的质量对堆排序没有影响，在各种情况下，堆排序的时间复杂度都是O(nlogn)，这得益于完全二叉树的性质，高度控制在
+logn, 最坏情况下将根节点交换至叶子节点次数等于该高度</p>
+<p>​</p></li>
 </ul>
-</li>
-<li>最主要缺点：快排的性能最坏时会滑向👆，而且相比归并排序的递归实现的空间占用O(logn)，O(n) 的空间复杂度更容易出现栈溢出</li>
-</ul>
-<h3 id="6-归并排序（Merge-Sort）"><a href="#6-归并排序（Merge-Sort）" class="headerlink" title="6. 归并排序（Merge Sort）"></a>6. 归并排序（Merge Sort）</h3><ul>
-<li><p><strong>思路</strong>：将数组分成两半，分别排序，然后合并两个已排序的部分，形成一个完整的排序数组。</p>
-</li>
-<li><p><strong>适合场景</strong>：适合<strong>大规模数据</strong>，<strong>稳定</strong>，适用于链表等数据结构。</p>
-</li>
-<li><p>核心操作：<strong>合并</strong></p>
-</li>
-<li><p><strong>时间复杂度</strong>: </p>
-<p>​	无论输入数组的初始状态如何，归并排序都需要进行 log n 次分割，并且每次合并操作的复杂度为 O(n)，因此时间复杂度始终是 O(n log n)。</p>
-</li>
-</ul>
-<h3 id="7-堆排序（Heap-Sort）"><a href="#7-堆排序（Heap-Sort）" class="headerlink" title="7. 堆排序（Heap Sort）"></a>7. 堆排序（Heap Sort）</h3><ul>
-<li><p><strong>思路</strong>：将数组视为一棵完全二叉树，构建一个最大堆（或最小堆），然后 repeatedly 取出堆顶元素并重新调整堆，直到排序完成。</p>
-</li>
-<li><p><strong>适合场景</strong>：适合大规模数据，<strong>不稳定</strong>，且不需要额外的空间。</p>
-</li>
-<li><p>时间复杂度：与归并类似，都是按照既定的流程完成数组的排序，所以输入数据的质量对堆排序没有影响，在各种情况下，堆排序的时间复杂度都是O(nlogn)，这得益于完全二叉树的性质，高度控制在 logn, 最坏情况下将根节点交换至叶子节点次数等于该高度</p>
-<p>​</p>
-</li>
-</ul>
-<p>	</p>
-<h3 id="8-计数排序（Counting-Sort）"><a href="#8-计数排序（Counting-Sort）" class="headerlink" title="8. 计数排序（Counting Sort）"></a>8. 计数排序（Counting Sort）</h3><ul>
+<h3 id="计数排序counting-sort">8. 计数排序（Counting Sort）</h3>
+<ul>
 <li><strong>思路</strong>：通过统计每个元素出现的次数，利用这些信息直接生成排序后的数组，适用于范围较小的整数。</li>
 <li><strong>适合场景</strong>：适合范围小且数据量大的整数排序，非比较排序。</li>
 </ul>
-<h3 id="9-桶排序（Bucket-Sort）"><a href="#9-桶排序（Bucket-Sort）" class="headerlink" title="9. 桶排序（Bucket Sort）"></a>9. 桶排序（Bucket Sort）</h3><ul>
+<h3 id="桶排序bucket-sort">9. 桶排序（Bucket Sort）</h3>
+<ul>
 <li><strong>思路</strong>：将元素分到多个桶中，然后对每个桶内部进行排序，最后将所有桶的元素合并，适用于均匀分布的数据。</li>
 <li><strong>适合场景</strong>：适合均匀分布的数据，常与其他排序结合使用。</li>
 </ul>
-<h3 id="10-基数排序（Radix-Sort）"><a href="#10-基数排序（Radix-Sort）" class="headerlink" title="10. 基数排序（Radix Sort）"></a>10. 基数排序（Radix Sort）</h3><ul>
+<h3 id="基数排序radix-sort">10. 基数排序（Radix Sort）</h3>
+<ul>
 <li><strong>思路</strong>：通过逐位比较元素的数字，从最低位到最高位进行排序，适用于整数或字符串。</li>
 <li><strong>适合场景</strong>：适合整数或字符串，且数据范围较小。</li>
 </ul>
@@ -486,46 +486,48 @@ git commit -m &quot;Your commit message&quot;
     <div class="description">
         <div class="content" v-pre>
             
-            <h1 id="数组指针和指针数组"><a href="#数组指针和指针数组" class="headerlink" title="数组指针和指针数组"></a>数组指针和指针数组</h1><ul>
-<li>pointer to array （数组指针）</li>
+            <h1 id="数组指针和指针数组">数组指针和指针数组</h1>
+<ul>
+<li>pointer to array （数组指针）   </li>
 </ul>
-<p>   </p>
-<ol>
-<li>本质上是一个指针，指向一个数组，类型是int (*p)[3]   ps: 随便取个长度 3   </li>
-<li>声明： int (*p)[3]</li>
+<ol type="1">
+<li>本质上是一个指针，指向一个数组，类型是int (*p)[3]   ps: 随便取个长度
+3   </li>
+<li>声明： int (*p)[3]             </li>
 </ol>
-<p>             </p>
 <ul>
 <li>array of pointer （指针数组）</li>
 </ul>
-<ol>
+<ol type="1">
 <li>本质上是一个数组，里面存放的是指针变量  </li>
 <li>声明： int *p[3]</li>
 </ol>
-<h1 id="数组名"><a href="#数组名" class="headerlink" title="数组名"></a>数组名</h1><ul>
+<h1 id="数组名">数组名  </h1>
+<ul>
 <li>存放数组首元素的地址</li>
 <li>在进行&amp; 和 sizeof 时， 它代表整个数组变量</li>
-<li>它不可以被赋一个地址值，它是一个常量指针， 使用取址运算符发现是数组指针类型的</li>
+<li>它不可以被赋一个地址值，它是一个常量指针，
+使用取址运算符发现是数组指针类型的</li>
 </ul>
-<h1 id="指针常量和常量指针"><a href="#指针常量和常量指针" class="headerlink" title="指针常量和常量指针"></a>指针常量和常量指针</h1><ul>
+<h1 id="指针常量和常量指针">指针常量和常量指针 </h1>
+<ul>
 <li>pointer constant</li>
 </ul>
-<ol>
+<ol type="1">
 <li>指针存的是地址，常量指针代表该地址不可改变，即指针的指向不可被改变             </li>
-<li>int * const p 🥇: *号右结合 ， 结合到了const p , 即（不可变的）指针</li>
+<li>int * const p 🥇: *号右结合 ， 结合到了const p ,
+即（不可变的）指针     </li>
 </ol>
-<p>     </p>
 <ul>
-<li>pointer to constant</li>
+<li>pointer to constant   </li>
 </ul>
-<p>   </p>
-<ol>
+<ol type="1">
 <li>该指针指向的变量，无法通过解引用该指针修改它指向的内容</li>
 <li>const int *p</li>
 <li>int const *p   </li>
-<li>以上两种方式均为 指针常量，*号右结合，结合到了普通的（可改变指向的）p，但const修饰，无法修改它指向的内容</li>
+<li>以上两种方式均为
+指针常量，*号右结合，结合到了普通的（可改变指向的）p，但const修饰，无法修改它指向的内容    </li>
 </ol>
-<p>    </p>
 
             
         </div>
@@ -536,36 +538,6 @@ git commit -m &quot;Your commit message&quot;
         
     </div>
     <a href="/2024/08/29/2024-8-29-pointer/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/08/28/2024-08-28-english/">
-        <h2 class="post-title">translation   </h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/8/28
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h3 id="“This-branch-is-8-commits-ahead-of-main”：当前分支相较于主分支（main）多了-8-个提交。这意味着在当前分支上进行了-8-次提交，而这些提交在主分支上并不存在。"><a href="#“This-branch-is-8-commits-ahead-of-main”：当前分支相较于主分支（main）多了-8-个提交。这意味着在当前分支上进行了-8-次提交，而这些提交在主分支上并不存在。" class="headerlink" title="“This branch is 8 commits ahead of main”：当前分支相较于主分支（main）多了 8 个提交。这意味着在当前分支上进行了 8 次提交，而这些提交在主分支上并不存在。"></a>“This branch is 8 commits ahead of main”：当前分支相较于主分支（main）多了 8 个提交。这意味着在当前分支上进行了 8 次提交，而这些提交在主分支上并不存在。</h3><h3 id="“9-commits-behind-main”：当前分支落后于主分支-9-个提交。这意味着主分支上有-9-次提交是当前分支所没有的。"><a href="#“9-commits-behind-main”：当前分支落后于主分支-9-个提交。这意味着主分支上有-9-次提交是当前分支所没有的。" class="headerlink" title="“9 commits behind main”：当前分支落后于主分支 9 个提交。这意味着主分支上有 9 次提交是当前分支所没有的。"></a>“9 commits behind main”：当前分支落后于主分支 9 个提交。这意味着主分支上有 9 次提交是当前分支所没有的。</h3>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-        
-    </div>
-    <a href="/2024/08/28/2024-08-28-english/" class="go-post">阅读全文</a>
 </div>
 
 <div class="post">
@@ -587,8 +559,9 @@ git commit -m &quot;Your commit message&quot;
         <div class="content" v-pre>
             
             <p>以下是 C 语言中常见运算符的优先级顺序（从高到低）：</p>
-<h3 id="运算符优先级顺序"><a href="#运算符优先级顺序" class="headerlink" title="运算符优先级顺序"></a>运算符优先级顺序</h3><ol>
-<li><p><strong>后缀运算符</strong> （左结合性） </p>
+<h3 id="运算符优先级顺序">运算符优先级顺序</h3>
+<ol type="1">
+<li><strong>后缀运算符</strong> （左结合性） 
 <ul>
 <li><code>++</code>（后缀自增）</li>
 <li><code>--</code>（后缀自减）</li>
@@ -596,9 +569,8 @@ git commit -m &quot;Your commit message&quot;
 <li><code>[]</code>（数组下标）</li>
 <li><code>.</code>（成员访问）</li>
 <li><code>-&gt;</code>（指针成员访问）</li>
-</ul>
-</li>
-<li><p><strong>一元运算符</strong> （右结合性）   </p>
+</ul></li>
+<li><strong>一元运算符</strong> （右结合性）   
 <ul>
 <li><code>++</code>（前缀自增）</li>
 <li><code>--</code>（前缀自减）</li>
@@ -606,88 +578,75 @@ git commit -m &quot;Your commit message&quot;
 <li><code>-</code>（负号）</li>
 <li><code>!</code>（逻辑非）</li>
 <li><code>~</code>（按位取反）       </li>
-<li><code>*</code>  (解引用)</li>
-</ul>
-</li>
-<li><p><strong>乘法和除法</strong></p>
+<li><code>*</code> (解引用)</li>
+</ul></li>
+<li><strong>乘法和除法</strong>
 <ul>
 <li><code>*</code>（乘法）</li>
 <li><code>/</code>（除法）</li>
 <li><code>%</code>（取模）</li>
-</ul>
-</li>
-<li><p><strong>加法和减法</strong></p>
+</ul></li>
+<li><strong>加法和减法</strong>
 <ul>
 <li><code>+</code>（加法）</li>
 <li><code>-</code>（减法）</li>
-</ul>
-</li>
-<li><p><strong>位移运算符</strong></p>
+</ul></li>
+<li><strong>位移运算符</strong>
 <ul>
 <li><code>&lt;&lt;</code>（左移）</li>
 <li><code>&gt;&gt;</code>（右移）</li>
-</ul>
-</li>
-<li><p><strong>关系运算符</strong></p>
+</ul></li>
+<li><strong>关系运算符</strong>
 <ul>
 <li><code>&lt;</code>（小于）</li>
 <li><code>&lt;=</code>（小于等于）</li>
 <li><code>&gt;</code>（大于）</li>
 <li><code>&gt;=</code>（大于等于）</li>
-</ul>
-</li>
-<li><p><strong>相等运算符</strong></p>
+</ul></li>
+<li><strong>相等运算符</strong>
 <ul>
 <li><code>==</code>（等于）</li>
 <li><code>!=</code>（不等于）</li>
-</ul>
-</li>
-<li><p><strong>按位与</strong></p>
+</ul></li>
+<li><strong>按位与</strong>
 <ul>
 <li><code>&amp;</code></li>
-</ul>
-</li>
-<li><p><strong>按位异或</strong></p>
-</li>
+</ul></li>
+<li><strong>按位异或</strong>         </li>
 </ol>
-<p>         </p>
 <ul>
 <li><code>^</code> （自反性，恒等性，交换性，结合性）</li>
 </ul>
-<ol start="11">
-<li><p><strong>按位或</strong>  </p>
+<ol start="11" type="1">
+<li><strong>按位或</strong>  
 <ul>
 <li><code>|</code></li>
-</ul>
-</li>
-<li><p><strong>逻辑与</strong></p>
+</ul></li>
+<li><strong>逻辑与</strong>
 <ul>
 <li><code>&amp;&amp;</code></li>
-</ul>
-</li>
-<li><p><strong>逻辑或</strong></p>
+</ul></li>
+<li><strong>逻辑或</strong>
 <ul>
 <li><code>||</code></li>
-</ul>
-</li>
-<li><p><strong>条件运算符</strong></p>
+</ul></li>
+<li><strong>条件运算符</strong>
 <ul>
 <li><code>? :</code></li>
-</ul>
-</li>
-<li><p><strong>赋值运算符</strong></p>
+</ul></li>
+<li><strong>赋值运算符</strong>
 <ul>
 <li><code>=</code>（赋值）</li>
-<li><code>+=</code>、<code>-=</code>、<code>*=</code>、<code>/=</code>、<code>%=</code> 等</li>
-</ul>
-</li>
-<li><p><strong>逗号运算符</strong></p>
+<li><code>+=</code>、<code>-=</code>、<code>*=</code>、<code>/=</code>、<code>%=</code>
+等</li>
+</ul></li>
+<li><strong>逗号运算符</strong>
 <ul>
 <li><code>,</code></li>
-</ul>
-</li>
+</ul></li>
 </ol>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>运算符的优先级决定了表达式中各个运算的计算顺序。高优先级的运算符会在低优先级的运算符之前执行。使用括号可以显式地改变运算顺序。</p>
+<h3 id="总结">总结</h3>
+<p>运算符的优先级决定了表达式中各个运算的计算顺序。高优先级的运算符会在低优先级的运算符之前执行。使用括号可以显式地改变运算顺序。</p>
 
             
         </div>
@@ -698,6 +657,45 @@ git commit -m &quot;Your commit message&quot;
         
     </div>
     <a href="/2024/08/28/2024-08-28-operator/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2024/08/28/2024-08-28-english/">
+        <h2 class="post-title">translation   </h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/8/28
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h3
+id="this-branch-is-8-commits-ahead-of-main当前分支相较于主分支main多了-8-个提交这意味着在当前分支上进行了-8-次提交而这些提交在主分支上并不存在">“This
+branch is 8 commits ahead of main”：当前分支相较于主分支（main）多了 8
+个提交。这意味着在当前分支上进行了 8
+次提交，而这些提交在主分支上并不存在。</h3>
+<h3
+id="commits-behind-main当前分支落后于主分支-9-个提交这意味着主分支上有-9-次提交是当前分支所没有的">“9
+commits behind main”：当前分支落后于主分支 9 个提交。这意味着主分支上有
+9 次提交是当前分支所没有的。</h3>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/2024/08/28/2024-08-28-english/" class="go-post">阅读全文</a>
 </div>
 
 
