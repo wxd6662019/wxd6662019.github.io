@@ -35,10 +35,17 @@
 <script src="/js/lib/highlight.js"></script>
 
 
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
 
 <script src="/js/lib/preview.js"></script>
 
 
+
+<script src="/js/lib/search.js"></script>
 
 
 
@@ -154,6 +161,8 @@
             
 <div id="archives">
     
+    <input id="search-bar" class="input" placeholder="搜索" v-model="rawSearch" />
+    
     <div id="timeline-wrap" ref="timeline">
         
         <div class="timeline" data-title="operatorpriority">
@@ -198,12 +207,12 @@
             </div>
         </div>
         
-        <div class="timeline" data-title="useful-git">
+        <div class="timeline" data-title="sort">
             <div class="timeline-tail"></div>
             <div class="timeline-content">
                 <div class="item-time">2024/9/2</div>
-                <a href="/2024/09/02/2024-9-2-useful-git/">
-                    <h3>useful-git</h3>
+                <a href="/2024/09/02/2024-9-2-sort/">
+                    <h3>sort</h3>
                 </a>
                 <div class="info">
                     
@@ -212,12 +221,12 @@
             </div>
         </div>
         
-        <div class="timeline" data-title="sort">
+        <div class="timeline" data-title="useful-git">
             <div class="timeline-tail"></div>
             <div class="timeline-content">
                 <div class="item-time">2024/9/2</div>
-                <a href="/2024/09/02/2024-9-2-sort/">
-                    <h3>sort</h3>
+                <a href="/2024/09/02/2024-9-2-useful-git/">
+                    <h3>useful-git</h3>
                 </a>
                 <div class="info">
                     
@@ -235,20 +244,37 @@
                 </a>
                 <div class="info">
                     
+                    <span class="category">
+                        <a href="/categories/%E7%8E%AF%E5%A2%83/">
+                            <span class="icon">
+                                <i class="fa-solid fa-bookmark fa-fw"></i>
+                            </span>
+                            环境
+                        </a>
+                    </span>
                     
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline" data-title="linux">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2024/9/6</div>
-                <a href="/2024/09/06/2024-9-6-linux/">
-                    <h3>linux</h3>
-                </a>
-                <div class="info">
                     
+                    <span class="tags">
+                        <span class="icon">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </span>
+                        
+                        
+                        <span class="tag">
+                            
+                            <a href="/tags/Github/" style="color: #ff7d73">
+                                Github
+                            </a>
+                        </span>
+                        
+                        <span class="tag">
+                            
+                            <a href="/tags/SSH/" style="color: #ffa2c4">
+                                SSH
+                            </a>
+                        </span>
+                        
+                    </span>
                     
                 </div>
             </div>
@@ -263,6 +289,68 @@
                 </a>
                 <div class="info">
                     
+                    <span class="category">
+                        <a href="/categories/%E8%AF%AD%E6%B3%95/">
+                            <span class="icon">
+                                <i class="fa-solid fa-bookmark fa-fw"></i>
+                            </span>
+                            语法
+                        </a>
+                    </span>
+                    
+                    
+                    <span class="tags">
+                        <span class="icon">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </span>
+                        
+                        
+                        <span class="tag">
+                            
+                            <a href="/tags/C/" style="color: #03a9f4">
+                                C
+                            </a>
+                        </span>
+                        
+                    </span>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline" data-title="linux">
+            <div class="timeline-tail"></div>
+            <div class="timeline-content">
+                <div class="item-time">2024/9/6</div>
+                <a href="/2024/09/06/2024-9-6-linux/">
+                    <h3>linux</h3>
+                </a>
+                <div class="info">
+                    
+                    <span class="category">
+                        <a href="/categories/%E5%91%BD%E4%BB%A4/">
+                            <span class="icon">
+                                <i class="fa-solid fa-bookmark fa-fw"></i>
+                            </span>
+                            命令
+                        </a>
+                    </span>
+                    
+                    
+                    <span class="tags">
+                        <span class="icon">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </span>
+                        
+                        
+                        <span class="tag">
+                            
+                            <a href="/tags/Linux/" style="color: #ff7d73">
+                                Linux
+                            </a>
+                        </span>
+                        
+                    </span>
                     
                 </div>
             </div>
@@ -277,6 +365,30 @@
                 </a>
                 <div class="info">
                     
+                    <span class="category">
+                        <a href="/categories/%E7%8E%AF%E5%A2%83/">
+                            <span class="icon">
+                                <i class="fa-solid fa-bookmark fa-fw"></i>
+                            </span>
+                            环境
+                        </a>
+                    </span>
+                    
+                    
+                    <span class="tags">
+                        <span class="icon">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </span>
+                        
+                        
+                        <span class="tag">
+                            
+                            <a href="/tags/vim/" style="color: #00a596">
+                                vim
+                            </a>
+                        </span>
+                        
+                    </span>
                     
                 </div>
             </div>
@@ -291,6 +403,37 @@
                 </a>
                 <div class="info">
                     
+                    <span class="category">
+                        <a href="/categories/%E7%8E%AF%E5%A2%83/">
+                            <span class="icon">
+                                <i class="fa-solid fa-bookmark fa-fw"></i>
+                            </span>
+                            环境
+                        </a>
+                    </span>
+                    
+                    
+                    <span class="tags">
+                        <span class="icon">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </span>
+                        
+                        
+                        <span class="tag">
+                            
+                            <a href="/tags/npm/" style="color: #ff7d73">
+                                npm
+                            </a>
+                        </span>
+                        
+                        <span class="tag">
+                            
+                            <a href="/tags/SSL/" style="color: #00bcd4">
+                                SSL
+                            </a>
+                        </span>
+                        
+                    </span>
                     
                 </div>
             </div>
@@ -306,19 +449,20 @@
                 <div class="info">
                     
                     
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline" data-title="first">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2024/9/11</div>
-                <a href="/2024/09/11/first/">
-                    <h3>first</h3>
-                </a>
-                <div class="info">
-                    
+                    <span class="tags">
+                        <span class="icon">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </span>
+                        
+                        
+                        <span class="tag">
+                            
+                            <a href="/tags/tutor/" style="color: #ff7d73">
+                                tutor
+                            </a>
+                        </span>
+                        
+                    </span>
                     
                 </div>
             </div>

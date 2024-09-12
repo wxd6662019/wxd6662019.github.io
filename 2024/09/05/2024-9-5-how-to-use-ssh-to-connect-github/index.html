@@ -35,6 +35,11 @@
 <script src="/js/lib/highlight.js"></script>
 
 
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
 
 <script src="/js/lib/preview.js"></script>
 
@@ -167,6 +172,37 @@
             2024/9/5
         </span>
         
+        <span class="category">
+            <a href="/categories/%E7%8E%AF%E5%A2%83/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                环境
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/Github/" style="color: #03a9f4">
+                    Github
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/SSH/" style="color: #ff7d73">
+                    SSH
+                </a>
+            </span>
+            
+        </span>
         
     </div>
     
@@ -227,11 +263,16 @@ ssh-add ~/.ssh/id_rsa
 <pre><code class="bash">git push origin main
 </code></pre>
 <p>将 <code>main</code> 替换为你的分支名称。</p>
-<h3 id="ssh-keygen-R-47-94-20-51-，重新连接的命令，删除KnownHosts文件里这个ip的记录"><a href="#ssh-keygen-R-47-94-20-51-，重新连接的命令，删除KnownHosts文件里这个ip的记录" class="headerlink" title="ssh-keygen -R 47.94.20.51 ，重新连接的命令，删除KnownHosts文件里这个ip的记录"></a>ssh-keygen -R 47.94.20.51 ，重新连接的命令，删除KnownHosts文件里这个ip的记录</h3>
+<h3 id="8-当远程公钥发生变动"><a href="#8-当远程公钥发生变动" class="headerlink" title="8. 当远程公钥发生变动"></a>8. 当远程公钥发生变动</h3><p><code>ssh-keygen -R remoteIP</code> ，重新连接的命令，删除KnownHosts文件里这个ip的记录</p>
+
     </div>
     
     
     
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
     
     
     
@@ -268,6 +309,23 @@ ssh-add ~/.ssh/id_rsa
     <script src="/js/main.js"></script>
     
     
+<script
+    src="https://giscus.app/client.js"
+    data-repo="wxd6662019/wxd6662019.github.io"
+    data-repo-id="R_kgDOMv_QXw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMv_QX84CiZrp"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
 
 
 

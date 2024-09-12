@@ -35,12 +35,13 @@
 <script src="/js/lib/highlight.js"></script>
 
 
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
 
 <script src="/js/lib/preview.js"></script>
-
-
-
-
 
 
 
@@ -155,30 +156,100 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div class="article">
-    <div>
-        <h1>Tags</h1>
-    </div>
-    <div class="info">
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/11
+            <div id="archives">
+    
+    <div class="categories-tags">
+        
+        
+        
+        <span>
+            <a href="/tags/npm/" style="background: #ff7d73">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                npm
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/tutor/" style="background: #03a9f4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                tutor
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Linux/" style="background: #ff7d73">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                Linux
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/SSL/" style="background: #00a596">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                SSL
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Github/" style="background: #ffa2c4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                Github
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/SSH/" style="background: #03a9f4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                SSH
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/vim/" style="background: #00a596">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                vim
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/C/" style="background: #ff7d73">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                C
+            </a>
         </span>
         
         
     </div>
-    
-    <div class="content" v-pre>
-        
-    </div>
-    
-    
-    
-    
-    
-    
     
 </div>
 
@@ -210,12 +281,6 @@
         
     </div>
     <script src="/js/main.js"></script>
-    
-    
-
-
-
-
     
 </body>
 </html>
