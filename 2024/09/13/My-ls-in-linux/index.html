@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Kola&#39;s nest</title>
+    <title>My ls in linux | Kola&#39;s nest</title>
     <meta name="author" content="wxd666" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -47,7 +47,9 @@
 
 
 
-<script src="/js/lib/home.js"></script>
+
+
+
 
 <link rel="stylesheet" href="/css/main.css" />
 
@@ -158,45 +160,17 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div id="home-head">
-    <div
-        id="home-background"
-        ref="homeBackground"
-        data-images="/images/background.jp"
-    >
-    <video autoplay loop muted id="background-video" style="width:100%;height:100%;object-fit:cover">
-        <source src="/images/back.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-
+            <div class="article">
+    <div>
+        <h1>My ls in linux</h1>
     </div>
-    <div id="home-info" @click="homeClick">
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="info">
-            <div class="wrap">
-                <h1>Kola&#39;s nest</h1>
-                <h3></h3>
-                <h5 style="height: 23.2px"><span id="dynamic-description"></span></h5>
-            </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/9/13
         </span>
-    </div>
-</div>
-<div
-    id="home-posts-wrap"
-    ref="homePostsWrap"
-    true
->
-    <div id="home-posts">
-        
-
-<div class="post">
-    <a href="/2024/09/13/My-ls-in-linux/">
-        <h2 class="post-title">My ls in linux</h2>
-    </a>
-    <div class="category-and-date">
         
         <span class="category">
             <a href="/categories/%E5%AE%9E%E8%B7%B5/">
@@ -207,19 +181,33 @@
             </a>
         </span>
         
-        <span class="date">
+        
+        <span class="tags">
             <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
+                <i class="fa-solid fa-tags fa-fw"></i>
             </span>
-            2024/9/13
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/Linux/" style="color: #03a9f4">
+                    Linux
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/C/" style="color: #00bcd4">
+                    C
+                </a>
+            </span>
+            
         </span>
         
-        
     </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="stat系统调用函数">1. stat系统调用函数</h1>
+    
+    <div class="content" v-pre>
+        <h1 id="stat系统调用函数">1. stat系统调用函数</h1>
 <p>用于获取指定文件的相关信息，其函数声明如下</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/stat.h&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> stat<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>path<span class="op">,</span> <span class="kw">struct</span> stat <span class="op">*</span>buf<span class="op">);</span></span>
@@ -351,380 +339,20 @@ class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1
 <div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>getgrgid<span class="op">(</span>stat_buf<span class="op">.</span>st_gid<span class="op">)-&gt;</span>gr_name  <span class="co">// 拥有者组名</span></span></code></pre></div>
 <p>最后使用格式字符串打印即可</p>
 
-            
-        </div>
     </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/Linux/" style="color: #00a596">Linux</a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/C/" style="color: #ffa2c4">C</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/13/My-ls-in-linux/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/10/hello-world/">
-        <h2 class="post-title">Hello World</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/10
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>这是一个使用hexo的新手文档。</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/tutor/" style="color: #00bcd4">tutor</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/10/hello-world/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/10/2024-9-10-use-npm/">
-        <h2 class="post-title">use npm</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/%E7%8E%AF%E5%A2%83/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                环境
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/10
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>使用npm命令进度缓慢</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/npm/" style="color: #00a596">npm</a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/SSL/" style="color: #ff7d73">SSL</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/10/2024-9-10-use-npm/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/08/2024-9-8-vim-plus/">
-        <h2 class="post-title">vim-plus</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/%E7%8E%AF%E5%A2%83/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                环境
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/8
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>配置vim-plus</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/vim/" style="color: #ffa2c4">vim</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/08/2024-9-8-vim-plus/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/06/2024-9-6-linux/">
-        <h2 class="post-title">linux</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/%E5%91%BD%E4%BB%A4/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                命令
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/6
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>记录不会的linux命令</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/Linux/" style="color: #00bcd4">Linux</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/06/2024-9-6-linux/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/06/2024-9-6-file-stream/">
-        <h2 class="post-title">file stream</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/%E8%AF%AD%E6%B3%95/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                语法
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/6
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>文件流的学习</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/C/" style="color: #00bcd4">C</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/06/2024-9-6-file-stream/" class="go-post">阅读全文</a>
-</div>
-
-
-        <div class="page-current">
-    
-    <span class="current">1</span>
-    
-    <a class="page-num" href="/page/2">
-        2
-    </a>
     
     
     
     
-    <a class="page-num" href="/page/2/">
-        <i class="fa-solid fa-caret-right fa-fw"></i>
-    </a>
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
     
 </div>
 
-    </div>
-    
-    <div id="home-card">
-        <div id="card-style">
-    <div id="card-div">
-        <div class="avatar">
-            <img src="/images/avatar.jpg" alt="avatar" />
-        </div>
-        <div class="name">wxd666</div>
-        <div class="description">
-            <p>置于死地，方能后生！</p>
-
-        </div>
-        
-        <div class="icon-links">
-            
-            <span class="icon-link">
-                <a target="_blank" rel="noopener" href="https://github.com/wxd6662019">
-                    <i
-                        class="fa-brands fa-github fa-fw"
-                    ></i>
-                </a>
-            </span>
-            
-            <span class="icon-link">
-                <a href="mailto:3066217249@qq.com">
-                    <i
-                        class="fa-solid fa-envelope fa-fw"
-                    ></i>
-                </a>
-            </span>
-            
-            <span class="icon-link">
-                <a target="_blank" rel="noopener" href="http://wpa.qq.com/msgrd?v=3&uin=3066217249&site=qq&menu=yes">
-                    <i
-                        class="fa-brands fa-qq fa-fw"
-                    ></i>
-                </a>
-            </span>
-            
-            <span class="icon-link">
-                <a target="_blank" rel="noopener" href="https://twitter.com/yourusername">
-                    <i
-                        class="fa-brands fa-weixin fa-fw"
-                    ></i>
-                </a>
-            </span>
-            
-        </div>
-        
-        
-        <div class="friend-links">
-            
-            <div class="friend-link">
-                <a target="_blank" rel="noopener" href="https://argvchs.github.io">Argvchs</a>
-            </div>
-            
-        </div>
-        
-    </div>
-</div>
-
-    </div>
-    
-</div>
-
-<style>
-
-
-</style>
-
-
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const options = {
-            strings: ["绝望中, ^1500仍存有一线生机！", "置于死地，^1000方能后生！", " 还不可以认输！", "潜龙勿用，^500藏锋守拙！", "龙战于野，^500其血玄黄！"], 
-            // 替换为你的描述
-            typeSpeed: 100, // 输入速度
-            backSpeed: 50, // 删除速度
-            backDelay: 5000, // 删除等待时间
-            startDelay: 300, // 开始之前的延迟300毫秒
-            loop: true, // 循环
-            showCursor: true, // 显示光标
-            autoInsertCss: true,
-        };
-
-        new Typed("#dynamic-description", options);
-    });
-</script>
             <footer id="footer">
     <div id="footer-wrap">
         <div>
@@ -753,6 +381,29 @@ class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1
         
     </div>
     <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="wxd6662019/wxd6662019.github.io"
+    data-repo-id="R_kgDOMv_QXw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMv_QX84CiZrp"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
     
 </body>
 </html>
