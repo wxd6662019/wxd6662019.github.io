@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>linux | Kola&#39;s nest</title>
+    <title>mmap函数实现读写文件 | Kola&#39;s nest</title>
     <meta name="author" content="wxd666" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -162,22 +162,22 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>linux</h1>
+        <h1>mmap函数实现读写文件</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/9/6
+            2024/9/16
         </span>
         
         <span class="category">
-            <a href="/categories/%E5%91%BD%E4%BB%A4/">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                命令
+                理论
             </a>
         </span>
         
@@ -190,8 +190,8 @@
             
             <span class="tag">
                 
-                <a href="/tags/Linux/" style="color: #ff7d73">
-                    Linux
+                <a href="/tags/C/" style="color: #00a596">
+                    C
                 </a>
             </span>
             
@@ -200,48 +200,27 @@
     </div>
     
     <div class="content" v-pre>
-        <p>root@hostname : <span class="citation"
-data-cites="符后面跟着主机的名字">@符后面跟着主机的名字</span>，<code>root</code>
-则是当前登录的用户</p>
-<p><code>hostnamectl set-hostname</code> 新的主机名
-可以更改当前服务器的主机名</p>
-<h4
-id="ps显示当前运行的进程a显示所有用户的进程u以用户格式显示进程信息x显示没有控制终端的进程">ps显示当前运行的进程，a显示所有用户的进程，u以用户格式显示进程信息，x显示没有控制终端的进程</h4>
-<p>运行 <code>ps aux | grep ssh-agent</code>
-后，输出通常包含以下列：</p>
+        <h1>1 Memory map</h1>
+<p>将磁盘中文件的数据，选择性的映射到内存中，然后通过读写操作内存数据，进而读写操作文件数据。</p>
+<p>也就是，利用以往读写内存的处理方式，来处理文件数据</p>
+<p>mmap仍然是一个系统调用，它所提供的的文件读写操作，仍然是基于open打开文件的，那么思考一下：</p>
+<p>和传统的read/write读写文件数据，mmap的差别是什么？</p>
+<span id="more"></span>
+<p>read/write 提供的文件读写操作时顺序访问的，他依靠一个指示文件位置的指针来完成文件的读写操作，默认是从文件的开头读写到文件的末尾。整个过程不能跳着来，r/w是没有办法直接读写访问文件中间的数据的</p>
+<p>mmap提供了操作内存的方式来操作文件，而内存的操作时支持随机访问的，所以mmap读写文件，支持随机访问，可以直接访问文件的中间数据</p>
+<p>r/w是文件操作的常用方式，而mmap是文件操作的补充，在特殊的场景中使用</p>
+<p>mmap函数声明如下：</p>
+<p><img src="C:%5CUsers%5C30662%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240916151041580.png" alt="image-20240916151041580"></p>
 <ul>
-<li>USER：进程的所有者。</li>
-<li>PID：进程ID。</li>
-<li>%CPU：进程占用的CPU百分比。</li>
-<li>%MEM：进程占用的内存百分比。</li>
-<li>VSZ：进程使用的虚拟内存大小（以KB为单位）。</li>
-<li>RSS：进程使用的物理内存大小（以KB为单位）。</li>
-<li>TTY：进程关联的终端。</li>
-<li>STAT：进程状态（如运行、睡眠等）。</li>
-<li>START：进程启动时间。</li>
-<li>TIME：进程使用的CPU时间。</li>
-<li>COMMAND：启动该进程的命令及其参数。</li>
+<li>void *addr ：从哪个地址开始映射文件数据，一般不需要指定，表示让OS自己决定从哪里开始映射</li>
+<li>size_t length：表示内存中映射区域的大小，也就是想要映射的文件内容的数据大小</li>
+<li>int prot：类似open函数的flag参数，表内存映射区域的读写特性</li>
+<li>int flags：决定映射区域的回写特性和进程相关的特性，先指定为MAP_SHARED</li>
+<li>int fd：file description</li>
+<li>返回值：返回内存中文件映射区域的指针，可以与以往malloc的返回值做同等处理</li>
 </ul>
-<p>by the way , 在Windows上则是</p>
-<p><code>ps | Where-Object &#123; $_.ProcessName -like "*ssh-agent*" &#125;</code></p>
-<p>使用<strong>别名</strong>可以缩短较长的命令</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">打开文件：nano</span> ~/.bashrc</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">添加别名：alias</span> gs=<span class="st">&#39;git status&#39;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">保存退出并运行：source</span> ~/.bashrc</span></code></pre></div>
-<p>在Unix/Linux环境的命令行界面下的<strong>快捷键</strong></p>
-<pre><code>Ctrl+A ：表示将光标移动到最左端
-Ctrl+E：光标移动到最右端
-Ctrl+U：删除光标前所有输入
-Ctrl+K：删除光标后所有输入
-Ctrl+L：清屏（power shell中也可用）
-Ctrl+C：中止当前进程
-Ctrl+D：在输入时发送EOF</code></pre>
-<p><strong>解压</strong>操作：<strong>tar -zxvf
-filename.tar.gz</strong></p>
-<p>-z: 使用gzip格式 ，x表示解压，v表示看，f表示指定文件名</p>
+<h1>2 结论</h1>
+<p>read/write 在顺序读写时性能更好，我们和内核态的文件对 象交互，而mmap则直接和内核态的页缓存交互。文件对象也是从页缓存来的</p>
 
     </div>
     

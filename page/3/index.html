@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>linux | Kola&#39;s nest</title>
+    <title>Kola&#39;s nest</title>
     <meta name="author" content="wxd666" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -47,9 +47,7 @@
 
 
 
-
-
-
+<script src="/js/lib/home.js"></script>
 
 <link rel="stylesheet" href="/css/main.css" />
 
@@ -160,103 +158,185 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div class="article">
-    <div>
-        <h1>linux</h1>
+            <div id="home-head">
+    <div
+        id="home-background"
+        ref="homeBackground"
+        data-images="/images/background.jp"
+    >
+    <video autoplay loop muted id="background-video" style="width:100%;height:100%;object-fit:cover">
+        <source src="/images/back.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
     </div>
-    <div class="info">
+    <div id="home-info" @click="homeClick">
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="info">
+            <div class="wrap">
+                <h1>Kola&#39;s nest</h1>
+                <h3></h3>
+                <h5 style="height: 23.2px"><span id="dynamic-description"></span></h5>
+            </div>
+        </span>
+    </div>
+</div>
+<div
+    id="home-posts-wrap"
+    ref="homePostsWrap"
+    true
+>
+    <div id="home-posts">
+        
+
+<div class="post">
+    <a href="/2024/08/28/2024-08-28-english/">
+        <h2 class="post-title">translation   </h2>
+    </a>
+    <div class="category-and-date">
+        
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/9/6
+            2024/8/28
         </span>
         
-        <span class="category">
-            <a href="/categories/%E5%91%BD%E4%BB%A4/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                命令
-            </a>
-        </span>
-        
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            
-            <span class="tag">
-                
-                <a href="/tags/Linux/" style="color: #ff7d73">
-                    Linux
-                </a>
-            </span>
-            
-        </span>
         
     </div>
-    
-    <div class="content" v-pre>
-        <p>root@hostname : <span class="citation"
-data-cites="符后面跟着主机的名字">@符后面跟着主机的名字</span>，<code>root</code>
-则是当前登录的用户</p>
-<p><code>hostnamectl set-hostname</code> 新的主机名
-可以更改当前服务器的主机名</p>
-<h4
-id="ps显示当前运行的进程a显示所有用户的进程u以用户格式显示进程信息x显示没有控制终端的进程">ps显示当前运行的进程，a显示所有用户的进程，u以用户格式显示进程信息，x显示没有控制终端的进程</h4>
-<p>运行 <code>ps aux | grep ssh-agent</code>
-后，输出通常包含以下列：</p>
-<ul>
-<li>USER：进程的所有者。</li>
-<li>PID：进程ID。</li>
-<li>%CPU：进程占用的CPU百分比。</li>
-<li>%MEM：进程占用的内存百分比。</li>
-<li>VSZ：进程使用的虚拟内存大小（以KB为单位）。</li>
-<li>RSS：进程使用的物理内存大小（以KB为单位）。</li>
-<li>TTY：进程关联的终端。</li>
-<li>STAT：进程状态（如运行、睡眠等）。</li>
-<li>START：进程启动时间。</li>
-<li>TIME：进程使用的CPU时间。</li>
-<li>COMMAND：启动该进程的命令及其参数。</li>
-</ul>
-<p>by the way , 在Windows上则是</p>
-<p><code>ps | Where-Object &#123; $_.ProcessName -like "*ssh-agent*" &#125;</code></p>
-<p>使用<strong>别名</strong>可以缩短较长的命令</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">打开文件：nano</span> ~/.bashrc</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">添加别名：alias</span> gs=<span class="st">&#39;git status&#39;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">保存退出并运行：source</span> ~/.bashrc</span></code></pre></div>
-<p>在Unix/Linux环境的命令行界面下的<strong>快捷键</strong></p>
-<pre><code>Ctrl+A ：表示将光标移动到最左端
-Ctrl+E：光标移动到最右端
-Ctrl+U：删除光标前所有输入
-Ctrl+K：删除光标后所有输入
-Ctrl+L：清屏（power shell中也可用）
-Ctrl+C：中止当前进程
-Ctrl+D：在输入时发送EOF</code></pre>
-<p><strong>解压</strong>操作：<strong>tar -zxvf
-filename.tar.gz</strong></p>
-<p>-z: 使用gzip格式 ，x表示解压，v表示看，f表示指定文件名</p>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h3
+id="this-branch-is-8-commits-ahead-of-main当前分支相较于主分支main多了-8-个提交这意味着在当前分支上进行了-8-次提交而这些提交在主分支上并不存在">“This
+branch is 8 commits ahead of main”：当前分支相较于主分支（main）多了 8
+个提交。这意味着在当前分支上进行了 8
+次提交，而这些提交在主分支上并不存在。</h3>
+<h3
+id="commits-behind-main当前分支落后于主分支-9-个提交这意味着主分支上有-9-次提交是当前分支所没有的">“9
+commits behind main”：当前分支落后于主分支 9 个提交。这意味着主分支上有
+9 次提交是当前分支所没有的。</h3>
 
+            
+        </div>
     </div>
-    
-    
-    
-    
-    <div id="comment">
-        <div id="giscus-container" class="giscus"></div>
+    <div class="post-tags">
+        
+        
+        
     </div>
+    <a href="/2024/08/28/2024-08-28-english/" class="go-post">阅读全文</a>
+</div>
+
+
+        <div class="page-current">
+    
+    <a class="page-num" href="/page/2/">
+        <i class="fa-solid fa-caret-left fa-fw"></i>
+    </a>
+    <a class="page-num" href="/">1</a>
+    <span class="page-omit">...</span>
+    
+    <span class="current">3</span>
     
     
     
     
 </div>
 
+    </div>
+    
+    <div id="home-card">
+        <div id="card-style">
+    <div id="card-div">
+        <div class="avatar">
+            <img src="/images/avatar.jpg" alt="avatar" />
+        </div>
+        <div class="name">wxd666</div>
+        <div class="description">
+            <p>置于死地，方能后生！</p>
+
+        </div>
+        
+        <div class="icon-links">
+            
+            <span class="icon-link">
+                <a target="_blank" rel="noopener" href="https://github.com/wxd6662019">
+                    <i
+                        class="fa-brands fa-github fa-fw"
+                    ></i>
+                </a>
+            </span>
+            
+            <span class="icon-link">
+                <a href="mailto:3066217249@qq.com">
+                    <i
+                        class="fa-solid fa-envelope fa-fw"
+                    ></i>
+                </a>
+            </span>
+            
+            <span class="icon-link">
+                <a target="_blank" rel="noopener" href="http://wpa.qq.com/msgrd?v=3&uin=3066217249&site=qq&menu=yes">
+                    <i
+                        class="fa-brands fa-qq fa-fw"
+                    ></i>
+                </a>
+            </span>
+            
+            <span class="icon-link">
+                <a target="_blank" rel="noopener" href="https://twitter.com/yourusername">
+                    <i
+                        class="fa-brands fa-weixin fa-fw"
+                    ></i>
+                </a>
+            </span>
+            
+        </div>
+        
+        
+        <div class="friend-links">
+            
+            <div class="friend-link">
+                <a target="_blank" rel="noopener" href="https://argvchs.github.io">Argvchs</a>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+    </div>
+    
+</div>
+
+<style>
+
+
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const options = {
+            strings: ["绝望中, ^1500仍存有一线生机！", "置于死地，^1000方能后生！", " 还不可以认输！", "潜龙勿用，^500藏锋守拙！", "龙战于野，^500其血玄黄！"], 
+            // 替换为你的描述
+            typeSpeed: 100, // 输入速度
+            backSpeed: 50, // 删除速度
+            backDelay: 5000, // 删除等待时间
+            startDelay: 300, // 开始之前的延迟300毫秒
+            loop: true, // 循环
+            showCursor: true, // 显示光标
+            autoInsertCss: true,
+        };
+
+        new Typed("#dynamic-description", options);
+    });
+</script>
             <footer id="footer">
     <div id="footer-wrap">
         <div>
@@ -285,29 +365,6 @@ filename.tar.gz</strong></p>
         
     </div>
     <script src="/js/main.js"></script>
-    
-    
-<script
-    src="https://giscus.app/client.js"
-    data-repo="wxd6662019/wxd6662019.github.io"
-    data-repo-id="R_kgDOMv_QXw"
-    data-category="Announcements"
-    data-category-id="DIC_kwDOMv_QX84CiZrp"
-    data-mapping="pathname"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="bottom"
-    data-theme="preferred_color_scheme"
-    data-lang="zh-CN"
-    crossorigin
-    async
-></script>
-
-
-
-
-
     
 </body>
 </html>
