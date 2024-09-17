@@ -176,133 +176,179 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="有用的命令">有用的命令</h1>
-<h3 id="基本操作">1. <strong>基本操作</strong></h3>
+        <h1>有用的命令</h1>
+<h3 id="1-基本操作">1. <strong>基本操作</strong></h3>
 <ul>
-<li><p><strong>初始化仓库</strong></p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span></code></pre></div></li>
-<li><p><strong>克隆仓库</strong></p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="op">&lt;</span>repository-url<span class="op">&gt;</span></span></code></pre></div></li>
-<li><p><strong>清楚git缓存</strong></p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> credential-cache exit </span></code></pre></div></li>
+<li>
+<p><strong>初始化仓库</strong></p>
+<pre><code class="language-bash">git init
+</code></pre>
+</li>
+<li>
+<p><strong>克隆仓库</strong></p>
+<pre><code class="language-bash">git clone &lt;repository-url&gt;
+</code></pre>
+</li>
+<li>
+<p><strong>清楚git缓存</strong></p>
+<pre><code class="language-bash">git credential-cache exit 
+</code></pre>
+</li>
 </ul>
-<h3 id="查看状态">2. <strong>查看状态</strong></h3>
+<h3 id="2-查看状态">2. <strong>查看状态</strong></h3>
 <ul>
-<li><p><strong>查看当前状态</strong></p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div></li>
-<li><p><strong>查看提交历史</strong></p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log</span></code></pre></div></li>
+<li>
+<p><strong>查看当前状态</strong></p>
+<pre><code class="language-bash">git status
+</code></pre>
+</li>
+<li>
+<p><strong>查看提交历史</strong></p>
+<pre><code class="language-bash">git log
+</code></pre>
+</li>
 </ul>
-<h3 id="文件操作">3. <strong>文件操作</strong></h3>
+<h3 id="3-文件操作">3. <strong>文件操作</strong></h3>
 <ul>
-<li><p><strong>添加文件到暂存区</strong></p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="op">&lt;</span>file<span class="op">&gt;</span></span></code></pre></div>
+<li>
+<p><strong>添加文件到暂存区</strong></p>
+<pre><code class="language-bash">git add &lt;file&gt;
+</code></pre>
 <p>添加所有文件：</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span></code></pre></div></li>
-<li><p><strong>从暂存区移除文件</strong></p>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="op">&lt;</span>file<span class="op">&gt;</span></span></code></pre></div></li>
-<li><p><strong>查看文件差异</strong></p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff</span></code></pre></div></li>
+<pre><code class="language-bash">git add .
+</code></pre>
+</li>
+<li>
+<p><strong>从暂存区移除文件</strong></p>
+<pre><code class="language-bash">git reset &lt;file&gt;
+</code></pre>
+</li>
+<li>
+<p><strong>查看文件差异</strong></p>
+<pre><code class="language-bash">git diff
+</code></pre>
+</li>
 </ul>
-<h3 id="提交更改">4. <strong>提交更改</strong></h3>
+<h3 id="4-提交更改">4. <strong>提交更改</strong></h3>
 <ul>
-<li><p><strong>提交更改</strong></p>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Commit message&quot;</span></span></code></pre></div></li>
+<li><strong>提交更改</strong><pre><code class="language-bash">git commit -m &quot;Commit message&quot;
+</code></pre>
+</li>
 </ul>
-<h3 id="分支管理">5. <strong>分支管理</strong></h3>
+<h3 id="5-分支管理">5. <strong>分支管理</strong></h3>
 <ul>
-<li><p><strong>查看分支</strong></p>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch</span></code></pre></div></li>
-<li><p><strong>创建新分支</strong></p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="op">&lt;</span>branch-name<span class="op">&gt;</span></span></code></pre></div></li>
-<li><p><strong>切换分支</strong></p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="op">&lt;</span>branch-name<span class="op">&gt;</span></span></code></pre></div></li>
-<li><p><strong>合并分支</strong></p>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge <span class="op">&lt;</span>branch-name<span class="op">&gt;</span></span></code></pre></div></li>
+<li>
+<p><strong>查看分支</strong></p>
+<pre><code class="language-bash">git branch
+</code></pre>
+</li>
+<li>
+<p><strong>创建新分支</strong></p>
+<pre><code class="language-bash">git branch &lt;branch-name&gt;
+</code></pre>
+</li>
+<li>
+<p><strong>切换分支</strong></p>
+<pre><code class="language-bash">git checkout &lt;branch-name&gt;
+</code></pre>
+</li>
+<li>
+<p><strong>合并分支</strong></p>
+<pre><code class="language-bash">git merge &lt;branch-name&gt;
+</code></pre>
+</li>
 </ul>
-<h3 id="远程操作">6. <strong>远程操作</strong></h3>
+<h3 id="6-远程操作">6. <strong>远程操作</strong></h3>
 <ul>
-<li><p><strong>查看远程仓库</strong></p>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span></code></pre></div></li>
-<li><p><strong>添加远程仓库</strong></p>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin <span class="op">&lt;</span>repository-url<span class="op">&gt;</span></span></code></pre></div></li>
-<li><p><strong>推送到远程仓库</strong></p>
-<div class="sourceCode" id="cb17"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin <span class="op">&lt;</span>branch-name<span class="op">&gt;</span></span></code></pre></div></li>
-<li><p><strong>拉取远程更新</strong></p>
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin <span class="op">&lt;</span>branch-name<span class="op">&gt;</span></span></code></pre></div></li>
-<li><p><strong>重新设置远程仓库</strong></p>
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote set-url origin https://github.com/你的用户名/新的仓库名.git</span></code></pre></div></li>
+<li>
+<p><strong>查看远程仓库</strong></p>
+<pre><code class="language-bash">git remote -v
+</code></pre>
+</li>
+<li>
+<p><strong>添加远程仓库</strong></p>
+<pre><code class="language-bash">git remote add origin &lt;repository-url&gt;
+</code></pre>
+</li>
+<li>
+<p><strong>推送到远程仓库</strong></p>
+<pre><code class="language-bash">git push origin &lt;branch-name&gt;
+</code></pre>
+</li>
+<li>
+<p><strong>拉取远程更新</strong></p>
+<pre><code class="language-bash">git pull origin &lt;branch-name&gt;
+</code></pre>
+</li>
+<li>
+<p><strong>重新设置远程仓库</strong></p>
+<pre><code class="language-bash">git remote set-url origin https://github.com/你的用户名/新的仓库名.git
+</code></pre>
+</li>
 </ul>
-<h3 id="其他实用命令">7. <strong>其他实用命令</strong></h3>
+<h3 id="7-其他实用命令">7. <strong>其他实用命令</strong></h3>
 <ul>
-<li><p><strong>撤销上一次提交（保留更改）</strong></p>
-<div class="sourceCode" id="cb20"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--soft</span> HEAD~1</span></code></pre></div></li>
-<li><p><strong>强制推送</strong></p>
-<div class="sourceCode" id="cb21"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">--force</span></span></code></pre></div></li>
-<li><p><strong>查看已追踪的文件</strong></p>
-<div class="sourceCode" id="cb22"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> ls-files</span></code></pre></div></li>
+<li>
+<p><strong>撤销上一次提交（保留更改）</strong></p>
+<pre><code class="language-bash">git reset --soft HEAD~1
+</code></pre>
+</li>
+<li>
+<p><strong>强制推送</strong></p>
+<pre><code class="language-bash">git push --force
+</code></pre>
+</li>
+<li>
+<p><strong>查看已追踪的文件</strong></p>
+<pre><code class="language-bash">git ls-files
+</code></pre>
+</li>
 </ul>
-<h3 id="标签管理">8. <strong>标签管理</strong></h3>
+<h3 id="8-标签管理">8. <strong>标签管理</strong></h3>
 <ul>
-<li><p><strong>创建标签</strong></p>
-<div class="sourceCode" id="cb23"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="op">&lt;</span>tag-name<span class="op">&gt;</span></span></code></pre></div></li>
-<li><p><strong>推送标签到远程</strong></p>
-<div class="sourceCode" id="cb24"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin <span class="op">&lt;</span>tag-name<span class="op">&gt;</span></span></code></pre></div></li>
+<li>
+<p><strong>创建标签</strong></p>
+<pre><code class="language-bash">git tag &lt;tag-name&gt;
+</code></pre>
+</li>
+<li>
+<p><strong>推送标签到远程</strong></p>
+<pre><code class="language-bash">git push origin &lt;tag-name&gt;
+</code></pre>
+</li>
 </ul>
-<h3
-id="当你在进行合并操作时若当前工作区中有未提交的更改这些更改会被合并操作覆盖git-为了防止数据丢失会阻止这个操作">9.
-当你在进行合并操作时，若当前工作区中有未提交的更改，这些更改会被合并操作覆盖。Git
-为了防止数据丢失，会阻止这个操作</h3>
+<h3 id="9-当你在进行合并操作时，若当前工作区中有未提交的更改，这些更改会被合并操作覆盖。Git-为了防止数据丢失，会阻止这个操作">9. 当你在进行合并操作时，若当前工作区中有未提交的更改，这些更改会被合并操作覆盖。Git 为了防止数据丢失，会阻止这个操作</h3>
 <h3 id="解决方法">解决方法</h3>
-<ol type="1">
-<li><p><strong>提交更改</strong>：</p>
+<ol>
+<li>
+<p><strong>提交更改</strong>：</p>
 <ul>
-<li><p>如果你希望保留当前的更改，可以先将它们提交：</p>
-<div class="sourceCode" id="cb25"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Your commit message&quot;</span></span></code></pre></div></li>
-</ul></li>
-<li><p><strong>暂存更改</strong>：</p>
+<li>如果你希望保留当前的更改，可以先将它们提交：<pre><code class="language-bash">git add .
+git commit -m &quot;Your commit message&quot;
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>暂存更改</strong>：</p>
 <ul>
-<li><p>如果你不想立即提交这些更改，可以使用 <code>git stash</code>
-命令将它们暂存：</p>
-<div class="sourceCode" id="cb26"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash</span></code></pre></div></li>
-<li><p>暂存后，你可以执行合并操作。完成后，可以通过以下命令恢复暂存的更改：</p>
-<div class="sourceCode" id="cb27"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash pop</span></code></pre></div></li>
-</ul></li>
-<li><p><strong>丢弃更改</strong>：</p>
+<li>如果你不想立即提交这些更改，可以使用 <code>git stash</code> 命令将它们暂存：<pre><code class="language-bash">git stash
+</code></pre>
+</li>
+<li>暂存后，你可以执行合并操作。完成后，可以通过以下命令恢复暂存的更改：<pre><code class="language-bash">git stash pop
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>丢弃更改</strong>：</p>
 <ul>
-<li><p>如果你确定不需要当前的更改，可以使用以下命令丢弃它们：</p>
-<div class="sourceCode" id="cb28"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">--</span> fileName</span></code></pre></div></li>
-<li><p>注意，这将永久删除未提交的更改，请谨慎操作。</p></li>
-</ul></li>
+<li>如果你确定不需要当前的更改，可以使用以下命令丢弃它们：<pre><code class="language-bash">git checkout -- fileName
+</code></pre>
+</li>
+<li>注意，这将永久删除未提交的更改，请谨慎操作。</li>
+</ul>
+</li>
 </ol>
 
     </div>

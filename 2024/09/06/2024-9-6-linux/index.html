@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/Linux/" style="color: #ff7d73">
+                <a href="/tags/Linux/" style="color: #00a596">
                     Linux
                 </a>
             </span>
@@ -200,15 +200,10 @@
     </div>
     
     <div class="content" v-pre>
-        <p>root@hostname : <span class="citation"
-data-cites="符后面跟着主机的名字">@符后面跟着主机的名字</span>，<code>root</code>
-则是当前登录的用户</p>
-<p><code>hostnamectl set-hostname</code> 新的主机名
-可以更改当前服务器的主机名</p>
-<h4
-id="ps显示当前运行的进程a显示所有用户的进程u以用户格式显示进程信息x显示没有控制终端的进程">ps显示当前运行的进程，a显示所有用户的进程，u以用户格式显示进程信息，x显示没有控制终端的进程</h4>
-<p>运行 <code>ps aux | grep ssh-agent</code>
-后，输出通常包含以下列：</p>
+        <p>root@hostname : @符后面跟着主机的名字，<code>root</code> 则是当前登录的用户</p>
+<p><code>hostnamectl set-hostname</code> 新的主机名 可以更改当前服务器的主机名</p>
+<h4 id="ps显示当前运行的进程，a显示所有用户的进程，u以用户格式显示进程信息，x显示没有控制终端的进程">ps显示当前运行的进程，a显示所有用户的进程，u以用户格式显示进程信息，x显示没有控制终端的进程</h4>
+<p>运行 <code>ps aux | grep ssh-agent</code> 后，输出通常包含以下列：</p>
 <ul>
 <li>USER：进程的所有者。</li>
 <li>PID：进程ID。</li>
@@ -223,14 +218,14 @@ id="ps显示当前运行的进程a显示所有用户的进程u以用户格式显
 <li>COMMAND：启动该进程的命令及其参数。</li>
 </ul>
 <p>by the way , 在Windows上则是</p>
-<p><code>ps | Where-Object &#123; $_.ProcessName -like "*ssh-agent*" &#125;</code></p>
+<p><code>ps | Where-Object &#123; $_.ProcessName -like &quot;*ssh-agent*&quot; &#125;</code></p>
 <p>使用<strong>别名</strong>可以缩短较长的命令</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">打开文件：nano</span> ~/.bashrc</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">添加别名：alias</span> gs=<span class="st">&#39;git status&#39;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">保存退出并运行：source</span> ~/.bashrc</span></code></pre></div>
+<pre><code class="language-bash">打开文件：nano ~/.bashrc
+
+添加别名：alias gs='git status'
+
+保存退出并运行：source ~/.bashrc
+</code></pre>
 <p>在Unix/Linux环境的命令行界面下的<strong>快捷键</strong></p>
 <pre><code>Ctrl+A ：表示将光标移动到最左端
 Ctrl+E：光标移动到最右端
@@ -238,9 +233,9 @@ Ctrl+U：删除光标前所有输入
 Ctrl+K：删除光标后所有输入
 Ctrl+L：清屏（power shell中也可用）
 Ctrl+C：中止当前进程
-Ctrl+D：在输入时发送EOF</code></pre>
-<p><strong>解压</strong>操作：<strong>tar -zxvf
-filename.tar.gz</strong></p>
+Ctrl+D：在输入时发送EOF
+</code></pre>
+<p><strong>解压</strong>操作：<strong>tar -zxvf filename.tar.gz</strong></p>
 <p>-z: 使用gzip格式 ，x表示解压，v表示看，f表示指定文件名</p>
 
     </div>
