@@ -176,43 +176,47 @@
     </div>
     
     <div class="content" v-pre>
-        <h1>数组指针和指针数组</h1>
+        <h1 id="数组指针和指针数组">数组指针和指针数组</h1>
 <ul>
-<li>pointer to array （数组指针）</li>
+<li>pointer to array （数组指针）   </li>
 </ul>
-<ol>
-<li>本质上是一个指针，指向一个数组，类型是int (*p)[3]   ps: 随便取个长度 3</li>
-<li>声明： int (*p)[3]</li>
+<ol type="1">
+<li>本质上是一个指针，指向一个数组，类型是int (*p)[3]   ps: 随便取个长度
+3   </li>
+<li>声明： int (*p)[3]             </li>
 </ol>
 <ul>
 <li>array of pointer （指针数组）</li>
 </ul>
-<ol>
-<li>本质上是一个数组，里面存放的是指针变量</li>
+<ol type="1">
+<li>本质上是一个数组，里面存放的是指针变量  </li>
 <li>声明： int *p[3]</li>
 </ol>
-<h1>数组名</h1>
+<h1 id="数组名">数组名  </h1>
 <ul>
 <li>存放数组首元素的地址</li>
 <li>在进行&amp; 和 sizeof 时， 它代表整个数组变量</li>
-<li>它不可以被赋一个地址值，它是一个常量指针， 使用取址运算符发现是数组指针类型的</li>
+<li>它不可以被赋一个地址值，它是一个常量指针，
+使用取址运算符发现是数组指针类型的</li>
 </ul>
-<h1>指针常量和常量指针</h1>
+<h1 id="指针常量和常量指针">指针常量和常量指针 </h1>
 <ul>
 <li>pointer constant</li>
 </ul>
-<ol>
-<li>指针存的是地址，常量指针代表该地址不可改变，即指针的指向不可被改变</li>
-<li>int * const p 🥇: *号右结合 ， 结合到了const p , 即（不可变的）指针</li>
+<ol type="1">
+<li>指针存的是地址，常量指针代表该地址不可改变，即指针的指向不可被改变             </li>
+<li>int * const p 🥇: *号右结合 ， 结合到了const p ,
+即（不可变的）指针     </li>
 </ol>
 <ul>
-<li>pointer to constant</li>
+<li>pointer to constant   </li>
 </ul>
-<ol>
+<ol type="1">
 <li>该指针指向的变量，无法通过解引用该指针修改它指向的内容</li>
 <li>const int *p</li>
-<li>int const *p</li>
-<li>以上两种方式均为 指针常量，*号右结合，结合到了普通的（可改变指向的）p，但const修饰，无法修改它指向的内容</li>
+<li>int const *p   </li>
+<li>以上两种方式均为
+指针常量，*号右结合，结合到了普通的（可改变指向的）p，但const修饰，无法修改它指向的内容    </li>
 </ol>
 
     </div>

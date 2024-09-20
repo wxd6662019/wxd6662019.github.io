@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/vim/" style="color: #03a9f4">
+                <a href="/tags/vim/" style="color: #00a596">
                     vim
                 </a>
             </span>
@@ -202,50 +202,40 @@
     <div class="content" v-pre>
         <p>查看当前linux版本</p>
 <ul>
-<li><code>cat /etc/os-release</code> 或 <code>cat /etc/*release</code></li>
-<li><code>lsb_release -a</code> 显示 Linux Standard Base（LSB）和发行版信息</li>
+<li><code>cat /etc/os-release</code> 或
+<code>cat /etc/*release</code></li>
+<li><code>lsb_release -a</code> 显示 Linux Standard
+Base（LSB）和发行版信息</li>
 </ul>
 <p>安装vim-plus</p>
-<ol>
-<li>
-<p>确保软件包索引是最新的 <code>yum update</code></p>
+<ol type="1">
+<li><p>确保软件包索引是最新的 <code>yum update</code></p>
 <ul>
-<li>
-<p><strong>获取最新版本</strong>：软件包索引包含可用软件包的列表及其版本信息。保持索引更新可以确保你安装的是最新版本，包含了安全补丁和新功能。</p>
-</li>
-<li>
-<p><strong>避免冲突</strong>：如果索引过时，可能会导致安装旧版本的包，进而引发依赖性问题或软件冲突。</p>
-</li>
-</ul>
-</li>
-<li>
-<p>安装 EPEL 仓库  <code>yum install epel-release</code></p>
+<li><p><strong>获取最新版本</strong>：软件包索引包含可用软件包的列表及其版本信息。保持索引更新可以确保你安装的是最新版本，包含了安全补丁和新功能。</p></li>
+<li><p><strong>避免冲突</strong>：如果索引过时，可能会导致安装旧版本的包，进而引发依赖性问题或软件冲突。</p></li>
+</ul></li>
+<li><p>安装 EPEL 仓库 <code>yum install epel-release</code></p>
 <ul>
-<li><strong>EPEL（Extra Packages for Enterprise Linux）</strong> 是一个由 Fedora 社区维护的仓库</li>
-<li><strong>额外软件包</strong>：默认的仓库可能不包含所有你需要的软件包，EPEL 提供了更多选择，包括 <code>vim-plus</code>。</li>
-<li><strong>稳定性和支持</strong>：EPEL 提供的软件包经过测试，通常适用于生产环境，能提供更好的稳定性。</li>
-</ul>
-</li>
-<li>
-<h3 id="安装-vim-plus-yum-install-vim-enhanced">安装 vim-plus <code>yum install vim-enhanced</code></h3>
-</li>
-<li>
-<p>验证安装 <code>vim --version</code></p>
-</li>
-<li>
-<p>安装git</p>
-</li>
-<li>
-<p>安装插件管理器（需要git依赖）</p>
-<pre><code class="language-bash">curl -fLo ~/.vim/autoload/plug.vim --create-dirs \    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-附加命令，需进入.vimrc文件使用
-#:PlugUpgrade 更新vim-plug
-#:PlugUpdate 更新插件
-#:PlugClean 清理插件
-#:h plug 查看帮助文档
-</code></pre>
-</li>
+<li><strong>EPEL（Extra Packages for Enterprise Linux）</strong>
+是一个由 Fedora 社区维护的仓库</li>
+<li><strong>额外软件包</strong>：默认的仓库可能不包含所有你需要的软件包，EPEL
+提供了更多选择，包括 <code>vim-plus</code>。</li>
+<li><strong>稳定性和支持</strong>：EPEL
+提供的软件包经过测试，通常适用于生产环境，能提供更好的稳定性。</li>
+</ul></li>
+<li><h3 id="安装-vim-plus-yum-install-vim-enhanced">安装 vim-plus
+<code>yum install vim-enhanced</code></h3></li>
+<li><p>验证安装 <code>vim --version</code></p></li>
+<li><p>安装git</p></li>
+<li><p>安装插件管理器（需要git依赖）</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fLo</span> ~/.vim/autoload/plug.vim <span class="at">--create-dirs</span> <span class="dt">\ </span>   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">附加命令，需进入.vimrc文件使用</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#:PlugUpgrade 更新vim-plug</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#:PlugUpdate 更新插件</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#:PlugClean 清理插件</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#:h plug 查看帮助文档</span></span></code></pre></div></li>
 </ol>
 
     </div>

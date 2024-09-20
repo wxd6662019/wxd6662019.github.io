@@ -162,14 +162,17 @@
     <div
         id="home-background"
         ref="homeBackground"
-        data-images="/images/background.jp"
+        data-images="/images/background.jpg"
     >
-    <video autoplay loop muted id="background-video" style="width:100%;height:100%;object-fit:cover">
+
+<!-- 这是一个注释 -->
+    <video autoplay loop muted class="background-video" style="width:100%;height:100%;object-fit:cover;">
         <source src="/images/back.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
     </div>
+
     <div id="home-info" @click="homeClick">
         <span class="loop"></span>
         <span class="loop"></span>
@@ -191,6 +194,321 @@
 >
     <div id="home-posts">
         
+
+<div class="post">
+    <a href="/2024/09/20/%E7%BA%BF%E7%A8%8B/">
+        <h2 class="post-title">线程</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                理论
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/9/20
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <span id="more"></span>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Linux/" style="color: #03a9f4">Linux</a>
+        </span>
+        
+    </div>
+    <a href="/2024/09/20/%E7%BA%BF%E7%A8%8B/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2024/09/20/IPC%E4%B9%8B%E4%BF%A1%E5%8F%B7/">
+        <h2 class="post-title">IPC之信号</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                理论
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/9/20
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <hr />
+<h3 id="信号的定义">1. <strong>信号的定义</strong></h3>
+<ul>
+<li>信号是一种异步通知机制，用于向进程发送事件通知。这些事件可以是外部事件（如用户按键、定时器到期）或内核事件（如进程错误）。</li>
+</ul>
+<blockquote>
+<p>Each signal has a current disposition, which determines how the
+process behaves when it is delivered the signal.</p>
+</blockquote>
+<h3 id="信号的类型">2. <strong>信号的类型</strong></h3>
+<ul>
+<li>常见的信号包括：
+<ul>
+<li><code>SIGINT</code>：中断信号，通常由 Ctrl+C 发送。</li>
+<li><code>SIGTERM</code>：终止信号，要求进程终止。</li>
+<li><code>SIGKILL</code>：强制终止信号，不能被捕获或忽略。</li>
+<li><code>SIGUSR1</code> 和
+<code>SIGUSR2</code>：用户定义的信号，可以用于自定义事件处理。</li>
+</ul></li>
+</ul>
+<h3 id="信号的发送">3. <strong>信号的发送</strong></h3>
+<ul>
+<li>信号可以由以下方式发送：
+<ul>
+<li><strong>命令行</strong>：使用 <code>kill</code> 命令发送信号。kill
+-l 查看所有信号</li>
+<li><strong>系统调用</strong>：使用 <code>kill()</code> 或
+<code>raise()</code> 函数在程序内部发送信号。</li>
+</ul></li>
+</ul>
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Linux/" style="color: #ff7d73">Linux</a>
+        </span>
+        
+    </div>
+    <a href="/2024/09/20/IPC%E4%B9%8B%E4%BF%A1%E5%8F%B7/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2024/09/19/%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">
+        <h2 class="post-title">进程相关系统调用</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                理论
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/9/19
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="系统调用">系统调用</h1>
+<h3 id="fork">1. <strong><code>fork()</code></strong></h3>
+<ul>
+<li><strong>作用</strong>：创建一个新进程，复制当前进程的所有属性。</li>
+<li><strong>返回值</strong>：在父进程中返回新创建的子进程的
+PID，在子进程中返回 0，失败时返回 -1。</li>
+<li>在fork之前打开的文件对象是共享的，pc指针和代码段也是相同的</li>
+</ul>
+<h3 id="exec">2. <strong><code>exec()</code></strong></h3>
+<ul>
+<li><strong>作用</strong>：用新程序替换当前进程的映像。</li>
+<li><strong>常用变体</strong>：<code>execl()</code>,
+<code>execp()</code>, <code>execv()</code> 等。</li>
+<li><strong>返回值</strong>：成功时不返回，失败时返回 -1。</li>
+</ul>
+<h3 id="wait-waitpid">3. <strong><code>wait()</code> /
+<code>waitpid()</code></strong></h3>
+<ul>
+<li><strong>作用</strong>：让父进程等待子进程结束，并获取子进程的退出状态。</li>
+<li><strong>返回值</strong>：成功时返回结束的子进程的 PID，失败时返回
+-1。</li>
+<li>参数NULL表示父进程不关心子进程的退出状态信息</li>
+</ul>
+<h3 id="exit">4. <strong><code>exit()</code></strong></h3>
+<ul>
+<li><strong>作用</strong>：终止当前进程，并返回状态给父进程。</li>
+<li><strong>返回值</strong>：不返回。</li>
+<li>其它退出方式：_exit() : 不清理缓冲， return清理缓冲区，被信号中止，
+主动调用 abort()</li>
+</ul>
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Linux/" style="color: #03a9f4">Linux</a>
+        </span>
+        
+    </div>
+    <a href="/2024/09/19/%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2024/09/18/%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4/">
+        <h2 class="post-title">进程相关命令</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                理论
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/9/18
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="命令">命令</h1>
+<h3 id="ps"><strong>ps</strong></h3>
+<ul>
+<li><p><strong>功能</strong>：显示当前运行的进程。</p></li>
+<li><p>常用选项</p>
+<ul>
+<li><code>ps aux</code>：显示所有用户的进程。
+<ul>
+<li>显示所有用户的进程。</li>
+<li>输出格式较简洁，包含用户、PID、CPU
+和内存使用率、运行时间、TTY、状态和命令等。</li>
+</ul></li>
+<li><code>ps -elf</code>：显示详细的进程信息。
+<ul>
+<li><p>显示更详细的进程信息。</p></li>
+<li><p>输出包含更多列，如进程标志位、优先级、nice
+值、内存地址、等待事件等</p></li>
+<li><p>输出列解释</p>
+<ol type="1">
+<li><p><strong>F</strong>：进程的标志位，表示该进程的状态和调度信息。（1-running，4-uninterruptable）</p></li>
+<li><p><strong>S</strong>：进程的状态（例如，R 表示运行，S 表示休眠，Z
+表示僵尸等。T暂停）。</p></li>
+<li><p><strong>UID</strong>：进程所有者的用户 ID。</p></li>
+<li><p><strong>PID</strong>：进程 ID，唯一标识进程。</p></li>
+<li><p><strong>PPID</strong>：父进程 ID，表示创建此进程的进程。</p></li>
+<li><p><strong>C</strong>：进程占用CPU的百分比</p></li>
+<li><p><strong>PRI</strong>：进程的实际调度优先级，值越小，优先级越高，OS会根据该值来决定哪个进程可以获得cpu时间，该值会根据进程行为（如cpu使用情况，等待时间）自动调整</p></li>
+<li><p><strong>NI</strong>：nice
+值，范围通常在-20~19，数值越小优先级越高，较高的NI值会使PRI值上升从而降低其调度优先级</p></li>
+<li><p><strong>ADDR</strong>：进程在内存中的地址（通常为
+<code>?</code>，表示不适用）。</p></li>
+<li><p><strong>SZ</strong>：进程使用的内存大小，单位为页。</p></li>
+<li><p><strong>VSZ</strong>：该进程使用的虚拟内存量，单位KB</p></li>
+<li><p><strong>RSS</strong>：该进程占用的固定内存量，驻留中页的数量，单位KB</p></li>
+<li><p><strong>WCHAN</strong>：进程正在等待的事件。</p></li>
+<li><p><strong>STAT</strong>： D //无法中断的休眠状态（通常 IO
+的进程）； R //正在运行可中在队列中可过行的； S //处于休眠状态； T
+//停止或被追踪； W //进入内存交换 （从内核2.6开始无效）； X //死掉的进程
+（基本很少见）； Z //僵尸进程； &lt; //优先级高的进程 N
+//优先级较低的进程 L //有些页被锁进内存； s
+//进程的领导者（在它之下有子进程）； l //多线程，克隆线程（使用
+CLONE_THREAD, 类似 NPTL pthreads）； + //位于后台的进程组；</p>
+<p>linux是一个多用户，多任务的系统，可以同时运行多个用户的多个程序，就必然会产生很多的进程，而每个进程会有不同的状态。</p></li>
+<li><p><strong>TTY</strong>：该进程在哪个终端上运行，若与终端无关则显示？。若显示pts/0则表示由网络连接主机进程</p></li>
+<li><p><strong>TIME</strong>：进程使用的 CPU 时间。</p></li>
+<li><p><strong>CMD</strong>：启动进程的命令行。</p></li>
+</ol></li>
+</ul></li>
+</ul></li>
+<li><p>补充—<code>PRI</code>（优先级）和 <code>NI</code>（nice
+值）主要在Completely Fair Schedular下工作：</p>
+<p><strong>完全公平调度器（CFS）</strong></p>
+<ul>
+<li><strong>描述</strong>：CFS 是 Linux 2.6.23
+版本引入的默认调度器，旨在实现公平的 CPU 时间分配。</li>
+<li>工作原理
+<ul>
+<li>CFS 使用虚拟运行时间来衡量每个进程的运行时间。</li>
+<li><code>NI</code>
+值会影响进程的权重，从而影响其在调度中的优先级。</li>
+<li><code>PRI</code> 值在 CFS 中并不直接使用，而是通过 <code>NI</code>
+值间接影响调度。</li>
+</ul></li>
+</ul></li>
+</ul>
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Linux/" style="color: #ffa2c4">Linux</a>
+        </span>
+        
+    </div>
+    <a href="/2024/09/18/%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4/" class="go-post">阅读全文</a>
+</div>
 
 <div class="post">
     <a href="/2024/09/16/mmap%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6/">
@@ -219,7 +537,7 @@
     <div class="description">
         <div class="content" v-pre>
             
-            <h1>1 Memory map</h1>
+            <h1 id="mmap函数">1 mmap函数</h1>
 <p>将磁盘中文件的数据，选择性的映射到内存中，然后通过读写操作内存数据，进而读写操作文件数据。</p>
 <p>也就是，利用以往读写内存的处理方式，来处理文件数据</p>
 <p>mmap仍然是一个系统调用，它所提供的的文件读写操作，仍然是基于open打开文件的，那么思考一下：</p>
@@ -237,7 +555,7 @@
         
         <span class="tag">
             
-            <a href="/tags/C/" style="color: #00a596">C</a>
+            <a href="/tags/C/" style="color: #ffa2c4">C</a>
         </span>
         
     </div>
@@ -286,208 +604,16 @@
         
         <span class="tag">
             
-            <a href="/tags/C/" style="color: #00bcd4">C</a>
+            <a href="/tags/C/" style="color: #ff7d73">C</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Linux/" style="color: #ff7d73">Linux</a>
+            <a href="/tags/Linux/" style="color: #00bcd4">Linux</a>
         </span>
         
     </div>
     <a href="/2024/09/13/My-ls-in-linux/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/10/hello-world/">
-        <h2 class="post-title">Hello World</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/10
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>这是一个使用hexo的新手文档。</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/tutor/" style="color: #ffa2c4">tutor</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/10/hello-world/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/10/2024-9-10-use-npm/">
-        <h2 class="post-title">use npm</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/%E7%8E%AF%E5%A2%83/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                环境
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/10
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>使用npm命令进度缓慢</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/npm/" style="color: #00bcd4">npm</a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/SSL/" style="color: #ff7d73">SSL</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/10/2024-9-10-use-npm/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/08/2024-9-8-vim-plus/">
-        <h2 class="post-title">vim-plus</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/%E7%8E%AF%E5%A2%83/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                环境
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/8
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>配置vim-plus</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/vim/" style="color: #00bcd4">vim</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/08/2024-9-8-vim-plus/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/06/2024-9-6-file-stream/">
-        <h2 class="post-title">file stream</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/%E8%AF%AD%E6%B3%95/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                语法
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/6
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>文件流的学习</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/C/" style="color: #00a596">C</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/06/2024-9-6-file-stream/" class="go-post">阅读全文</a>
 </div>
 
 

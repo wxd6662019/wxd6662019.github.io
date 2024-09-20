@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>进程相关命令 | Kola&#39;s nest</title>
+    <meta name="author" content="wxd666" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>KOLA&#39;S NEST</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;KOLA&#39;S NEST</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>进程相关命令</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/9/18
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                理论
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/Linux/" style="color: #ff7d73">
+                    Linux
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="命令">命令</h1>
+<h3 id="ps"><strong>ps</strong></h3>
+<ul>
+<li><p><strong>功能</strong>：显示当前运行的进程。</p></li>
+<li><p>常用选项</p>
+<ul>
+<li><code>ps aux</code>：显示所有用户的进程。
+<ul>
+<li>显示所有用户的进程。</li>
+<li>输出格式较简洁，包含用户、PID、CPU
+和内存使用率、运行时间、TTY、状态和命令等。</li>
+</ul></li>
+<li><code>ps -elf</code>：显示详细的进程信息。
+<ul>
+<li><p>显示更详细的进程信息。</p></li>
+<li><p>输出包含更多列，如进程标志位、优先级、nice
+值、内存地址、等待事件等</p></li>
+<li><p>输出列解释</p>
+<ol type="1">
+<li><p><strong>F</strong>：进程的标志位，表示该进程的状态和调度信息。（1-running，4-uninterruptable）</p></li>
+<li><p><strong>S</strong>：进程的状态（例如，R 表示运行，S 表示休眠，Z
+表示僵尸等。T暂停）。</p></li>
+<li><p><strong>UID</strong>：进程所有者的用户 ID。</p></li>
+<li><p><strong>PID</strong>：进程 ID，唯一标识进程。</p></li>
+<li><p><strong>PPID</strong>：父进程 ID，表示创建此进程的进程。</p></li>
+<li><p><strong>C</strong>：进程占用CPU的百分比</p></li>
+<li><p><strong>PRI</strong>：进程的实际调度优先级，值越小，优先级越高，OS会根据该值来决定哪个进程可以获得cpu时间，该值会根据进程行为（如cpu使用情况，等待时间）自动调整</p></li>
+<li><p><strong>NI</strong>：nice
+值，范围通常在-20~19，数值越小优先级越高，较高的NI值会使PRI值上升从而降低其调度优先级</p></li>
+<li><p><strong>ADDR</strong>：进程在内存中的地址（通常为
+<code>?</code>，表示不适用）。</p></li>
+<li><p><strong>SZ</strong>：进程使用的内存大小，单位为页。</p></li>
+<li><p><strong>VSZ</strong>：该进程使用的虚拟内存量，单位KB</p></li>
+<li><p><strong>RSS</strong>：该进程占用的固定内存量，驻留中页的数量，单位KB</p></li>
+<li><p><strong>WCHAN</strong>：进程正在等待的事件。</p></li>
+<li><p><strong>STAT</strong>： D //无法中断的休眠状态（通常 IO
+的进程）； R //正在运行可中在队列中可过行的； S //处于休眠状态； T
+//停止或被追踪； W //进入内存交换 （从内核2.6开始无效）； X //死掉的进程
+（基本很少见）； Z //僵尸进程； &lt; //优先级高的进程 N
+//优先级较低的进程 L //有些页被锁进内存； s
+//进程的领导者（在它之下有子进程）； l //多线程，克隆线程（使用
+CLONE_THREAD, 类似 NPTL pthreads）； + //位于后台的进程组；</p>
+<p>linux是一个多用户，多任务的系统，可以同时运行多个用户的多个程序，就必然会产生很多的进程，而每个进程会有不同的状态。</p></li>
+<li><p><strong>TTY</strong>：该进程在哪个终端上运行，若与终端无关则显示？。若显示pts/0则表示由网络连接主机进程</p></li>
+<li><p><strong>TIME</strong>：进程使用的 CPU 时间。</p></li>
+<li><p><strong>CMD</strong>：启动进程的命令行。</p></li>
+</ol></li>
+</ul></li>
+</ul></li>
+<li><p>补充—<code>PRI</code>（优先级）和 <code>NI</code>（nice
+值）主要在Completely Fair Schedular下工作：</p>
+<p><strong>完全公平调度器（CFS）</strong></p>
+<ul>
+<li><strong>描述</strong>：CFS 是 Linux 2.6.23
+版本引入的默认调度器，旨在实现公平的 CPU 时间分配。</li>
+<li>工作原理
+<ul>
+<li>CFS 使用虚拟运行时间来衡量每个进程的运行时间。</li>
+<li><code>NI</code>
+值会影响进程的权重，从而影响其在调度中的优先级。</li>
+<li><code>PRI</code> 值在 CFS 中并不直接使用，而是通过 <code>NI</code>
+值间接影响调度。</li>
+</ul></li>
+</ul></li>
+</ul>
+<span id="more"></span>
+<h3 id="top"><strong>top</strong></h3>
+<ul>
+<li><strong>功能</strong>：实时监控系统中进程的状态，包括 CPU
+和内存使用情况。</li>
+<li><strong>使用</strong>：直接输入 <code>top</code>，可以按
+<code>q</code> 退出。</li>
+</ul>
+<h3 id="kill"><strong>kill</strong></h3>
+<ul>
+<li><strong>功能</strong>：终止指定进程。</li>
+<li><code>kill &lt;PID&gt;</code>：发送默认的 <code>TERM</code>
+信号终止进程。</li>
+<li><code>kill -9 &lt;PID&gt;</code>：强制终止进程（使用
+<code>KILL</code> 信号）。</li>
+<li><strong>kill -l</strong> ：查看所有信号</li>
+</ul>
+<h3 id="nice"><strong>nice</strong></h3>
+<ul>
+<li><strong>功能</strong>：启动一个进程并设置其优先级。</li>
+<li><strong>使用</strong>：<code>nice -n &lt;niceness&gt; &lt;command&gt;</code>，其中
+niceness 值通常在 -20（最高优先级）到 19（最低优先级）之间。</li>
+</ul>
+<h3 id="renice"><strong>renice</strong></h3>
+<ul>
+<li><strong>功能</strong>：改变运行中进程的优先级。</li>
+<li><strong>使用</strong>：<code>renice &lt;niceness&gt; -p &lt;PID&gt;</code>。</li>
+</ul>
+<h3 id="jobs"><strong>jobs</strong></h3>
+<ul>
+<li><strong>功能</strong>：列出当前 shell 中的作业。</li>
+<li><strong>使用</strong>：在后台运行命令后使用 <code>jobs</code>
+查看状态。</li>
+</ul>
+<h3 id="fg-bg"><strong>fg / bg</strong></h3>
+<ul>
+<li><code>fg</code>：将后台作业移到前台。(与jobs配合使用)</li>
+<li><code>bg</code>：将作业放入后台运行。</li>
+</ul>
+<h1 id="其他">其他</h1>
+<p><strong>Linux进程状态：R (TASK_RUNNING)，可执行状态。</strong></p>
+<p>只有在该状态的进程才可能在CPU上运行。而同一时刻可能有多个进程处于可执行状态，这些进程的task_struct结构（进程控制块）被放入对应CPU的可执行队列中（一个进程最多只能出现在一个CPU的可执行队列中）。进程调度器的任务就是从各个CPU的可执行队列中分别选择一个进程在该CPU上运行。</p>
+<p>很多操作系统教科书将正在CPU上执行的进程定义为RUNNING状态、而将可执行但是尚未被调度执行的进程定义为READY状态，这两种状态在linux下统一为
+TASK_RUNNING状态。</p>
+<p><strong>Linux进程状态：S
+(TASK_INTERRUPTIBLE)，可中断的睡眠状态。</strong></p>
+<p>处于这个状态的进程因为等待某某事件的发生（比如等待socket连接、等待信号量），而被挂起。这些进程的task_struct结构被放入对应事件的等待队列中。当这些事件发生时（由外部中断触发、或由其他进程触发），对应的等待队列中的一个或多个进程将被唤醒。</p>
+<p>通过ps命令我们会看到，一般情况下，进程列表中的绝大多数进程都处于TASK_INTERRUPTIBLE状态（除非机器的负载很高）。毕竟CPU就这么一两个，进程动辄几十上百个，如果不是绝大多数进程都在睡眠，CPU又怎么响应得过来。</p>
+<p><strong>Linux进程状态：D
+(TASK_UNINTERRUPTIBLE)，不可中断的睡眠状态。</strong></p>
+<p>与TASK_INTERRUPTIBLE状态类似，进程处于睡眠状态，但是此刻进程是不可中断的。不可中断，指的并不是CPU不响应外部硬件的中断，而是指进程不响应异步信号。
+绝大多数情况下，进程处在睡眠状态时，总是应该能够响应异步信号的。否则你将惊奇的发现，kill
+-9竟然杀不死一个正在睡眠的进程了！于是我们也很好理解，为什么ps命令看到的进程几乎不会出现TASK_UNINTERRUPTIBLE状态，而总是TASK_INTERRUPTIBLE状态。</p>
+<p><strong>而TASK_UNINTERRUPTIBLE状态存在的意义就在于，内核的某些处理流程是不能被打断的</strong>。如果响应异步信号，程序的执行流程中就会被插入一段用于处理异步信号的流程（这个插入的流程可能只存在于内核态，也可能延伸到用户态），于是原有的流程就被中断了。（参见《linux内核异步中断浅析》）
+在进程对某些硬件进行操作时（比如进程调用read系统调用对某个设备文件进行读操作，而read系统调用最终执行到对应设备驱动的代码，并与对应的物理设备进行交互），可能需要使用TASK_UNINTERRUPTIBLE状态对进程进行保护，以避免进程与设备交互的过程被打断，造成设备陷入不可控的状态。这种情况下的TASK_UNINTERRUPTIBLE状态总是非常短暂的，通过ps命令基本上不可能捕捉到。</p>
+<p>linux系统中也存在容易捕捉的TASK_UNINTERRUPTIBLE状态。执行vfork系统调用后，父进程将进入TASK_UNINTERRUPTIBLE状态，直到子进程调用exit或exec（参见《神奇的vfork》）。
+通过下面的代码就能得到处于TASK_UNINTERRUPTIBLE状态的进程：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> main<span class="op">()</span> <span class="op">&#123;</span>  <span class="cf">if</span> <span class="op">(!</span>vfork<span class="op">())</span> sleep<span class="op">(</span><span class="dv">100</span><span class="op">);</span>  <span class="op">&#125;</span> </span></code></pre></div>
+<p>编译运行，然后ps一下：</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ps <span class="at">-ax</span> <span class="kw">|</span> <span class="fu">grep</span> a<span class="dt">\.</span>out  4371 pts/0    D+     0:00 ./a.out  4372 pts/0    S+     0:00 ./a.out  4374 pts/1    S+     0:00 grep a.out </span></code></pre></div>
+<p>然后我们可以试验一下TASK_UNINTERRUPTIBLE状态的威力。不管kill还是kill
+-9，这个TASK_UNINTERRUPTIBLE状态的父进程依然屹立不倒。</p>
+<p>上面我们介绍了Linux进程的R、S、D三种状态，这里接着上面的文章介绍另外三个状态。</p>
+<p><strong>Linux进程状态：T (TASK_STOPPED or
+TASK_TRACED)，暂停状态或跟踪状态。</strong></p>
+<p>向进程发送一个SIGSTOP信号，它就会因响应该信号而进入TASK_STOPPED状态（除非该进程本身处于TASK_UNINTERRUPTIBLE状态而不响应信号）。（SIGSTOP与SIGKILL信号一样，是非常强制的。不允许用户进程通过signal系列的系统调用重新设置对应的信号处理函数。）
+向进程发送一个SIGCONT信号，可以让其从TASK_STOPPED状态恢复到TASK_RUNNING状态。</p>
+<p>当进程正在被跟踪时，它处于TASK_TRACED这个特殊的状态。“正在被跟踪”指的是进程暂停下来，等待跟踪它的进程对它进行操作。比如在gdb中对被跟踪的进程下一个断点，进程在断点处停下来的时候就处于TASK_TRACED状态。而在其他时候，被跟踪的进程还是处于前面提到的那些状态。</p>
+<p>对于进程本身来说，TASK_STOPPED和TASK_TRACED状态很类似，都是表示进程暂停下来。
+而TASK_TRACED状态相当于在TASK_STOPPED之上多了一层保护，处于TASK_TRACED状态的进程不能响应SIGCONT信号而被唤醒。只能等到调试进程通过ptrace系统调用执行PTRACE_CONT、PTRACE_DETACH等操作（通过ptrace系统调用的参数指定操作），或调试进程退出，被调试的进程才能恢复TASK_RUNNING状态。</p>
+<p><strong>Linux进程状态：Z (TASK_DEAD -
+EXIT_ZOMBIE)，退出状态，进程成为僵尸进程。</strong></p>
+<p>进程在退出的过程中，处于TASK_DEAD状态。</p>
+<p>在这个退出过程中，进程占有的所有资源将被回收，除了task_struct结构（以及少数资源）以外。于是进程就只剩下task_struct这么个空壳，故称为僵尸。
+之所以保留task_struct，是因为task_struct里面保存了进程的退出码、以及一些统计信息。而其父进程很可能会关心这些信息。比如在shell中，<strong>$?</strong>变量就保存了最后一个退出的前台进程的退出码，而这个退出码往往被作为if语句的判断条件。
+当然，内核也可以将这些信息保存在别的地方，而将task_struct结构释放掉，以节省一些空间。但是使用task_struct结构更为方便，因为在内核中已经建立了从pid到task_struct查找关系，还有进程间的父子关系。释放掉task_struct，则需要建立一些新的数据结构，以便让父进程找到它的子进程的退出信息。</p>
+<p>父进程可以通过wait系列的系统调用（如wait4、waitid）来等待某个或某些子进程的退出，并获取它的退出信息。然后wait系列的系统调用会顺便将子进程的尸体（task_struct）也释放掉。
+子进程在退出的过程中，内核会给其父进程发送一个信号，通知父进程来“收尸”。这个信号默认是SIGCHLD，但是在通过clone系统调用创建子进程时，可以设置这个信号。</p>
+<p>通过下面的代码能够制造一个EXIT_ZOMBIE状态的进程：</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> main<span class="op">()</span> <span class="op">&#123;</span>  <span class="cf">if</span> <span class="op">(</span>fork<span class="op">())</span>  <span class="cf">while</span><span class="op">(</span><span class="dv">1</span><span class="op">)</span> sleep<span class="op">(</span><span class="dv">100</span><span class="op">);</span>  <span class="op">&#125;</span> </span></code></pre></div>
+<p>编译运行，然后ps一下：</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ps <span class="at">-ax</span> <span class="kw">|</span> <span class="fu">grep</span> a<span class="dt">\.</span>out  </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">10410</span> pts/0    S+     0:00 ./a.out  10411 pts/0    Z+     0:00 <span class="pp">[</span><span class="ss">a.out</span><span class="pp">]</span>   10413 pts/1    S+     0:00 grep a.out </span></code></pre></div>
+<p>只要父进程不退出，这个僵尸状态的子进程就一直存在。那么如果父进程退出了呢，谁又来给子进程“收尸”？
+当进程退出的时候，会将它的所有子进程都托管给别的进程（使之成为别的进程的子进程）。托管给谁呢？可能是退出进程所在进程组的下一个进程（如果存在的话），或者是1号进程。所以每个进程、每时每刻都有父进程存在。除非它是1号进程。</p>
+<p>1号进程，pid为1的进程，又称init进程。
+linux系统启动后，第一个被创建的用户态进程就是init进程。它有两项使命：
+1、执行系统初始化脚本，创建一系列的进程（它们都是init进程的子孙）；
+2、在一个死循环中等待其子进程的退出事件，并调用waitid系统调用来完成“收尸”工作；
+init进程不会被暂停、也不会被杀死（这是由内核来保证的）。它在等待子进程退出的过程中处于TASK_INTERRUPTIBLE状态，“收尸”过程中则处于TASK_RUNNING状态。</p>
+<p><strong>Linux进程状态：X (TASK_DEAD -
+EXIT_DEAD)，退出状态，进程即将被销毁。</strong></p>
+<p>而进程在退出过程中也可能不会保留它的task_struct。比如这个进程是多线程程序中被detach过的进程（进程？线程？参见《linux线程浅析》）。或者父进程通过设置SIGCHLD信号的handler为SIG_IGN，显式的忽略了SIGCHLD信号。（这是posix的规定，尽管子进程的退出信号可以被设置为SIGCHLD以外的其他信号。）
+此时，进程将被置于EXIT_DEAD退出状态，这意味着接下来的代码立即就会将该进程彻底释放。所以EXIT_DEAD状态是非常短暂的，几乎不可能通过ps命令捕捉到。</p>
+<p><strong>进程的初始状态</strong></p>
+<p>进程是通过fork系列的系统调用（fork、clone、vfork）来创建的，内核（或内核模块）也可以通过kernel_thread函数创建内核进程。这些创建子进程的函数本质上都完成了相同的功能——将调用进程复制一份，得到子进程。（可以通过选项参数来决定各种资源是共享、还是私有。）
+那么既然调用进程处于TASK_RUNNING状态（否则，它若不是正在运行，又怎么进行调用？），则子进程默认也处于TASK_RUNNING状态。
+另外，在系统调用调用clone和内核函数kernel_thread也接受CLONE_STOPPED选项，从而将子进程的初始状态置为
+TASK_STOPPED。</p>
+<p><strong>进程状态变迁</strong></p>
+<p>进程自创建以后，状态可能发生一系列的变化，直到进程退出。而尽管进程状态有好几种，但是进程状态的变迁却只有两个方向——从TASK_RUNNING状态变为非TASK_RUNNING状态、或者从非TASK_RUNNING状态变为TASK_RUNNING状态。
+也就是说，如果给一个TASK_INTERRUPTIBLE状态的进程发送SIGKILL信号，这个进程将先被唤醒（进入TASK_RUNNING状态），然后再响应SIGKILL信号而退出（变为TASK_DEAD状态）。并不会从TASK_INTERRUPTIBLE状态直接退出。</p>
+<p>进程从非TASK_RUNNING状态变为TASK_RUNNING状态，是由别的进程（也可能是中断处理程序）执行唤醒操作来实现的。执行唤醒的进程设置被唤醒进程的状态为TASK_RUNNING，然后将其task_struct结构加入到某个CPU的可执行队列中。于是被唤醒的进程将有机会被调度执行。</p>
+<p>而进程从TASK_RUNNING状态变为非TASK_RUNNING状态，则有两种途径：
+1、响应信号而进入TASK_STOPED状态、或TASK_DEAD状态；
+2、执行系统调用主动进入TASK_INTERRUPTIBLE状态（如nanosleep系统调用）、或TASK_DEAD状态（如exit系统调用）；或由于执行系统调用需要的资源得不到满足，而进入TASK_INTERRUPTIBLE状态或TASK_UNINTERRUPTIBLE状态（如select系统调用）。
+显然，这两种情况都只能发生在进程正在CPU上执行的情况下。</p>
+
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2023 - 2024 Kola&#39;s nest
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;wxd666
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="wxd6662019/wxd6662019.github.io"
+    data-repo-id="R_kgDOMv_QXw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMv_QX84CiZrp"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>
+

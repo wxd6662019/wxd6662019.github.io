@@ -973,3 +973,10 @@ ol li {
         padding-left: 20px;
     }
 }
+
+/*added*/
+@media (max-width: 768px) {
+  #home-head #home-background video {
+    display: none; /* 在手机上隐藏视频 */
+  }
+}
