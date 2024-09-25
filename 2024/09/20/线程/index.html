@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/Linux/" style="color: #ffa2c4">
+                <a href="/tags/Linux/" style="color: #03a9f4">
                     Linux
                 </a>
             </span>
@@ -200,101 +200,487 @@
     </div>
     
     <div class="content" v-pre>
-        <p>在 Unix/Linux
-系统中，线程相关的系统调用主要用于创建、管理和控制线程。以下是一些常见的线程相关系统调用及其功能：</p>
-<h3 id="pthread_create">1.
-<strong><code>pthread_create()</code></strong></h3>
+        <h1>基本概念</h1>
+<p><strong>linux</strong>中线程又叫做轻量级进程（light-weight process LWP），也有PCB，创建线程使用的底层函数和进程底层一样，都是clone，但没有独立的地址空间；而进程有独立地址空间，拥有PCB。<br>
+Linux下：线程是最小的执行单位，调度的基本单位。进程是最小分配资源单位，可看成是只有一个线程的进程。<br>
+线程是一个进程内部的控制序列。控制序列可以理解为一个执行流。进程内部是指虚拟地址空间。</p>
+<h3 id="1-pthread-create">1. <strong><code>pthread_create()</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：创建一个新线程。</li>
 <li><strong>参数</strong>：
 <ul>
-<li>线程ID（<code>pthread_t</code>）。</li>
+<li>线程ID（<code>&amp;pthread_t</code>）。传入线程id的指针</li>
 <li>线程属性（可以为 <code>NULL</code>，表示默认属性）。</li>
 <li>线程函数（线程启动时执行的函数）。</li>
 <li>线程参数（传递给线程函数的参数）。</li>
-</ul></li>
-<li><strong>返回值</strong>：成功时返回
-<code>0</code>，失败时返回错误码。</li>
 </ul>
-<h3 id="pthread_exit">2.
-<strong><code>pthread_exit()</code></strong></h3>
+</li>
+<li><strong>返回值</strong>：成功时返回 <code>0</code>，失败时返回错误码。</li>
+<li><strong>注意：第三方库, 需要手动链接 -lpthread</strong></li>
+</ul>
+<span id="more"></span>
+<h3 id="2-pthread-exit">2. <strong><code>pthread_exit()</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：结束调用线程的执行，并可以返回一个值给其他线程。</li>
 <li><strong>参数</strong>：返回值（可以为 <code>NULL</code>）。</li>
 <li><strong>注意</strong>：如果主线程调用此函数，整个进程会终止。</li>
 </ul>
-<h3 id="pthread_join">3.
-<strong><code>pthread_join()</code></strong></h3>
+<h3 id="3-pthread-join-pthread-t-thread-void-retval">3. <strong><code>pthread_join(pthread_t thread, void **retval)</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：等待指定线程结束，获取其返回值。</li>
 <li><strong>参数</strong>：
 <ul>
 <li>线程ID（<code>pthread_t</code>）。</li>
-<li>指向返回值的指针（可以为 <code>NULL</code>）。</li>
-</ul></li>
-<li><strong>返回值</strong>：成功时返回
-<code>0</code>，失败时返回错误码。</li>
+<li>指向返回值的指针（可以为 <code>NULL</code>, 表示不获取返回值）。</li>
 </ul>
-<h3 id="pthread_detach">4.
-<strong><code>pthread_detach()</code></strong></h3>
+</li>
+<li><strong>返回值</strong>：成功时返回 <code>0</code>，失败时返回错误码。</li>
+<li>使用<strong>二级指针</strong>的场景：
+<ul>
+<li>传递，被调函数修改主调方的指针指向</li>
+<li>偏移， 主调函数存在一个指针数组，传递时退化</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-pthread-detach">4. <strong><code>pthread_detach()</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：将线程设置为“分离状态”，使其在结束时自动释放资源。</li>
 <li><strong>参数</strong>：线程ID（<code>pthread_t</code>）。</li>
-<li><strong>注意</strong>：一旦线程被分离，无法再调用
-<code>pthread_join()</code>。</li>
+<li><strong>注意</strong>：一旦线程被分离，无法再调用 <code>pthread_join()</code>。</li>
 </ul>
-<h3 id="pthread_cancel">5.
-<strong><code>pthread_cancel()</code></strong></h3>
+<h3 id="5-pthread-cancel">5. <strong><code>pthread_cancel()</code></strong></h3>
 <ul>
-<li><strong>功能</strong>：请求取消指定的线程。</li>
+<li><strong>功能</strong>：请求取消指定的线程(Send a cancelation request to a thread)。</li>
 <li><strong>参数</strong>：线程ID（<code>pthread_t</code>）。</li>
 <li><strong>注意</strong>：线程必须在可取消状态下，才能被取消。</li>
+<li>线程会在取消点（IO操作）取消，而非立刻取消</li>
+<li>可以调用<code>pthread_testcancel()</code> ,手动添加取消点</li>
+<li>取消机制可能会引起<strong>资源泄露</strong></li>
 </ul>
-<h3 id="pthread_mutex_lock-和-pthread_mutex_unlock">6.
-<strong><code>pthread_mutex_lock()</code> 和
-<code>pthread_mutex_unlock()</code></strong></h3>
+<hr>
+<p>补充知识：资源清理栈，我们可以手动给资源擦屁股，即在申请资源之后，调用<code>pthread_cleanup_push((void *routine)(void*), void*arg)</code> , 包装函数routine是一个返回值void，参数类型void* 的统一函数，我们在其中将传入的（各种）<em>参数</em>强转，再作相应处理</p>
+<p>它本身不是取消点，所以一个资源被创建后，一定会入栈，注意每一个cleanup都必须搭配一个<code>pthread_cleanup_pop(1)</code> 表示出栈，这样线程在pop之前挂掉的话，资源会自动出栈，并调用相应的包装函数 ，如果线程正常结束，pop也会按顺序执行，完成资源清理，此函数参数为零表示只出栈，不清理资源</p>
+<hr>
+<p>在 <code>pthread</code> 库中，锁是用于同步多线程访问共享资源的重要工具</p>
+<h3 id="pthread-mutex-t"><strong><code>pthread_mutex_t</code></strong></h3>
+<p>☝🏻这是用于创建互斥锁的基本数据结构。</p>
+<pre><code class="language-c">int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);
+</code></pre>
 <ul>
-<li><strong>功能</strong>：用于加锁和解锁互斥量，确保对共享资源的安全访问。</li>
-<li><strong>参数</strong>：互斥量（<code>pthread_mutex_t</code>）。</li>
-<li><strong>返回值</strong>：成功时返回
-<code>0</code>，失败时返回错误码。</li>
-</ul>
-<h3 id="pthread_cond_wait-和-pthread_cond_signal">7.
-<strong><code>pthread_cond_wait()</code> 和
-<code>pthread_cond_signal()</code></strong></h3>
-<ul>
-<li><strong>功能</strong>：
-<ul>
-<li><code>pthread_cond_wait()</code>：使线程等待条件变量，并自动释放互斥量。</li>
-<li><code>pthread_cond_signal()</code>：通知等待该条件变量的线程。</li>
-</ul></li>
+<li><strong>功能</strong>：初始化一个互斥锁。</li>
 <li><strong>参数</strong>：
 <ul>
-<li><code>pthread_cond_wait()</code>：条件变量和互斥量。</li>
-<li><code>pthread_cond_signal()</code>：条件变量。</li>
-</ul></li>
+<li><code>mutex</code>：指向要初始化的互斥锁。</li>
+<li><code>attr</code>：锁的属性，可以为 <code>NULL</code> 表示使用默认属性。</li>
 </ul>
-<h3 id="pthread_self">8.
-<strong><code>pthread_self()</code></strong></h3>
+</li>
+</ul>
+<pre><code class="language-c">int pthread_mutex_lock(pthread_mutex_t *mutex);
+</code></pre>
+<ul>
+<li><strong>功能</strong>：锁定互斥锁。</li>
+<li><strong>参数</strong>：指向要加锁的互斥锁。</li>
+<li><strong>返回值</strong>：成功时返回 0，失败时返回错误码。</li>
+</ul>
+<pre><code class="language-c">int pthread_mutex_unlock(pthread_mutex_t *mutex);
+</code></pre>
+<ul>
+<li><strong>功能</strong>：解锁互斥锁。</li>
+<li><strong>参数</strong>：指向要解锁的互斥锁。</li>
+<li><strong>返回值</strong>：成功时返回 0，失败时返回错误码。</li>
+</ul>
+<pre><code class="language-c">int pthread_mutex_destroy(pthread_mutex_t *mutex);
+</code></pre>
+<ul>
+<li><strong>功能</strong>：销毁互斥锁。</li>
+<li><strong>参数</strong>：指向要销毁的互斥锁。</li>
+<li><strong>返回值</strong>：成功时返回 0，失败时返回错误码。</li>
+<li><strong>注意</strong>：在销毁之前，确保没有线程持有该锁。</li>
+</ul>
+<pre><code class="language-c">int pthread_mutex_trylock(pthread_mutex_t *mutex);
+</code></pre>
+<ul>
+<li><strong>功能</strong>：尝试锁定互斥锁，若锁已被其他线程锁定则立即返回。</li>
+<li><strong>参数</strong>：指向要尝试加锁的互斥锁。</li>
+<li><strong>返回值</strong>：
+<ul>
+<li>成功时返回 0。</li>
+<li>若锁已被其他线程持有，则返回 <code>EBUSY</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用示例">使用示例</h3>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;pthread.h&gt;
+
+pthread_mutex_t lock;
+int shared_data = 0;
+
+void* thread_function(void* arg) &#123;
+    pthread_mutex_lock(&amp;lock);
+    shared_data++; // 访问共享数据
+    pthread_mutex_unlock(&amp;lock);
+    return NULL;
+&#125;
+
+int main() &#123;
+    pthread_t threads[5];
+    pthread_mutex_init(&amp;lock, NULL);
+
+    for (int i = 0; i &lt; 5; i++) &#123;
+        pthread_create(&amp;threads[i], NULL, thread_function, NULL);
+    &#125;
+
+    for (int i = 0; i &lt; 5; i++) &#123;
+        pthread_join(threads[i], NULL);
+    &#125;
+
+    printf(&quot;Final shared_data: %d\n&quot;, shared_data);
+    pthread_mutex_destroy(&amp;lock);
+    return 0;
+&#125;
+</code></pre>
+<h3 id="总结">总结</h3>
+<ul>
+<li>
+<p>使用互斥锁可以有效防止数据竞争和不一致性。</p>
+</li>
+<li>
+<p>确保在解锁之前每次加锁都成功，并在使用完后销毁锁。</p>
+</li>
+<li>
+<p>尽量避免长时间持有锁，以提高系统性能。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">锁类型</th>
+<th style="text-align:left">特点</th>
+<th style="text-align:left">使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">互斥锁</td>
+<td style="text-align:left">保护临界区，阻止多个线程同时访问</td>
+<td style="text-align:left">一般临界区保护</td>
+</tr>
+<tr>
+<td style="text-align:left">读写锁</td>
+<td style="text-align:left">多读单写，适合读多写少的场景</td>
+<td style="text-align:left">数据库查询、共享配置读取</td>
+</tr>
+<tr>
+<td style="text-align:left">自旋锁</td>
+<td style="text-align:left">轻量级锁，适合短时间持有</td>
+<td style="text-align:left">多核处理器，短时间锁操作</td>
+</tr>
+<tr>
+<td style="text-align:left">可重入锁</td>
+<td style="text-align:left">同一线程可多次获取</td>
+<td style="text-align:left">递归调用或复杂对象操作</td>
+</tr>
+<tr>
+<td style="text-align:left">条件变量</td>
+<td style="text-align:left">线程等待某个条件</td>
+<td style="text-align:left">生产者-消费者模型</td>
+</tr>
+<tr>
+<td style="text-align:left">信号量</td>
+<td style="text-align:left">控制并发访问数量</td>
+<td style="text-align:left">限制资源访问、线程池等</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="6-pthread-mutex-lock-和-pthread-mutex-unlock">6. <strong><code>pthread_mutex_lock()</code> 和 <code>pthread_mutex_unlock()</code></strong></h3>
+<ul>
+<li><strong>功能</strong>：用于加锁和解锁互斥量，确保对共享资源的安全访问。</li>
+<li><strong>参数</strong>：互斥量（<code>pthread_mutex_t</code> *mutex）。</li>
+<li><strong>返回值</strong>：成功时返回 <code>0</code>，失败时返回错误码。</li>
+</ul>
+<hr>
+<p>在 <code>pthread</code> 库中，条件变量（<code>pthread_cond_t</code>）用于线程间的同步，允许线程在某个条件发生变化时进行等待和通知。条件变量的使用场景通常与共享资源的状态变化有关，尤其是在生产者-消费者问题等多线程场景中。😀</p>
+<h3 id="1-条件变量的基本概念">1. 条件变量的基本概念</h3>
+<p>条件变量的本质是提供一种机制，使得一个线程能够在某个条件不满足时挂起，并在条件满足时被其他线程唤醒。它们通常与互斥锁（<code>pthread_mutex_t</code>）结合使用，以确保在检查条件和修改共享资源时的线程安全。</p>
+<h3 id="2-主要函数">2. 主要函数</h3>
+<p>以下是条件变量的主要函数及其用途：</p>
+<ul>
+<li>
+<p><strong>初始化</strong></p>
+<pre><code class="language-c">pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+</code></pre>
+<p>或使用：</p>
+<pre><code class="language-c">pthread_cond_init(&amp;cond, NULL);
+</code></pre>
+</li>
+<li>
+<p><strong>等待</strong></p>
+<pre><code class="language-c">pthread_cond_wait(&amp;cond, &amp;mutex);
+</code></pre>
+<ul>
+<li>该函数使当前线程等待，直到接收到一个信号。它在等待之前会<strong>自动释放互斥锁</strong> <code>mutex</code>，并在被唤醒后重新获得该锁。</li>
+</ul>
+</li>
+<li>
+<p><strong>通知</strong></p>
+<pre><code class="language-c">pthread_cond_signal(&amp;cond);
+</code></pre>
+<ul>
+<li>唤醒一个等待在条件变量上的线程。</li>
+</ul>
+<pre><code class="language-c">pthread_cond_broadcast(&amp;cond);
+</code></pre>
+<ul>
+<li>唤醒所有等待在条件变量上的线程。</li>
+</ul>
+</li>
+<li>
+<p><strong>销毁</strong></p>
+<pre><code class="language-c">pthread_cond_destroy(&amp;cond);
+</code></pre>
+<ul>
+<li>销毁条件变量，释放相关资源。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-使用场景">3. 使用场景</h3>
+<h4 id="生产者-消费者问题">生产者-消费者问题</h4>
+<p>典型的使用场景是生产者-消费者问题，其中一个或多个线程（生产者）生产数据，而另一些线程（消费者）消费数据。消费者在队列为空时等待，生产者在队列满时等待。</p>
+<h3 id="4-示例代码">4. 示例代码</h3>
+<p>下面是一个简单的示例，展示了如何使用条件变量：</p>
+<pre><code class="language-c">#include &lt;my_header.h&gt;
+#define RANDOM_SIDE 100
+#define DEFAULT_CAPCITY 10
+
+typedef struct node &#123;
+    struct node *next;
+    int val;
+&#125; node_t;
+
+typedef struct list &#123;
+    struct node *rear;
+    struct node *front;
+    int size;
+&#125;list_t;
+
+bool isFull(list_t *li)&#123;
+    return li-&gt;size &gt;= DEFAULT_CAPCITY;
+&#125;
+
+list_t *creatList()&#123;
+    list_t *li = (list_t*) calloc(1, sizeof(list_t));
+    return li;
+&#125;
+
+void enQ(list_t *li, int val)&#123;
+    if(isFull(li)) return;
+
+    node_t *new1 = (node_t*)calloc(1, sizeof(int));
+    new1-&gt;val = val;
+
+    if(li-&gt;size == 0) &#123;
+        li-&gt;front = new1;
+        li-&gt;rear = new1;
+    &#125;else &#123;
+        li-&gt;rear-&gt;next = new1;
+        li-&gt;rear = new1;
+    &#125;
+    li-&gt;size++;
+
+    return;
+&#125;
+
+void printList(list_t *li)&#123;
+    node_t *cur = li-&gt;front;
+    while(cur)&#123;
+        printf(&quot;%d &quot;, cur-&gt;val);
+        cur = cur-&gt;next;
+    &#125;
+    printf(&quot;\n&quot;);
+&#125;
+
+int deQ(list_t *li)&#123;
+    if(li-&gt;size == 0)&#123;
+        perror(&quot;empty q\n&quot;);
+        exit(-1);
+    &#125;
+    
+    int val = li-&gt;front-&gt;val;
+    node_t *tmp = li-&gt;front;
+    li-&gt;front = li-&gt;front-&gt;next;
+    free(tmp);
+    li-&gt;size--;
+    return val;
+&#125;
+/* Usage:  */
+typedef struct resource &#123;
+    pthread_cond_t instock; // 表示货架变动
+    pthread_mutex_t mutex;
+    list_t *commodities;
+&#125; resource_t;
+
+void *producer(void *arg)&#123;
+    srand(time(NULL));
+    resource_t *re = (resource_t*)arg;
+    while(1)&#123;
+
+        pthread_mutex_lock(&amp;re-&gt;mutex);
+        while(re-&gt;commodities-&gt;size &gt;= DEFAULT_CAPCITY)&#123;
+            printf(&quot;%ld : 当前货架已满\n&quot;, pthread_self());
+            pthread_cond_wait(&amp;re-&gt;instock, &amp;re-&gt;mutex);
+        &#125;
+        
+        int val = rand() % RANDOM_SIDE;
+        printf(&quot;%ld 生产者生产了 %d 号商品\n&quot;, pthread_self(), val);
+        enQ(re-&gt;commodities, val);
+        printf(&quot;当前货架 ：&quot;);
+        printList(re-&gt;commodities);
+        pthread_cond_signal(&amp;re-&gt;instock);
+        pthread_mutex_unlock(&amp;re-&gt;mutex);
+
+        sleep(3);
+    &#125;
+
+&#125;
+
+void *consumer(void *arg)&#123;
+
+    sleep(5);
+    resource_t *re = (resource_t*)arg;
+    while(1)&#123;
+
+        pthread_mutex_lock(&amp;re-&gt;mutex);
+        while(re-&gt;commodities-&gt;size &lt; 1)&#123;
+            printf(&quot;%ld : 当前货架为空\n&quot;, pthread_self());
+            pthread_cond_wait(&amp;re-&gt;instock, &amp;re-&gt;mutex);
+        &#125;
+        
+        printf(&quot;%ld 消费者消费了 %d 号商品\n&quot;,pthread_self() , deQ(re-&gt;commodities));
+        printf(&quot;当前货架 ：&quot;);
+        printList(re-&gt;commodities);
+        pthread_cond_signal(&amp;re-&gt;instock);
+        pthread_mutex_unlock(&amp;re-&gt;mutex);
+
+        sleep(1);
+    &#125;
+
+
+&#125;
+int main(int argc, char *argv[])&#123;                                  
+        
+    list_t *li = creatList();
+    srand(time(NULL));
+    // 初始化商品
+    for(int i=0; i &lt; 8; i++)&#123;
+        enQ(li, rand()%100);    
+    &#125;
+    printList(li);
+    resource_t re;
+    re.commodities = li;
+    pthread_mutex_init(&amp;re.mutex, NULL);
+    pthread_cond_init(&amp;re.instock, NULL);
+    
+    pthread_t tid1,tid2;
+    pthread_create(&amp;tid1, NULL, consumer, &amp;re);
+    pthread_create(&amp;tid2, NULL, consumer, &amp;re);
+    
+    pthread_t tid3,tid4,tid5;
+    pthread_create(&amp;tid3, NULL, producer, &amp;re);
+    pthread_create(&amp;tid4, NULL, producer, &amp;re);
+    pthread_create(&amp;tid5, NULL, producer, &amp;re);
+
+
+    pthread_join(tid1, NULL); // 都是死循环，象征性的等一下
+    //，不然主进程关闭，线程都死了
+    return 0;
+&#125;
+</code></pre>
+<h3 id="5-总结">5. 总结</h3>
+<ul>
+<li><strong>本质</strong>：条件变量是线程同步机制，允许线程在某个条件不满足时挂起，并在条件满足时唤醒。</li>
+<li><strong>何时使用</strong>：当线程需要等待某个条件（如资源可用性）时使用条件变量，通常与互斥锁一起使用来确保线程安全。</li>
+</ul>
+<hr>
+<h3 id="7-pthread-cond-wait-条件量，-锁-和-pthread-cond-signal-条件量-💕">7. **<code>pthread_cond_wait(条件量， 锁)</code> 和 <code>pthread_cond_signal(条件量)</code>**💕</h3>
+<p><code>pthread_cond_wait</code> 是一个用于线程同步的函数，它允许一个线程在某个条件不满足时进入等待状态。</p>
+<h3 id="pthread-cond-wait-流程"><code>pthread_cond_wait</code> 流程</h3>
+<ol>
+<li>
+<p><strong>获取互斥锁</strong>：</p>
+<ul>
+<li>在调用 <code>pthread_cond_wait</code> 之前，线程必须先获取一个互斥锁（<code>pthread_mutex_t</code>）。这确保了对共享资源的安全访问。</li>
+</ul>
+</li>
+<li>
+<p><strong>检查条件</strong>：</p>
+<ul>
+<li>线程检查某个条件是否满足。如果条件不满足，则进入等待状态。</li>
+</ul>
+</li>
+<li>
+<p><strong>释放互斥锁</strong>：</p>
+<ul>
+<li>在进入等待状态之前，<code>pthread_cond_wait</code> 会自动释放所持有的互斥锁。这是为了允许其他线程在条件满足时对共享资源进行修改。</li>
+</ul>
+</li>
+<li>
+<p><strong>进入等待状态</strong>：</p>
+<ul>
+<li>线程进入等待状态，直到被其他线程通过 <code>pthread_cond_signal</code> 或 <code>pthread_cond_broadcast</code> 唤醒。</li>
+</ul>
+</li>
+<li>
+<p><strong>重新获得互斥锁</strong>：</p>
+<ul>
+<li>当线程被唤醒后，<code>pthread_cond_wait</code> 会重新获得之前释放的互斥锁。</li>
+</ul>
+</li>
+<li>
+<p><strong>返回并检查条件</strong>：</p>
+<ul>
+<li>线程返回后，通常需要再次检查条件，因为在被唤醒后，条件可能依然不满足。</li>
+</ul>
+</li>
+</ol>
+<h3 id="原子操作">原子操作</h3>
+<p>在 <code>pthread_cond_wait</code> 的流程中，以下步骤被视为原子操作：</p>
+<ol>
+<li>
+<p><strong>释放互斥锁并进入等待状态</strong>：</p>
+<ul>
+<li><code>pthread_cond_wait</code> 会在进入等待状态时自动释放互斥锁，这个过程是原子的。也就是说，线程在释放锁的瞬间，其他线程无法同时获得该锁。</li>
+</ul>
+</li>
+<li>
+<p><strong>重新获得互斥锁</strong>：</p>
+<ul>
+<li>当条件满足且线程被唤醒时，<code>pthread_cond_wait</code> 会在返回时自动重新获得互斥锁，这也是一个原子操作。</li>
+</ul>
+</li>
+</ol>
+<h3 id="注意事项">注意事项</h3>
+<ul>
+<li>在调用 <code>pthread_cond_wait</code> 之前，必须确保互斥锁已被锁住。</li>
+<li>在被唤醒后，线程应再次检查条件，这个检查是必要的，因为可能存在虚假唤醒（即线程在没有条件满足的情况下被唤醒）。</li>
+</ul>
+<hr>
+<h3 id="8-pthread-self">8. <strong><code>pthread_self()</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：获取当前线程的线程ID。</li>
-<li><strong>返回值</strong>：返回当前线程的
-<code>pthread_t</code>。</li>
+<li><strong>返回值</strong>：返回当前线程的 <code>pthread_t</code>。</li>
 </ul>
-<h3 id="pthread_getschedparam-和-pthread_setschedparam">9.
-<strong><code>pthread_getschedparam()</code> 和
-<code>pthread_setschedparam()</code></strong></h3>
+<h3 id="9-pthread-getschedparam-和-pthread-setschedparam">9. <strong><code>pthread_getschedparam()</code> 和 <code>pthread_setschedparam()</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：获取或设置线程的调度策略和优先级。</li>
 <li><strong>参数</strong>：
 <ul>
 <li>线程ID（<code>pthread_t</code>）。</li>
 <li>指向调度参数的结构体。</li>
-</ul></li>
 </ul>
-<h3 id="总结">总结</h3>
-<p>这些线程相关的系统调用提供了创建、管理和同步线程的基本功能，是多线程编程的核心。正确使用这些调用能帮助开发者有效地利用多核处理器，提高程序的性能和响应能力。</p>
-<span id="more"></span>
+</li>
+</ul>
 
     </div>
     

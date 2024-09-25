@@ -166,7 +166,7 @@
     >
 
 <!-- 这是一个注释 -->
-    <video autoplay loop muted class="background-video" style="width:100%;height:100%;object-fit:cover;">
+    <video autoplay loop muted id="background-video" style="width:100%;height:100%;object-fit:cover;">
         <source src="/images/back.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
@@ -228,7 +228,7 @@
         
         <span class="tag">
             
-            <a href="/tags/tutor/" style="color: #ff7d73">tutor</a>
+            <a href="/tags/tutor/" style="color: #ffa2c4">tutor</a>
         </span>
         
     </div>
@@ -277,12 +277,12 @@
         
         <span class="tag">
             
-            <a href="/tags/npm/" style="color: #00a596">npm</a>
+            <a href="/tags/npm/" style="color: #ffa2c4">npm</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/SSL/" style="color: #ff7d73">SSL</a>
+            <a href="/tags/SSL/" style="color: #00bcd4">SSL</a>
         </span>
         
     </div>
@@ -380,7 +380,7 @@
         
         <span class="tag">
             
-            <a href="/tags/C/" style="color: #ffa2c4">C</a>
+            <a href="/tags/C/" style="color: #ff7d73">C</a>
         </span>
         
     </div>
@@ -478,12 +478,12 @@
         
         <span class="tag">
             
-            <a href="/tags/Github/" style="color: #03a9f4">Github</a>
+            <a href="/tags/Github/" style="color: #00a596">Github</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/SSH/" style="color: #ff7d73">SSH</a>
+            <a href="/tags/SSH/" style="color: #03a9f4">SSH</a>
         </span>
         
     </div>
@@ -524,7 +524,8 @@
         </div>
         <div class="name">wxd666</div>
         <div class="description">
-            <p>置于死地，方能后生！</p>
+            <p>Success is not final, failure is not fatal:<br>
+It is the courage to continue that counts</p>
 
         </div>
         
@@ -603,7 +604,18 @@
 
         new Typed("#dynamic-description", options);
     });
+
+    window.onload = function() {
+        if (window.innerWidth > 768) {
+            const video = document.getElementById('background-video');
+             video.load(); // 仅在大屏幕上加载视频
+        } else {
+            const video = document.getElementById('background-video');
+            video.remove(); // 小屏幕时移除视频元素
+        }
+    };
 </script>
+
             <footer id="footer">
     <div id="footer-wrap">
         <div>

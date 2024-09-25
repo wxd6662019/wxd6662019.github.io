@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/Linux/" style="color: #03a9f4">
+                <a href="/tags/Linux/" style="color: #00a596">
                     Linux
                 </a>
             </span>
@@ -200,338 +200,337 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="系统调用">系统调用</h1>
-<h3 id="fork">1. <strong><code>fork()</code></strong></h3>
+        <h1>系统调用</h1>
+<h3 id="1-fork">1. <strong><code>fork()</code></strong></h3>
 <ul>
 <li><strong>作用</strong>：创建一个新进程，复制当前进程的所有属性。</li>
-<li><strong>返回值</strong>：在父进程中返回新创建的子进程的
-PID，在子进程中返回 0，失败时返回 -1。</li>
+<li><strong>返回值</strong>：在父进程中返回新创建的子进程的 PID，在子进程中返回 0，失败时返回 -1。</li>
 <li>在fork之前打开的文件对象是共享的，pc指针和代码段也是相同的</li>
 </ul>
-<h3 id="exec">2. <strong><code>exec()</code></strong></h3>
+<h3 id="2-exec">2. <strong><code>exec()</code></strong></h3>
 <ul>
 <li><strong>作用</strong>：用新程序替换当前进程的映像。</li>
-<li><strong>常用变体</strong>：<code>execl()</code>,
-<code>execp()</code>, <code>execv()</code> 等。</li>
+<li><strong>常用变体</strong>：<code>execl()</code>, <code>execp()</code>, <code>execv()</code> 等。</li>
 <li><strong>返回值</strong>：成功时不返回，失败时返回 -1。</li>
 </ul>
-<h3 id="wait-waitpid">3. <strong><code>wait()</code> /
-<code>waitpid()</code></strong></h3>
+<h3 id="3-wait-waitpid">3. <strong><code>wait()</code> / <code>waitpid()</code></strong></h3>
 <ul>
 <li><strong>作用</strong>：让父进程等待子进程结束，并获取子进程的退出状态。</li>
-<li><strong>返回值</strong>：成功时返回结束的子进程的 PID，失败时返回
--1。</li>
+<li><strong>返回值</strong>：成功时返回结束的子进程的 PID，失败时返回 -1。</li>
 <li>参数NULL表示父进程不关心子进程的退出状态信息</li>
 </ul>
-<h3 id="exit">4. <strong><code>exit()</code></strong></h3>
+<h3 id="4-exit">4. <strong><code>exit()</code></strong></h3>
 <ul>
 <li><strong>作用</strong>：终止当前进程，并返回状态给父进程。</li>
 <li><strong>返回值</strong>：不返回。</li>
-<li>其它退出方式：_exit() : 不清理缓冲， return清理缓冲区，被信号中止，
-主动调用 abort()</li>
+<li>其它退出方式：_exit() : 不清理缓冲， return清理缓冲区，被信号中止， 主动调用 abort()</li>
 </ul>
 <span id="more"></span>
-<h3 id="getpid">5. <strong><code>getpid()</code></strong></h3>
+<h3 id="5-getpid">5. <strong><code>getpid()</code></strong></h3>
 <ul>
 <li><strong>作用</strong>：获取当前进程的 PID。</li>
 <li><strong>返回值</strong>：当前进程的 PID。</li>
 </ul>
-<h3 id="getppid">6. <strong><code>getppid()</code></strong></h3>
+<h3 id="6-getppid">6. <strong><code>getppid()</code></strong></h3>
 <ul>
 <li><strong>作用</strong>：获取当前进程的父进程的 PID。</li>
 <li><strong>返回值</strong>：父进程的 PID。</li>
 </ul>
-<h3 id="kill">7. <strong><code>kill()</code></strong></h3>
+<h3 id="7-kill">7. <strong><code>kill()</code></strong></h3>
 <ul>
 <li><strong>作用</strong>：向指定进程发送信号（例如终止信号）。</li>
 <li><strong>返回值</strong>：成功时返回 0，失败时返回 -1。</li>
 </ul>
 <h3 id="前置知识"><strong>前置知识</strong></h3>
-<hr />
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/266720121">在 Linux
-系统中，进程组组长是指进程组中的一个特殊进程，其进程 ID (PID) 与进程组
-ID (PGID) 相同</a>。进程组组长在进程组的创建和管理中起到重要作用。</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/266720121">在 Linux 系统中，进程组组长是指进程组中的一个特殊进程，其进程 ID (PID) 与进程组 ID (PGID) 相同</a>。进程组组长在进程组的创建和管理中起到重要作用。</p>
 <h3 id="进程组的概念">进程组的概念</h3>
 <ul>
-<li><strong>进程组</strong>：一组相关的进程，可以通过进程组 ID (PGID)
-进行标识和管理。进程组的主要目的是简化向组内所有进程发送信号的操作。</li>
-<li><strong>进程组组长</strong>：进程组中第一个创建的进程，其 PID 等于
-PGID。组长进程可以通过系统调用 <code>setpgid</code> 改变子进程的进程组
-ID，使其加入或离开某个进程组</li>
-<li>新建会话 或者 进程组的第一个进程本身不能改组id，
-bash启动的进程本身已经是一个组长</li>
+<li><strong>进程组</strong>：一组相关的进程，可以通过进程组 ID (PGID) 进行标识和管理。进程组的主要目的是简化向组内所有进程发送信号的操作。</li>
+<li>一般而言，进程从终端启动时，会自动创建一个新进程组，并且该进程组内只包含这个创始进程，而其后代进程默认都将会被装载在该进程组内部，这个进程组被称为<strong>前台进程组</strong>。前台进程组最大的特点是：<strong>可以接收控制终端发来的信号</strong>，所谓控制终端，一般就是指标准输入设备键盘</li>
+<li><strong>进程组组长</strong>：进程组中第一个创建的进程，其 PID 等于 PGID。组长进程可以通过系统调用 <code>setpgid</code> 改变子进程的进程组 ID，使其加入或离开某个进程组</li>
+<li>新建会话 或者 进程组的第一个进程本身不能改组id， bash启动的进程本身已经是一个组长</li>
 </ul>
 <h3 id="示例">示例</h3>
 <p>假设有一个 shell 进程，它创建了一个新的进程组并启动了两个子进程：</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建一个新的进程组</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> bash <span class="at">-c</span> <span class="st">&#39;echo $$; sleep 100 &amp; sleep 100&#39;</span></span></code></pre></div>
-<p>在这个例子中，<code>bash</code> 进程是进程组组长，其 PID 和 PGID
-相同。两个 <code>sleep</code> 进程属于同一个进程组，PGID 等于
-<code>bash</code> 进程的 PID。</p>
+<pre><code class="language-sh"># 创建一个新的进程组
+$ bash -c 'echo $$; sleep 100 &amp; sleep 100'
+</code></pre>
+<p>在这个例子中，<code>bash</code> 进程是进程组组长，其 PID 和 PGID 相同。两个 <code>sleep</code> 进程属于同一个进程组，PGID 等于 <code>bash</code> 进程的 PID。</p>
 <h3 id="进程组的作用">进程组的作用</h3>
 <ul>
-<li><strong>信号管理</strong>：可以向整个进程组发送信号，简化了进程管理。例如，使用
-<code>kill -SIGTERM -pgid</code> 可以向整个进程组发送终止信号。</li>
-<li><strong>作业控制</strong>：在 shell
-中，前台和后台作业的管理依赖于进程组。</li>
+<li><strong>信号管理</strong>：可以向整个进程组发送信号，简化了进程管理。例如，使用 <code>kill -SIGTERM -pgid</code> 可以向整个进程组发送终止信号。</li>
+<li><strong>作业控制</strong>：在 shell 中，前台和后台作业的管理依赖于进程组。</li>
 </ul>
-<hr />
-<h3 id="setpgrp">8. <strong><code>setpgrp()</code></strong></h3>
+<hr>
+<h3 id="8-setpgrp-pid-t-pid-pid-t-ppid-getpgrp-pid-t-pid"><strong>8. <code>setpgrp(pid_t pid,pid_t ppid)</code>/ <code>getpgrp(pid_t pid)</code></strong></h3>
 <ul>
-<li><strong>作用</strong>：设置当前进程的进程组
-ID，通常用于创建新的进程组。</li>
+<li><strong>作用</strong>：设置当前进程的进程组 ID，通常用于创建新的进程组/ 获取进程PID所在组ID</li>
+<li>如果pid==0，则设置本进程，如果pgid==0，则等价于pgid == pid</li>
 <li><strong>返回值</strong>：成功时返回 0，失败时返回 -1。</li>
 </ul>
-<h3 id="setsid">9. <strong><code>setsid()</code></strong></h3>
+<h3 id="9-setsid">9. <strong><code>setsid()</code></strong></h3>
 <ul>
-<li><p><strong>作用</strong>：创建新会话，使当前进程成为新的会话领导者，并与终端脱离。</p></li>
-<li><p>一个进程调用setsid()函数后，会发生如下事件</p>
-<pre class="text"><code>• 首先内核会创建一个新的会话，并让该进程成为该会话的leader进程，
-• 同时伴随该session的建立，一个新的进程组也会被创建，同时该进程成为该进程组的组长。
-• 该进程此时还没有和任何控制终端关联。若需要则要另外调用tcsetpgrp
-主要作用
-• 让进程摆脱原会话的控制。
-• 让进程摆脱原进程组的控制。
-• 让进程摆脱原控制终端的控制。</code></pre></li>
-<li><p><strong>返回值</strong>：成功时返回新会话的 PID，失败时返回
--1。</p></li>
-<li><p>示例</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">&#123;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    pid_t pid <span class="op">=</span> fork<span class="op">();</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pid <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">&#123;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        exit<span class="op">(</span><span class="dv">0</span><span class="op">);</span> <span class="co">// 父进程退出</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>pid <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">&#123;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        exit<span class="op">(</span><span class="dv">1</span><span class="op">);</span> <span class="co">// 出错</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>setsid<span class="op">();</span> <span class="co">// 创建新的会话</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>chdir<span class="op">(</span><span class="st">&quot;/&quot;</span><span class="op">);</span> <span class="co">// 改变工作目录</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>umask<span class="op">(</span><span class="dv">0</span><span class="op">);</span> <span class="co">// 设置文件权限掩码</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">// 重定向标准输入、输出、错误</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>freopen<span class="op">(</span><span class="st">&quot;/dev/null&quot;</span><span class="op">,</span> <span class="st">&quot;r&quot;</span><span class="op">,</span> stdin<span class="op">);</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>freopen<span class="op">(</span><span class="st">&quot;/dev/null&quot;</span><span class="op">,</span> <span class="st">&quot;w&quot;</span><span class="op">,</span> stdout<span class="op">);</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>freopen<span class="op">(</span><span class="st">&quot;/dev/null&quot;</span><span class="op">,</span> <span class="st">&quot;w&quot;</span><span class="op">,</span> stderr<span class="op">);</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">&#123;</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 守护进程的主要功能</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span></code></pre></div></li>
+<li>
+<p><strong>作用</strong>：创建新会话，使当前进程成为新的会话领导者，并与终端脱离。</p>
+</li>
+<li>
+<p>一个进程调用setsid()函数后，会发生如下事件</p>
+<p>• 首先内核会创建一个新的会话，并让该进程成为该会话的leader进程，<br>
+• 同时伴随该session的建立，一个新的进程组也会被创建，同时该进程成为该进程组的组长。<br>
+• 该进程此时还没有和任何控制终端关联。若需要则要另外调用tcsetpgrp<br>
+<strong>主要作用</strong><br>
+• 让进程摆脱原会话的控制。<br>
+• 让进程摆脱原进程组的控制。<br>
+• 让进程摆脱原控制终端的控制。</p>
+<blockquote>
+<p>注意：进程组组长不能调用该函数。 新创建的会话没有关联控制终端，因此其内进程不受控制终端影响。<br>
+创建会话的进程，称为该会话的创始进程，创始进程有权捕获一个控制终端（在编写守护进程时通常需要避免），会话的其余成员进程无权获得控制终端。</p>
+</blockquote>
+</li>
+<li>
+<p><strong>返回值</strong>：成功时返回新会话的 PID，失败时返回 -1。</p>
+</li>
+<li>
+<p>示例</p>
+<pre><code class="language-c">#include &lt;unistd.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() &#123;
+    pid_t pid = fork();
+    if (pid &gt; 0) &#123;
+        exit(0); // 父进程退出
+    &#125; else if (pid &lt; 0) &#123;
+        exit(1); // 出错
+    &#125;
+
+setsid(); // 创建新的会话
+
+chdir(&quot;/&quot;); /** 改变工作目录
+当一个进程的工作路径被卸载时，进程也会随时消亡。守护进程为了避免此种情况发生，最简单的做法就是将自身的工作路径切换到一个无法被卸载的路径下，比如根目录。**/
+umask(0); // 设置文件权限掩码
+
+// 重定向标准输入、输出、错误
+freopen(&quot;/dev/null&quot;, &quot;r&quot;, stdin);
+freopen(&quot;/dev/null&quot;, &quot;w&quot;, stdout);
+freopen(&quot;/dev/null&quot;, &quot;w&quot;, stderr);
+
+while (1) &#123;
+    // 守护进程的主要功能
+&#125;
+
+return 0;
+
+&#125;
+</code></pre>
+</li>
 </ul>
-<h3 id="nice">10. <strong><code>nice()</code></strong></h3>
+<h3 id="10-nice">10. <strong><code>nice()</code></strong></h3>
 <ul>
 <li><strong>作用</strong>：改变当前进程的优先级，影响进程调度。</li>
 <li><strong>返回值</strong>：成功时返回新优先级，失败时返回 -1。</li>
 </ul>
-<h3 id="getpgrp">11. <strong><code>getpgrp()</code></strong></h3>
-<ul>
-<li><strong>作用</strong>：获取当前进程的进程组 ID。</li>
-<li><strong>返回值</strong>：当前进程的进程组 ID。</li>
-</ul>
-<hr />
+<hr>
 <h2 id="关于进程间通信的手段">关于进程间通信的手段</h2>
 <ul>
-<li><p>管道</p>
+<li>
+<p>管道</p>
 <ul>
-<li><p>有名管道 <code>mkfifo</code></p></li>
-<li><p>无名管道(父子间使用)</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">&#123;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> pipefd<span class="op">[</span><span class="dv">2</span><span class="op">];</span> <span class="co">// 管道文件描述符</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    pid_t pid<span class="op">;</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> buffer<span class="op">[</span><span class="dv">128</span><span class="op">];</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 创建管道</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pipe<span class="op">(</span>pipefd<span class="op">)</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">&#123;</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        perror<span class="op">(</span><span class="st">&quot;pipe&quot;</span><span class="op">);</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        exit<span class="op">(</span>EXIT_FAILURE<span class="op">);</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 创建子进程</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    pid <span class="op">=</span> fork<span class="op">();</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pid <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">&#123;</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        perror<span class="op">(</span><span class="st">&quot;fork&quot;</span><span class="op">);</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        exit<span class="op">(</span>EXIT_FAILURE<span class="op">);</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pid <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">&#123;</span> <span class="co">// 子进程</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        close<span class="op">(</span>pipefd<span class="op">[</span><span class="dv">1</span><span class="op">]);</span> <span class="co">// 关闭写端</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 从管道读取数据</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        read<span class="op">(</span>pipefd<span class="op">[</span><span class="dv">0</span><span class="op">],</span> buffer<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>buffer<span class="op">));</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;子进程收到: </span><span class="sc">%s\n</span><span class="st">&quot;</span><span class="op">,</span> buffer<span class="op">);</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        close<span class="op">(</span>pipefd<span class="op">[</span><span class="dv">0</span><span class="op">]);</span> <span class="co">// 关闭读端</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        exit<span class="op">(</span>EXIT_SUCCESS<span class="op">);</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span> <span class="cf">else</span> <span class="op">&#123;</span> <span class="co">// 父进程</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        close<span class="op">(</span>pipefd<span class="op">[</span><span class="dv">0</span><span class="op">]);</span> <span class="co">// 关闭读端</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>message <span class="op">=</span> <span class="st">&quot;Hello from parent!&quot;</span><span class="op">;</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 向管道写入数据</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        write<span class="op">(</span>pipefd<span class="op">[</span><span class="dv">1</span><span class="op">],</span> message<span class="op">,</span> strlen<span class="op">(</span>message<span class="op">)</span> <span class="op">+</span> <span class="dv">1</span><span class="op">);</span> <span class="co">// +1 以包括 null 终止符</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        close<span class="op">(</span>pipefd<span class="op">[</span><span class="dv">1</span><span class="op">]);</span> <span class="co">// 关闭写端</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        wait<span class="op">(</span>NULL<span class="op">);</span> <span class="co">// 等待子进程结束</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span></code></pre></div></li>
-</ul></li>
-<li><p>共享内存（最快的IPC，两个进程虚拟页映射到同一个物理页）</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/ipc.h&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/shm.h&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#define SHM_SIZE </span><span class="dv">128</span><span class="pp"> </span><span class="co">// 共享内存大小</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">&#123;</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> shmid<span class="op">;</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    key_t key <span class="op">=</span> <span class="dv">1234</span><span class="op">;</span> <span class="co">// 共享内存的唯一键值</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> <span class="op">*</span>shm_ptr<span class="op">;</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 创建共享内存段</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    shmid <span class="op">=</span> shmget<span class="op">(</span>key<span class="op">,</span> SHM_SIZE<span class="op">,</span> IPC_CREAT <span class="op">|</span> <span class="bn">0666</span><span class="op">);</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>shmid <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">&#123;</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        perror<span class="op">(</span><span class="st">&quot;shmget&quot;</span><span class="op">);</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        exit<span class="op">(</span>EXIT_FAILURE<span class="op">);</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 创建子进程</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    pid_t pid <span class="op">=</span> fork<span class="op">();</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pid <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">&#123;</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        perror<span class="op">(</span><span class="st">&quot;fork&quot;</span><span class="op">);</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        exit<span class="op">(</span>EXIT_FAILURE<span class="op">);</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pid <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">&#123;</span> <span class="co">// 子进程</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 将共享内存映射到子进程的地址空间</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        shm_ptr <span class="op">=</span> shmat<span class="op">(</span>shmid<span class="op">,</span> NULL<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>shm_ptr <span class="op">==</span> <span class="op">(</span><span class="dt">char</span> <span class="op">*)</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">&#123;</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>            perror<span class="op">(</span><span class="st">&quot;shmat&quot;</span><span class="op">);</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>            exit<span class="op">(</span>EXIT_FAILURE<span class="op">);</span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 读取共享内存中的数据</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;子进程读取: </span><span class="sc">%s\n</span><span class="st">&quot;</span><span class="op">,</span> shm_ptr<span class="op">);</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 解除映射</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>        shmdt<span class="op">(</span>shm_ptr<span class="op">);</span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>        exit<span class="op">(</span>EXIT_SUCCESS<span class="op">);</span></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span> <span class="cf">else</span> <span class="op">&#123;</span> <span class="co">// 父进程</span></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 将共享内存映射到父进程的地址空间</span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>        shm_ptr <span class="op">=</span> shmat<span class="op">(</span>shmid<span class="op">,</span> NULL<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>shm_ptr <span class="op">==</span> <span class="op">(</span><span class="dt">char</span> <span class="op">*)</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">&#123;</span></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>            perror<span class="op">(</span><span class="st">&quot;shmat&quot;</span><span class="op">);</span></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>            exit<span class="op">(</span>EXIT_FAILURE<span class="op">);</span></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 向共享内存写入数据</span></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>        <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>message <span class="op">=</span> <span class="st">&quot;Hello from parent!&quot;</span><span class="op">;</span></span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>        strncpy<span class="op">(</span>shm_ptr<span class="op">,</span> message<span class="op">,</span> SHM_SIZE<span class="op">);</span></span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 等待子进程结束</span></span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>        wait<span class="op">(</span>NULL<span class="op">);</span></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 解除映射</span></span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>        shmdt<span class="op">(</span>shm_ptr<span class="op">);</span></span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 删除共享内存段</span></span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>        shmctl<span class="op">(</span>shmid<span class="op">,</span> IPC_RMID<span class="op">,</span> NULL<span class="op">);</span></span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="co">// 多个并发的执行流访问同一个资源可能会引发竞态条件</span></span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="co">// 使用ipcs命令可以 show information on IPC facilities</span></span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="co">// using ipcrm to remove certain IPC resources</span></span></code></pre></div></li>
-<li><p>信号量</p></li>
-<li><p>消息队列</p></li>
-<li><p>信号</p></li>
-<li><p>Socket</p></li>
+<li>
+<p>有名管道 <code>mkfifo</code></p>
+</li>
+<li>
+<p>无名管道(父子间使用)</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+int main() &#123;
+    int pipefd[2]; // 管道文件描述符
+    pid_t pid;
+    char buffer[128];
+
+    // 创建管道
+    if (pipe(pipefd) == -1) &#123;
+        perror(&quot;pipe&quot;);
+        exit(EXIT_FAILURE);
+    &#125;
+
+    // 创建子进程
+    pid = fork();
+    if (pid &lt; 0) &#123;
+        perror(&quot;fork&quot;);
+        exit(EXIT_FAILURE);
+    &#125;
+
+    if (pid == 0) &#123; // 子进程
+        close(pipefd[1]); // 关闭写端
+
+        // 从管道读取数据
+        read(pipefd[0], buffer, sizeof(buffer));
+        printf(&quot;子进程收到: %s\n&quot;, buffer);
+
+        close(pipefd[0]); // 关闭读端
+        exit(EXIT_SUCCESS);
+    &#125; else &#123; // 父进程
+        close(pipefd[0]); // 关闭读端
+
+        const char *message = &quot;Hello from parent!&quot;;
+        // 向管道写入数据
+        write(pipefd[1], message, strlen(message) + 1); // +1 以包括 null 终止符
+
+        close(pipefd[1]); // 关闭写端
+        wait(NULL); // 等待子进程结束
+    &#125;
+
+    return 0;
+&#125;
+</code></pre>
+</li>
 </ul>
-<hr />
-<h1 id="常见错误">常见错误</h1>
+</li>
+<li>
+<p>共享内存（最快的IPC，两个进程虚拟页映射到同一个物理页）</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;sys/ipc.h&gt;
+#include &lt;sys/shm.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;string.h&gt;
+
+#define SHM_SIZE 128 // 共享内存大小
+
+int main() &#123;
+    int shmid;
+    key_t key = 1234; // 共享内存的唯一键值
+    char *shm_ptr;
+
+    // 创建共享内存段
+    shmid = shmget(key, SHM_SIZE, IPC_CREAT | 0666);
+    if (shmid &lt; 0) &#123;
+        perror(&quot;shmget&quot;);
+        exit(EXIT_FAILURE);
+    &#125;
+
+    // 创建子进程
+    pid_t pid = fork();
+
+    if (pid &lt; 0) &#123;
+        perror(&quot;fork&quot;);
+        exit(EXIT_FAILURE);
+    &#125;
+
+    if (pid == 0) &#123; // 子进程
+        // 将共享内存映射到子进程的地址空间
+        shm_ptr = shmat(shmid, NULL, 0);
+        if (shm_ptr == (char *) -1) &#123;
+            perror(&quot;shmat&quot;);
+            exit(EXIT_FAILURE);
+        &#125;
+
+        // 读取共享内存中的数据
+        printf(&quot;子进程读取: %s\n&quot;, shm_ptr);
+
+        // 解除映射
+        shmdt(shm_ptr);
+        exit(EXIT_SUCCESS);
+    &#125; else &#123; // 父进程
+        // 将共享内存映射到父进程的地址空间
+        shm_ptr = shmat(shmid, NULL, 0);
+        if (shm_ptr == (char *) -1) &#123;
+            perror(&quot;shmat&quot;);
+            exit(EXIT_FAILURE);
+        &#125;
+
+        // 向共享内存写入数据
+        const char *message = &quot;Hello from parent!&quot;;
+        strncpy(shm_ptr, message, SHM_SIZE);
+
+        // 等待子进程结束
+        wait(NULL);
+
+        // 解除映射
+        shmdt(shm_ptr);
+
+        // 删除共享内存段
+        shmctl(shmid, IPC_RMID, NULL);
+    &#125;
+
+    return 0;
+&#125;
+// 多个并发的执行流访问同一个资源可能会引发竞态条件
+// 使用ipcs命令可以 show information on IPC facilities
+// using ipcrm to remove certain IPC resources
+</code></pre>
+</li>
+<li>
+<p>信号量</p>
+</li>
+<li>
+<p>消息队列</p>
+</li>
+<li>
+<p>信号</p>
+</li>
+<li>
+<p>Socket</p>
+</li>
+</ul>
+<hr>
+<h1>题目</h1>
+<p>问：有时候我们也会用&amp;来让一个程序在后台运行，请问这跟守护进程有什么关系？</p>
+<p>答：使用&amp;可以使一个程序进入后台进程组，不再占用前台终端，但这跟deamon进程没有关系，deamon进程的关键是脱离会话、脱离进程组、屏蔽信号、打开系统日志甚至还要阻止重新打开终端，而前者仅仅是脱离控制终端。</p>
+<p>Q: 什么是前台进程组？什么是后台进程组？ 如何让进程进入后台进程组？有什么用？ 后台进程是什么？</p>
+<p>A: 在一个会话中，与控制终端直接关联的进程组称为前台进程组。终端中启动的进程默认都进入前台进程组，除非启动时添加了&amp;，就进入了后台进程组，后台进程组是相对前台进程组而言的，进入后台进程组的进程无法从终端获得输入、信号。这样可以避免占用终端。</p>
+<p>Q：编程实现两个程序：一个服务器server，一个客户机client。 要求：</p>
+<p>服务器采用守护进程模式在后台运行，常驻内存。 服务器创建并监视有名管道FIFO，一旦发现有数据则将其保存到一个指定的地方。<br>
+客户机每隔一段时间产生一个子进程。 客户机的这些子进程将当前系统时间和自身的PID写入有名管道FIFO就退出。</p>
+<h1>常见错误</h1>
 <p>在使用与进程相关的系统调用时，常见的错误包括：</p>
-<h3 id="未处理子进程的退出状态">1.
-<strong>未处理子进程的退出状态</strong></h3>
+<h3 id="1-未处理子进程的退出状态">1. <strong>未处理子进程的退出状态</strong></h3>
 <ul>
-<li><strong>错误</strong>：父进程未调用 <code>wait()</code> 或
-<code>waitpid()</code>
-来收集子进程的退出状态，导致子进程成为僵尸进程。</li>
-<li><strong>解决方案</strong>：始终在父进程中调用 <code>wait()</code> 或
-<code>waitpid()</code>，确保处理子进程的退出状态。</li>
+<li><strong>错误</strong>：父进程未调用 <code>wait()</code> 或 <code>waitpid()</code> 来收集子进程的退出状态，导致子进程成为僵尸进程。</li>
+<li><strong>解决方案</strong>：始终在父进程中调用 <code>wait()</code> 或 <code>waitpid()</code>，确保处理子进程的退出状态。</li>
 </ul>
-<h3 id="错误的进程创建逻辑">2. <strong>错误的进程创建逻辑</strong></h3>
+<h3 id="2-错误的进程创建逻辑">2. <strong>错误的进程创建逻辑</strong></h3>
 <ul>
-<li><strong>错误</strong>：在调用 <code>fork()</code>
-后，直接在父子进程中执行相同的代码，这可能导致资源竞争或不必要的重复工作。</li>
-<li><strong>解决方案</strong>：在 <code>fork()</code> 后，使用
-<code>if</code> 语句区分父进程和子进程的逻辑。</li>
+<li><strong>错误</strong>：在调用 <code>fork()</code> 后，直接在父子进程中执行相同的代码，这可能导致资源竞争或不必要的重复工作。</li>
+<li><strong>解决方案</strong>：在 <code>fork()</code> 后，使用 <code>if</code> 语句区分父进程和子进程的逻辑。</li>
 </ul>
-<h3 id="未显式退出父进程">3. <strong>未显式退出父进程</strong></h3>
+<h3 id="3-未显式退出父进程">3. <strong>未显式退出父进程</strong></h3>
 <ul>
-<li><strong>错误</strong>：在创建守护进程时，父进程未调用
-<code>exit()</code>，导致父子进程同时存在，可能干扰子进程。</li>
-<li><strong>解决方案</strong>：在创建守护进程后，确保父进程调用
-<code>exit()</code>。</li>
+<li><strong>错误</strong>：在创建守护进程时，父进程未调用 <code>exit()</code>，导致父子进程同时存在，可能干扰子进程。</li>
+<li><strong>解决方案</strong>：在创建守护进程后，确保父进程调用 <code>exit()</code>。</li>
 </ul>
-<h3 id="信号处理不当">4. <strong>信号处理不当</strong></h3>
+<h3 id="4-信号处理不当">4. <strong>信号处理不当</strong></h3>
 <ul>
-<li><strong>错误</strong>：未正确处理信号，导致子进程在父进程终止时收到意外信号（如
-SIGHUP）。</li>
-<li><strong>解决方案</strong>：在创建守护进程时，使用
-<code>setsid()</code> 断开与终端的关联。</li>
+<li><strong>错误</strong>：未正确处理信号，导致子进程在父进程终止时收到意外信号（如 SIGHUP）。</li>
+<li><strong>解决方案</strong>：在创建守护进程时，使用 <code>setsid()</code> 断开与终端的关联。</li>
 </ul>
-<h3 id="未正确设置文件权限掩码">5.
-<strong>未正确设置文件权限掩码</strong></h3>
+<h3 id="5-未正确设置文件权限掩码">5. <strong>未正确设置文件权限掩码</strong></h3>
 <ul>
-<li><strong>错误</strong>：未调用
-<code>umask(0)</code>，导致守护进程创建的文件权限不如预期。</li>
+<li><strong>错误</strong>：未调用 <code>umask(0)</code>，导致守护进程创建的文件权限不如预期。</li>
 <li><strong>解决方案</strong>：在创建守护进程时，设置适当的文件权限掩码。</li>
 </ul>
-<h3 id="未重定向标准输入输出">6.
-<strong>未重定向标准输入输出</strong></h3>
+<h3 id="6-未重定向标准输入输出">6. <strong>未重定向标准输入输出</strong></h3>
 <ul>
 <li><strong>错误</strong>：守护进程未重定向标准输入、输出和错误，可能导致与终端的意外交互。</li>
-<li><strong>解决方案</strong>：在守护进程中将标准流重定向到
-<code>/dev/null</code>。</li>
+<li><strong>解决方案</strong>：在守护进程中将标准流重定向到 <code>/dev/null</code>。</li>
 </ul>
-<h3 id="忽略错误检查">7. <strong>忽略错误检查</strong></h3>
+<h3 id="7-忽略错误检查">7. <strong>忽略错误检查</strong></h3>
 <ul>
 <li><strong>错误</strong>：调用系统调用后未检查返回值，可能导致程序在出错时继续运行。</li>
 <li><strong>解决方案</strong>：始终检查系统调用的返回值，并处理错误情况。</li>
 </ul>
-<h3 id="错误使用-exec-系列函数">8. <strong>错误使用 <code>exec()</code>
-系列函数</strong></h3>
+<h3 id="8-错误使用-exec-系列函数">8. <strong>错误使用 <code>exec()</code> 系列函数</strong></h3>
 <ul>
-<li><strong>错误</strong>：未正确处理 <code>exec()</code>
-调用的返回值，可能导致意外行为。</li>
-<li><strong>解决方案</strong>：在调用 <code>exec()</code>
-后，通常假设成功时不会返回，如果返回，则处理错误。</li>
+<li><strong>错误</strong>：未正确处理 <code>exec()</code> 调用的返回值，可能导致意外行为。</li>
+<li><strong>解决方案</strong>：在调用 <code>exec()</code> 后，通常假设成功时不会返回，如果返回，则处理错误。</li>
 </ul>
-<h3 id="不适当的进程优先级调整">9.
-<strong>不适当的进程优先级调整</strong></h3>
+<h3 id="9-不适当的进程优先级调整">9. <strong>不适当的进程优先级调整</strong></h3>
 <ul>
-<li><strong>错误</strong>：使用 <code>nice()</code>
-调整进程优先级时，未考虑影响系统性能。</li>
+<li><strong>错误</strong>：使用 <code>nice()</code> 调整进程优先级时，未考虑影响系统性能。</li>
 <li><strong>解决方案</strong>：合理评估进程的优先级调整，避免影响其他重要进程。</li>
 </ul>
 
