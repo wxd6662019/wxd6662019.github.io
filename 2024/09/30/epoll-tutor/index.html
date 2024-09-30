@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>linux | Kola&#39;s nest</title>
+    <title>epoll-tutor | Kola&#39;s nest</title>
     <meta name="author" content="wxd666" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -162,22 +162,22 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>linux</h1>
+        <h1>epoll-tutor</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/9/6
+            2024/9/30
         </span>
         
         <span class="category">
-            <a href="/categories/%E5%91%BD%E4%BB%A4/">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                命令
+                理论
             </a>
         </span>
         
@@ -190,8 +190,15 @@
             
             <span class="tag">
                 
-                <a href="/tags/Linux/" style="color: #03a9f4">
+                <a href="/tags/Linux/" style="color: #00bcd4">
                     Linux
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/IO/" style="color: #00a596">
+                    IO
                 </a>
             </span>
             
@@ -200,48 +207,141 @@
     </div>
     
     <div class="content" v-pre>
-        <p>root@hostname : <span class="citation"
-data-cites="符后面跟着主机的名字">@符后面跟着主机的名字</span>，<code>root</code>
-则是当前登录的用户</p>
-<p><code>hostnamectl set-hostname</code> 新的主机名
-可以更改当前服务器的主机名</p>
-<h4
-id="ps显示当前运行的进程a显示所有用户的进程u以用户格式显示进程信息x显示没有控制终端的进程">ps显示当前运行的进程，a显示所有用户的进程，u以用户格式显示进程信息，x显示没有控制终端的进程</h4>
-<p>运行 <code>ps aux | grep ssh-agent</code>
-后，输出通常包含以下列：</p>
+        <h1 id="使用-epoll-来完成-io-多路复用">使用 epoll 来完成 IO
+多路复用</h1>
+<h3 id="创建-epoll-实例">1. 创建 <code>epoll</code> 实例</h3>
 <ul>
-<li>USER：进程的所有者。</li>
-<li>PID：进程ID。</li>
-<li>%CPU：进程占用的CPU百分比。</li>
-<li>%MEM：进程占用的内存百分比。</li>
-<li>VSZ：进程使用的虚拟内存大小（以KB为单位）。</li>
-<li>RSS：进程使用的物理内存大小（以KB为单位）。</li>
-<li>TTY：进程关联的终端。</li>
-<li>STAT：进程状态（如运行、睡眠等）。</li>
-<li>START：进程启动时间。</li>
-<li>TIME：进程使用的CPU时间。</li>
-<li>COMMAND：启动该进程的命令及其参数。</li>
+<li><strong>操作</strong>：
+<ul>
+<li>使用 <code>epoll_create1()</code> 创建一个 <code>epoll</code>
+实例。</li>
+</ul></li>
+<li><strong>数据结构</strong>：
+<ul>
+<li><code>epoll_fd</code>：返回的文件描述符，代表 <code>epoll</code>
+实例。</li>
+</ul></li>
 </ul>
-<p>by the way , 在Windows上则是</p>
-<p><code>ps | Where-Object &#123; $_.ProcessName -like "*ssh-agent*" &#125;</code></p>
-<p>使用<strong>别名</strong>可以缩短较长的命令</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">打开文件：nano</span> ~/.bashrc</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">添加别名：alias</span> gs=<span class="st">&#39;git status&#39;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">保存退出并运行：source</span> ~/.bashrc</span></code></pre></div>
-<p>在Unix/Linux环境的命令行界面下的<strong>快捷键</strong></p>
-<pre><code>Ctrl+A ：表示将光标移动到最左端
-Ctrl+E：光标移动到最右端
-Ctrl+U：删除光标前所有输入
-Ctrl+K：删除光标后所有输入
-Ctrl+L：清屏（power shell中也可用）
-Ctrl+C：中止当前进程
-Ctrl+D：在输入时发送EOF</code></pre>
-<p><strong>解压</strong>操作：<strong>tar -zxvf
-filename.tar.gz</strong></p>
-<p>-z: 使用gzip格式 ，x表示解压，v表示看，f表示指定文件名</p>
+<h3 id="注册文件描述符">2. 注册文件描述符</h3>
+<ul>
+<li><p><strong>操作</strong>：</p>
+<ul>
+<li><p>使用</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> epoll_ctl<span class="op">(</span><span class="dt">int</span> epfd<span class="op">,</span> <span class="dt">int</span> op<span class="op">,</span> <span class="dt">int</span> fd<span class="op">,</span> <span class="kw">struct</span> epoll_event <span class="op">*</span>event<span class="op">);</span> </span></code></pre></div>
+<p>函数注册文件描述符，指定要监视的事件。</p>
+<ul>
+<li><code>epfd</code>：由 <code>epoll_create1</code>
+返回的文件描述符。</li>
+<li><code>op</code>：操作类型，可以是
+<code>EPOLL_CTL_ADD</code>（添加）、<code>EPOLL_CTL_MOD</code>（修改）或
+<code>EPOLL_CTL_DEL</code>（删除）。</li>
+<li><code>fd</code>：指明了要进行操作的文件描述符👈</li>
+<li><code>event</code>：指向 <code>struct epoll_event</code>
+的指针，指定或返回事件信息。里面的data字段存储与上面☝🏻文件描述符相关的数据</li>
+</ul></li>
+</ul></li>
+<li><p><strong>数据结构</strong>：</p>
+<ul>
+<li><p><code>struct epoll_event</code>：包含要监视的事件类型和用户数据（如文件描述符）。</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> epoll_event <span class="op">&#123;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> events<span class="op">;</span> <span class="co">// 事件类型</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    epoll_data_t data<span class="op">;</span> <span class="co">// 用户数据</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">//用户数据定义如下</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">union</span> <span class="op">&#123;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">void</span> <span class="op">*</span>ptr<span class="op">;</span>      <span class="co">// 用户自定义指针</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> fd<span class="op">;</span>         <span class="co">// 文件描述符</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">uint32_t</span> u32<span class="op">;</span>   <span class="co">// 32位无符号整数</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">uint64_t</span> u64<span class="op">;</span>   <span class="co">// 64位无符号整数</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span> epoll_data_t<span class="op">;</span>           </span></code></pre></div></li>
+<li><p><code>events</code>：例如
+<code>EPOLLIN(可读时就绪)</code>、<code>EPOLLOUT(可写时就绪)</code>
+等。</p></li>
+<li><p><code>data</code>：可以存储与文件描述符相关的用户数据（如指针或整型值）。</p></li>
+</ul></li>
+</ul>
+<h3 id="等待事件">3. 等待事件</h3>
+<ul>
+<li><p><strong>操作</strong>：</p>
+<ul>
+<li><p>使用</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> epoll_wait<span class="op">(</span><span class="dt">int</span> epfd<span class="op">,</span> <span class="kw">struct</span> epoll_event <span class="op">*</span>events<span class="op">,</span> <span class="dt">int</span> maxevents<span class="op">,</span> <span class="dt">int</span> timeout<span class="op">);</span></span></code></pre></div>
+<p>函数等待事件发生。</p>
+<ul>
+<li><code>epfd</code>：<code>epoll</code> 实例的文件描述符。</li>
+<li><code>events</code>：用于存储发生的事件的数组。</li>
+<li><code>maxevents</code>：数组的大小，即可以存储的最大事件数。</li>
+<li><code>timeout</code>：超时时间（毫秒），如果大于0，表示等待的毫秒数，小于0表示一直等到有事件发生，等于0表示立即返回</li>
+<li><strong>返回值</strong>：返回就绪事件的数量。</li>
+</ul></li>
+</ul></li>
+<li><p><strong>数据结构</strong>：</p>
+<ul>
+<li><code>struct epoll_event</code> 结果数组：用于存储返回的事件信息。
+<ul>
+<li>每次调用
+<code>epoll_wait()</code>，填充该数组，返回发生的事件数量。本质是拷贝内核态的数据一份</li>
+</ul></li>
+</ul></li>
+</ul>
+<span id="more"></span>
+<h1 id="其它">其它</h1>
+<h3 id="处理事件">4. 处理事件</h3>
+<ul>
+<li><strong>操作</strong>：
+<ul>
+<li>遍历 <code>epoll_wait()</code>
+返回的事件，根据事件类型进行相应处理。</li>
+</ul></li>
+<li><strong>数据结构</strong>：
+<ul>
+<li><code>epoll_event</code>
+数组中的每个元素：包含文件描述符及其相关事件。
+<ul>
+<li>通过 <code>data.fd</code> 访问文件描述符，处理相应的读写操作。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="修改或删除文件描述符">5. 修改或删除文件描述符</h3>
+<ul>
+<li><strong>操作</strong>：
+<ul>
+<li>根据需要使用 <code>epoll_ctl()</code>
+修改或删除文件描述符的监视状态。</li>
+</ul></li>
+<li><strong>数据结构</strong>：
+<ul>
+<li><code>struct epoll_event</code>：同样用于修改或删除文件描述符的事件状态。</li>
+</ul></li>
+</ul>
+<h3 id="流程总结">流程总结</h3>
+<ol type="1">
+<li><strong>创建 <code>epoll</code> 实例</strong>：
+<ul>
+<li><code>epoll_fd = epoll_create1(0);</code></li>
+</ul></li>
+<li><strong>注册文件描述符</strong>：
+<ul>
+<li><code>struct epoll_event ev;</code></li>
+<li><code>ev.events = EPOLLIN;</code></li>
+<li><code>epoll_ctl(epoll_fd, EPOLL_CTL_ADD, fd, &amp;ev);</code></li>
+</ul></li>
+<li><strong>等待事件</strong>：
+<ul>
+<li><code>int nfds = epoll_wait(epoll_fd, events, MAX_EVENTS, -1);</code></li>
+</ul></li>
+<li><strong>处理事件</strong>：
+<ul>
+<li><code>for (int i = 0; i &lt; nfds; i++) &#123; ... &#125;</code></li>
+</ul></li>
+<li><strong>修改或删除文件描述符</strong>：
+<ul>
+<li><code>epoll_ctl(epoll_fd, EPOLL_CTL_MOD, fd, &amp;ev);</code>
+或</li>
+<li><code>epoll_ctl(epoll_fd, EPOLL_CTL_DEL, fd, NULL);</code></li>
+</ul></li>
+</ol>
 
     </div>
     

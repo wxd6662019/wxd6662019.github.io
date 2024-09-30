@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>linux | Kola&#39;s nest</title>
+    <title>TCP | Kola&#39;s nest</title>
     <meta name="author" content="wxd666" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -162,22 +162,22 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>linux</h1>
+        <h1>TCP</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/9/6
+            2024/9/25
         </span>
         
         <span class="category">
-            <a href="/categories/%E5%91%BD%E4%BB%A4/">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                命令
+                理论
             </a>
         </span>
         
@@ -190,8 +190,8 @@
             
             <span class="tag">
                 
-                <a href="/tags/Linux/" style="color: #03a9f4">
-                    Linux
+                <a href="/tags/Network/" style="color: #00bcd4">
+                    Network
                 </a>
             </span>
             
@@ -200,48 +200,107 @@
     </div>
     
     <div class="content" v-pre>
-        <p>root@hostname : <span class="citation"
-data-cites="符后面跟着主机的名字">@符后面跟着主机的名字</span>，<code>root</code>
-则是当前登录的用户</p>
-<p><code>hostnamectl set-hostname</code> 新的主机名
-可以更改当前服务器的主机名</p>
-<h4
-id="ps显示当前运行的进程a显示所有用户的进程u以用户格式显示进程信息x显示没有控制终端的进程">ps显示当前运行的进程，a显示所有用户的进程，u以用户格式显示进程信息，x显示没有控制终端的进程</h4>
-<p>运行 <code>ps aux | grep ssh-agent</code>
-后，输出通常包含以下列：</p>
+        <h1 id="tcp基本认识">TCP基本认识</h1>
+<h2 id="看一看tcp的头">1. 看一看TCP的头</h2>
+<p><img
+src="https://cdn.xiaolincoding.com//mysql/other/format,png-20230309230534096.png" /></p>
+<p><strong>Sequence_Number</strong>:
+在建立连接时由计算机生成的随机数作为初始值，通过SYN包传给接收端主机，每发送一次数据，<em>累加</em>
+一次该 <em>数据字节数</em>
+的大小。<strong>用来解决网络包乱序问题。</strong></p>
+<p><strong>Ackonwledge_Number:</strong> 指下一次 <em>期望</em>
+收到的数据的序列号，发送端收到这个确认应答以后可以认为这个序号以前的数据都已经被正常接收。<strong>用来解决丢包的问题。</strong></p>
+<p><strong>flag：</strong></p>
 <ul>
-<li>USER：进程的所有者。</li>
-<li>PID：进程ID。</li>
-<li>%CPU：进程占用的CPU百分比。</li>
-<li>%MEM：进程占用的内存百分比。</li>
-<li>VSZ：进程使用的虚拟内存大小（以KB为单位）。</li>
-<li>RSS：进程使用的物理内存大小（以KB为单位）。</li>
-<li>TTY：进程关联的终端。</li>
-<li>STAT：进程状态（如运行、睡眠等）。</li>
-<li>START：进程启动时间。</li>
-<li>TIME：进程使用的CPU时间。</li>
-<li>COMMAND：启动该进程的命令及其参数。</li>
+<li>ACK：该位为1时，<em>确认应答</em>
+的字段变为有效，TCP规定处理最初建立连接时的SYN包之外该位必须设置为1</li>
+<li>RST： 该位为1时，表示TCP连接中出现异常必须强制断开连接</li>
+<li>SYN：该位为1时，表示希望建立连接，并在其 <em>序列号</em>
+的字段进行序列号初始值的设定</li>
+<li>FIN：该位为1时，表示今后不会再有数据发送，希望断开连接。当通信结束希望断开连接时，通信双方的主机之间就可以相互交换FIN位为1的TCP段。</li>
 </ul>
-<p>by the way , 在Windows上则是</p>
-<p><code>ps | Where-Object &#123; $_.ProcessName -like "*ssh-agent*" &#125;</code></p>
-<p>使用<strong>别名</strong>可以缩短较长的命令</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">打开文件：nano</span> ~/.bashrc</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">添加别名：alias</span> gs=<span class="st">&#39;git status&#39;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">保存退出并运行：source</span> ~/.bashrc</span></code></pre></div>
-<p>在Unix/Linux环境的命令行界面下的<strong>快捷键</strong></p>
-<pre><code>Ctrl+A ：表示将光标移动到最左端
-Ctrl+E：光标移动到最右端
-Ctrl+U：删除光标前所有输入
-Ctrl+K：删除光标后所有输入
-Ctrl+L：清屏（power shell中也可用）
-Ctrl+C：中止当前进程
-Ctrl+D：在输入时发送EOF</code></pre>
-<p><strong>解压</strong>操作：<strong>tar -zxvf
-filename.tar.gz</strong></p>
-<p>-z: 使用gzip格式 ，x表示解压，v表示看，f表示指定文件名</p>
+<span id="more"></span>
+<h2 id="为什么需要tcp协议它工作在哪一层">2.
+为什么需要TCP协议？它工作在哪一层</h2>
+<p><strong>IP层</strong>是不可靠的，它不保证网络包的交付，不保证网络包的按序交付，也不保证网络包中的数据的完整性</p>
+<p><img
+src="https://cdn.xiaolincoding.com//mysql/other/format,png-20230309230419839.png" /></p>
+<p>如果需要保障网络数据包的可靠性，那么就需要上层（传输层）的
+<strong>TCP</strong> 协议来负责。</p>
+<p>因为TCP是工作在 <strong>传输层</strong>的 <strong>可靠</strong>
+数据传输的服务，他能确保接收端接收的网络包是
+<strong>无损坏，无间隔，非冗余和按序的。</strong></p>
+<h2 id="什么是tcp">3. 什么是TCP ？</h2>
+<p>TCP 是<strong>面向连接的，可靠的，基于字节流</strong>
+的传输层通信协议</p>
+<p><img
+src="https://cdn.xiaolincoding.com//mysql/other/format,png-20230309230424714.png" /></p>
+<ul>
+<li><strong>面向连接</strong>：一定是 <em>一对一</em>
+才能连接，不能像UDP协议可以一个主机同时向多个主机发送消息，也就是一对多是无法做到的；</li>
+<li><strong>可靠的</strong>：
+无论网络链路中出现了怎样的链路变化，TCP都可以保证一个报文一定能够到达接收端；</li>
+<li><strong>字节流</strong>：
+用户消息通过TCP协议传输时，消息可能会被操作系统 <em>分组</em>
+成多个的TCP报文，如果接收方的程序如果不知道 <em>消息的边界</em>
+，是无法读出一个有效的用户消息的。并且TCP报文是 <em>有序的</em> ，当
+<em>前一个</em>
+TCP报文没有收到的时候，即使它先收到了后面的TCP报文，那么也不能扔给应用层去处理，同时对
+<em>重复</em> 的TCP报文会自动丢弃。</li>
+</ul>
+<h2 id="什么是tcp连接">4. 什么是TCP连接？</h2>
+<p>Let us check the defination of connection in RFC</p>
+<blockquote>
+<p>The reliablity and flow control mechanisms described above require
+that TCPs initialize and maintain certain status information for each
+data stream. The combination of this information, including sockets,
+sequence numbers, and window sizes, is called a connection.</p>
+</blockquote>
+<p><strong>简而言之，用于保证可靠性和流量控制维护的某些状态信息的组合，包括socket，序列号和窗口大小，称为连接</strong></p>
+<p><img
+src="https://cdn.xiaolincoding.com//mysql/other/format,png-20230309230428466.png" /></p>
+<p>所以我们可以知道，建立一个TCP连接是需要客户端与服务端达成上述三个信息的共识</p>
+<ul>
+<li><strong>Socket：</strong> 有IP地址和端口号组成</li>
+<li><strong>序列号：</strong>用来解决乱序问题</li>
+<li><strong>窗口大小：</strong>用来做流量控制</li>
+</ul>
+<h2 id="如何唯一确定一个tcp连接呢">4. 如何唯一确定一个TCP连接呢？</h2>
+<p>TCP四元组可以唯一的确定一个连接，四元组包括如下：</p>
+<ul>
+<li><p>源地址</p></li>
+<li><p>源端口</p></li>
+<li><p>目的地址</p></li>
+<li><p>目的端口</p>
+<p><img
+src="https://cdn.xiaolincoding.com//mysql/other/format,png-20230309230433082.png" /></p></li>
+</ul>
+<p>源地址和目的地址的字段（32位）是在IP头部中，作用是通过IP协议发送报文给对方主机。源端口和目的端口的字段（16位）是在TCP头部中，作用是告诉TCP协议应该把报文发给哪个进程</p>
+<blockquote>
+<p>有一个IP的服务端监听了一个端口，他的TCP的最大连接数是多少？</p>
+</blockquote>
+<p>服务端通常固定在某个本地端口上监听，等待客户端的连接请求。</p>
+<p>因此，客户端IP和端口是可变的，其理论值计算公式如下：</p>
+<p><img
+src="https://cdn.xiaolincoding.com//mysql/other/format,png-20230309230436594.png" /></p>
+<p>对IPv4，客户端的IP数最多为 <em>2</em> 的 <em>32</em>
+次方，客户端的端口数最多为 <em>2</em> 的 <em>16</em>
+次方，也就是说服务器单机最大TCP连接数，约为 <em>2</em> 的 <em>48</em>
+次方。</p>
+<p>当然，服务端最大并发TCP连接数远不能达到理论上限，会受以下因素影响：</p>
+<ul>
+<li><strong>文件描述符限制：</strong>每个TCP连接都是一个文件，如果文件描述符被占满了，会发生
+Too many open files。Linux对可打开的文件描述符的数量做了三个方面的限制
+<ul>
+<li><strong>系统级：</strong>当前系统可打开的最大数量，通过
+<code>cat /proc/sys/file-max</code> 查看</li>
+<li><strong>用户级：</strong>指定用户可打开的最大数量，通过
+<code>cat /etc/security/limits.conf</code> 查看</li>
+<li><strong>进程级：</strong>单个进程可打开的最大数量，通过
+<code>cat /proc/sys/fs/nr_open</code> 查看</li>
+</ul></li>
+<li><strong>内存限制：</strong>每个TCP连接都要占用一定内存，操作系统的内存是有限，如果内存资源被占满后，会发生OOM。</li>
+</ul>
 
     </div>
     
