@@ -196,6 +196,92 @@
         
 
 <div class="post">
+    <a href="/2024/10/15/mysql-tutor/">
+        <h2 class="post-title">MySQL的一行记录是如何存储的</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                理论
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/10/15
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <hr>
+<h5 id="MySQL的数据存放在哪个文件？">MySQL的数据存放在哪个文件？</h5>
+<hr>
+<p>大家都知道mysql的数据时存在磁盘的，那具体时保存在哪个文件呢？它的存储行为是由存储引擎实现的，mysql支持多种引擎，不同的引擎保存的文件自然也不同，本次主要讨论InnoDB的存储方式</p>
+<p>先来看mysql数据库的文件存放在哪个目录？</p>
+<pre><code class="language-mysql">mysql&gt; show variables like 'datadir';
++---------------+-----------------+
+| Variable_name | Value           |
++---------------+-----------------+
+| datadir       | /var/lib/mysql/ |
++---------------+-----------------+
+1 row in set (0.35 sec)
+</code></pre>
+<p>我们每创建一个database，都会在这个目录里面创建同名的目录，然后保存表结构和表数据的文件都会存放在这里，每个数据库下的各表都有对应的<strong>独占表空间文件</strong>---- xxx.ibd 文件，表数据就存在这里（5.6.6开始）</p>
+<h5 id="表空间文件的结构是怎么样的？">表空间文件的结构是怎么样的？</h5>
+<p>表空间是由 <strong>段segment，区extent，页page，行row</strong>组成，InnoDB存储引擎的逻辑存储结构如图<img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84.drawio.png" alt=""></p>
+<h6 id="1-行-row">1.行 row</h6>
+<p>数据库表中的记录都是按行进行存放的，每行记录根据不同的行格式，有不同的存储结构</p>
+<h6 id="2-页-page">2. 页 page</h6>
+<p>记录是按照行来存储的，但是数据库的读取并不以【行】为单位，否则一次读取（也就是一次I/O）只能处理一行数据，效率会非常低。因此innodb<strong>的数据是按照页为单位读写的</strong>， 即需要读一条记录时，并不是将这个行记录从磁盘读出来，而是以页为单位，将其整体读入内存。默认每个页的大小为16kb，也就是最多能保证16kb的连续存储空间，页是innodb存储引擎磁盘管理的最小单元，这意味着一次IO最少操作16kb的内容，页的类型有很多，常见的有数据页，undo日志页，溢出页等，数据表中的行记录是用【数据页】来管理的，( •̀ ω •́ )也就是说，表中的记录存储在【数据页】里面</p>
+<h6 id="3-区-extent">3. 区 extent</h6>
+<p>我们知道innodb是用B+树来组织数据的。</p>
+<p>B+树中每一层都是通过双向链表连接起来的，如果以页为单位来分配存储空间，那么链表中相邻的两个页之间的物理位置并不是连续的，可能离得非常远，那么磁盘查询时就会有大量的随机IO，随机IO是非常慢的。</p>
+<p>如何解决这个问题呢？只需让链表中相邻的页的物理位置也相邻，这样就可以使用顺序IO了，那么在范围查询（扫描叶子结点）的时候性能就会很高</p>
+<p>那具体怎么解决呢？</p>
+<p><strong>在表中数据量大的时候，为某个索引分配空间的时候不再按照页为单位分配了。而是按照区（extent）为单位分配，每个区的大小为1MB，对于16kb的页来说，连续的64个页会被划为一个区，这样就使得链表中相邻的页的物理位置也相邻</strong></p>
+<h6 id="4-段-segment">4. 段 segment</h6>
+<p>表空间是由各个段 segment组成的，段是由多个区extent组成的，段一般分为数据段，索引段和回滚段等。</p>
+<ul>
+<li>索引段：存放B+树的非叶子节点的区的集合</li>
+<li>数据段：存放B+树的叶子节点的区的集合</li>
+<li>回滚段：存放的时回滚数据的区的集合，MVCC就是利用了回滚段实现了多版本查询数据。</li>
+</ul>
+<h5 id="INNODB行格式有哪些？">INNODB行格式有哪些？</h5>
+<p>Innodb提供了四种行格式 row_format：分别是 Redundant, Compact, Dynamic, Compressed 行格式</p>
+<p>这里我们只介绍一种 ，COMPACT格式，它和Dynamic格式非常像，后者是Mysql默认的行格式，弄懂了compact，其他格式也能很快看懂</p>
+<p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/COMPACT.drawio.png" alt=""></p>
+<p>可以看到，一条完整的记录分为 【记录的额外信息】和【记录的真实数据】两部分</p>
+<hr>
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Mysql/" style="color: #03a9f4">Mysql</a>
+        </span>
+        
+    </div>
+    <a href="/2024/10/15/mysql-tutor/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2024/09/30/epoll-tutor/">
         <h2 class="post-title">epoll-tutor</h2>
     </a>
@@ -222,83 +308,96 @@
     <div class="description">
         <div class="content" v-pre>
             
-            <h1 id="使用-epoll-来完成-io-多路复用">使用 epoll 来完成 IO
-多路复用</h1>
-<h3 id="创建-epoll-实例">1. 创建 <code>epoll</code> 实例</h3>
+            <h1>使用 epoll 来完成 IO 多路复用</h1>
+<h3 id="1-创建-epoll-实例">1. 创建 <code>epoll</code> 实例</h3>
 <ul>
-<li><strong>操作</strong>：
+<li>
+<p>使用 <code>epoll_create1()</code> 创建一个 <code>epoll</code> 实例。内部有一个监听集合（红黑树）和就绪集合（线性表）</p>
+</li>
+<li>
+<p><strong>数据结构</strong>：</p>
 <ul>
-<li>使用 <code>epoll_create1()</code> 创建一个 <code>epoll</code>
-实例。</li>
-</ul></li>
-<li><strong>数据结构</strong>：
-<ul>
-<li><code>epoll_fd</code>：返回的文件描述符，代表 <code>epoll</code>
-实例。</li>
-</ul></li>
+<li><code>epoll_fd</code>：返回的文件描述符，代表 <code>epoll</code> 实例。</li>
 </ul>
-<h3 id="注册文件描述符">2. 注册文件描述符</h3>
+</li>
+</ul>
+<h3 id="2-注册文件描述符">2. 注册文件描述符</h3>
 <ul>
-<li><p><strong>操作</strong>：</p>
+<li>
+<p><strong>操作</strong>：</p>
 <ul>
-<li><p>使用</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> epoll_ctl<span class="op">(</span><span class="dt">int</span> epfd<span class="op">,</span> <span class="dt">int</span> op<span class="op">,</span> <span class="dt">int</span> fd<span class="op">,</span> <span class="kw">struct</span> epoll_event <span class="op">*</span>event<span class="op">);</span> </span></code></pre></div>
+<li>
+<p>使用</p>
+<pre><code class="language-c">int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event); 
+</code></pre>
 <p>函数注册文件描述符，指定要监视的事件。</p>
 <ul>
-<li><code>epfd</code>：由 <code>epoll_create1</code>
-返回的文件描述符。</li>
-<li><code>op</code>：操作类型，可以是
-<code>EPOLL_CTL_ADD</code>（添加）、<code>EPOLL_CTL_MOD</code>（修改）或
-<code>EPOLL_CTL_DEL</code>（删除）。</li>
+<li><code>epfd</code>：由 <code>epoll_create1</code> 返回的文件描述符。找到对应的监听集合（红黑树）</li>
+<li><code>op</code>：操作类型，可以是 <code>EPOLL_CTL_ADD</code>（添加）、<code>EPOLL_CTL_MOD</code>（修改）或 <code>EPOLL_CTL_DEL</code>（删除）。你希望对红黑树进行的操作</li>
 <li><code>fd</code>：指明了要进行操作的文件描述符👈</li>
-<li><code>event</code>：指向 <code>struct epoll_event</code>
-的指针，指定或返回事件信息。里面的data字段存储与上面☝🏻文件描述符相关的数据</li>
-</ul></li>
-</ul></li>
-<li><p><strong>数据结构</strong>：</p>
-<ul>
-<li><p><code>struct epoll_event</code>：包含要监视的事件类型和用户数据（如文件描述符）。</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> epoll_event <span class="op">&#123;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> events<span class="op">;</span> <span class="co">// 事件类型</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    epoll_data_t data<span class="op">;</span> <span class="co">// 用户数据</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">//用户数据定义如下</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">union</span> <span class="op">&#123;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">void</span> <span class="op">*</span>ptr<span class="op">;</span>      <span class="co">// 用户自定义指针</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> fd<span class="op">;</span>         <span class="co">// 文件描述符</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">uint32_t</span> u32<span class="op">;</span>   <span class="co">// 32位无符号整数</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">uint64_t</span> u64<span class="op">;</span>   <span class="co">// 64位无符号整数</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span> epoll_data_t<span class="op">;</span>           </span></code></pre></div></li>
-<li><p><code>events</code>：例如
-<code>EPOLLIN(可读时就绪)</code>、<code>EPOLLOUT(可写时就绪)</code>
-等。</p></li>
-<li><p><code>data</code>：可以存储与文件描述符相关的用户数据（如指针或整型值）。</p></li>
-</ul></li>
+<li><code>event</code>：指向 <code>struct epoll_event</code> 的指针，指定或返回事件信息。前面op参数如果是删除操作，此项为NULL</li>
 </ul>
-<h3 id="等待事件">3. 等待事件</h3>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>数据结构</strong>：</p>
 <ul>
-<li><p><strong>操作</strong>：</p>
+<li>
+<p><code>struct epoll_event</code>：包含要监视的事件类型和用户数据（如文件描述符）。</p>
+<pre><code class="language-c">struct epoll_event &#123;
+    uint32_t events; // 事件类型，描述fd何时就绪
+	//EPOLLET 边缘触发就绪，默认水平触发
+    epoll_data_t data; // 就绪后，往就绪集合放入的数据
+&#125;;
+//用户数据定义如下
+typedef union &#123;
+        void *ptr;      // 用户自定义指针
+        int fd;         // 文件描述符
+        uint32_t u32;   // 32位无符号整数
+        uint64_t u64;   // 64位无符号整数
+&#125; epoll_data_t;           
+</code></pre>
+</li>
+<li>
+<p><code>events</code>：例如 <code>EPOLLIN(可读时就绪)</code>、<code>EPOLLOUT(可写时就绪)</code> 等。</p>
+</li>
+<li>
+<p><code>data</code>：可以存储与文件描述符相关的用户数据（如指针或整型值）。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-等待事件">3. 等待事件</h3>
 <ul>
-<li><p>使用</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> epoll_wait<span class="op">(</span><span class="dt">int</span> epfd<span class="op">,</span> <span class="kw">struct</span> epoll_event <span class="op">*</span>events<span class="op">,</span> <span class="dt">int</span> maxevents<span class="op">,</span> <span class="dt">int</span> timeout<span class="op">);</span></span></code></pre></div>
+<li>
+<p><strong>操作</strong>：</p>
+<ul>
+<li>
+<p>使用</p>
+<pre><code class="language-c">int epoll_wait(int epfd, struct epoll_event *events, int maxevents, int timeout);
+</code></pre>
 <p>函数等待事件发生。</p>
 <ul>
 <li><code>epfd</code>：<code>epoll</code> 实例的文件描述符。</li>
 <li><code>events</code>：用于存储发生的事件的数组。</li>
 <li><code>maxevents</code>：数组的大小，即可以存储的最大事件数。</li>
 <li><code>timeout</code>：超时时间（毫秒），如果大于0，表示等待的毫秒数，小于0表示一直等到有事件发生，等于0表示立即返回</li>
-<li><strong>返回值</strong>：返回就绪事件的数量。</li>
-</ul></li>
-</ul></li>
-<li><p><strong>数据结构</strong>：</p>
+<li><strong>返回值</strong>：返回就绪集合实际的长度。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>数据结构</strong>：</p>
 <ul>
-<li><code>struct epoll_event</code> 结果数组：用于存储返回的事件信息。
+<li><code>struct epoll_event</code> 结果数组：用于存储返回的就绪集合。
 <ul>
-<li>每次调用
-<code>epoll_wait()</code>，填充该数组，返回发生的事件数量。本质是拷贝内核态的数据一份</li>
-</ul></li>
-</ul></li>
+<li>每次调用 <code>epoll_wait()</code>，填充该数组（本质是拷贝内核态的数据一份），返回就绪的事件数量。</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             
         </div>
@@ -313,7 +412,7 @@ class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1
         
         <span class="tag">
             
-            <a href="/tags/Linux/" style="color: #03a9f4">Linux</a>
+            <a href="/tags/Linux/" style="color: #00a596">Linux</a>
         </span>
         
         <span class="tag">
@@ -368,7 +467,7 @@ class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1
         
         <span class="tag">
             
-            <a href="/tags/Linux/" style="color: #03a9f4">Linux</a>
+            <a href="/tags/Linux/" style="color: #00bcd4">Linux</a>
         </span>
         
     </div>
@@ -434,7 +533,7 @@ src="https://cdn.xiaolincoding.com//mysql/other/format,png-20230309230534096.png
         
         <span class="tag">
             
-            <a href="/tags/Network/" style="color: #ff7d73">Network</a>
+            <a href="/tags/Network/" style="color: #00bcd4">Network</a>
         </span>
         
     </div>
@@ -468,13 +567,11 @@ src="https://cdn.xiaolincoding.com//mysql/other/format,png-20230309230534096.png
     <div class="description">
         <div class="content" v-pre>
             
-            <h1 id="基本概念">基本概念</h1>
-<p><strong>linux</strong>中线程又叫做轻量级进程（light-weight process
-LWP），也有PCB，创建线程使用的底层函数和进程底层一样，都是clone，但没有独立的地址空间；而进程有独立地址空间，拥有PCB。
-Linux下：线程是最小的执行单位，调度的基本单位。进程是最小分配资源单位，可看成是只有一个线程的进程。
+            <h1>基本概念</h1>
+<p><strong>linux</strong>中线程又叫做轻量级进程（light-weight process LWP），也有PCB，创建线程使用的底层函数和进程底层一样，都是clone，但没有独立的地址空间；而进程有独立地址空间，拥有PCB。<br>
+Linux下：线程是最小的执行单位，调度的基本单位。进程是最小分配资源单位，可看成是只有一个线程的进程。<br>
 线程是一个进程内部的控制序列。控制序列可以理解为一个执行流。进程内部是指虚拟地址空间。</p>
-<h3 id="pthread_create">1.
-<strong><code>pthread_create()</code></strong></h3>
+<h3 id="1-pthread-create">1. <strong><code>pthread_create()</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：创建一个新线程。</li>
 <li><strong>参数</strong>：
@@ -483,9 +580,9 @@ Linux下：线程是最小的执行单位，调度的基本单位。进程是最
 <li>线程属性（可以为 <code>NULL</code>，表示默认属性）。</li>
 <li>线程函数（线程启动时执行的函数）。</li>
 <li>线程参数（传递给线程函数的参数）。</li>
-</ul></li>
-<li><strong>返回值</strong>：成功时返回
-<code>0</code>，失败时返回错误码。</li>
+</ul>
+</li>
+<li><strong>返回值</strong>：成功时返回 <code>0</code>，失败时返回错误码。</li>
 <li><strong>注意：第三方库, 需要手动链接 -lpthread</strong></li>
 </ul>
             
@@ -581,78 +678,6 @@ Linux下：线程是最小的执行单位，调度的基本单位。进程是最
         
     </div>
     <a href="/2024/09/20/IPC%E4%B9%8B%E4%BF%A1%E5%8F%B7/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/19/%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">
-        <h2 class="post-title">进程相关系统调用</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/%E7%90%86%E8%AE%BA/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                理论
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/19
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1>系统调用</h1>
-<h3 id="1-fork">1. <strong><code>fork()</code></strong></h3>
-<ul>
-<li><strong>作用</strong>：创建一个新进程，复制当前进程的所有属性。</li>
-<li><strong>返回值</strong>：在父进程中返回新创建的子进程的 PID，在子进程中返回 0，失败时返回 -1。</li>
-<li>在fork之前打开的文件对象是共享的，pc指针和代码段也是相同的</li>
-</ul>
-<h3 id="2-exec">2. <strong><code>exec()</code></strong></h3>
-<ul>
-<li><strong>作用</strong>：用新程序替换当前进程的映像。</li>
-<li><strong>常用变体</strong>：<code>execl()</code>, <code>execp()</code>, <code>execv()</code> 等。</li>
-<li><strong>返回值</strong>：成功时不返回，失败时返回 -1。</li>
-</ul>
-<h3 id="3-wait-waitpid">3. <strong><code>wait()</code> / <code>waitpid()</code></strong></h3>
-<ul>
-<li><strong>作用</strong>：让父进程等待子进程结束，并获取子进程的退出状态。</li>
-<li><strong>返回值</strong>：成功时返回结束的子进程的 PID，失败时返回 -1。</li>
-<li>参数NULL表示父进程不关心子进程的退出状态信息</li>
-</ul>
-<h3 id="4-exit">4. <strong><code>exit()</code></strong></h3>
-<ul>
-<li><strong>作用</strong>：终止当前进程，并返回状态给父进程。</li>
-<li><strong>返回值</strong>：不返回。</li>
-<li>其它退出方式：_exit() : 不清理缓冲， return清理缓冲区，被信号中止， 主动调用 abort()</li>
-</ul>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/Linux/" style="color: #00bcd4">Linux</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/19/%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" class="go-post">阅读全文</a>
 </div>
 
 

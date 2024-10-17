@@ -190,14 +190,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/C/" style="color: #00a596">
+                <a href="/tags/C/" style="color: #00bcd4">
                     C
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/Linux/" style="color: #00bcd4">
+                <a href="/tags/Linux/" style="color: #ffa2c4">
                     Linux
                 </a>
             </span>
@@ -207,24 +207,26 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="stat系统调用函数">1. stat系统调用函数</h1>
+        <h1>1. stat系统调用函数</h1>
 <p>用于获取指定文件的相关信息，其函数声明如下</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/stat.h&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> stat<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>path<span class="op">,</span> <span class="kw">struct</span> stat <span class="op">*</span>buf<span class="op">);</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">path：指向字符数组的指针，代表要获取信息的文件的路径名</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">buf：一个指向struct stat结构体的指针，由于存储拿到的文件的信息</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">返回值：0成功/ -1失败，失败原因如权限不够，文件不存在等</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">**/</span></span></code></pre></div>
+<pre><code class="language-c">#include &lt;sys/stat.h&gt;
+int stat(const char *path, struct stat *buf);
+
+/**
+path：指向字符数组的指针，代表要获取信息的文件的路径名
+buf：一个指向struct stat结构体的指针，由于存储拿到的文件的信息
+返回值：0成功/ -1失败，失败原因如权限不够，文件不存在等
+**/
+</code></pre>
 <p>1.1</p>
+<p><code>DIR *dp = opendir(path); struct dirent *entry = readdir(dp)</code></p>
 <p>利用<code>dirent</code>结构体我们可以获取某个目录下所有文件的文件名，但这里的文件名不一定是<code>stat</code>系统调用函数的第一个参数</p>
-<ol type="1">
+<ol>
 <li>如果进程的当前工作目录就是<code>dirent</code>结构体所表示的目录（就是opendir打开的目录），那么文件名就是路径名(相对路径).</li>
-<li>如果进程的当前工作目录不是<code>dirent</code>结构体所表示的目录（不是opendir打开的目录），那么”<code>dirent</code>结构体目录路径/文件名”才是路径名(绝对路径)。</li>
+<li>如果进程的当前工作目录不是<code>dirent</code>结构体所表示的目录（不是opendir打开的目录），那么&quot;<code>dirent</code>结构体目录路径/文件名&quot;才是路径名(绝对路径)。</li>
 </ol>
 <p>此时基于<code>dirent</code>结构体，来获取<code>stat</code>函数形参的文件路径名就有了两种办法：</p>
-<ol type="1">
+<ol>
 <li>在子l进程中使用<code>chdir</code>函数切换进程的当前工作目录为<code>dirent</code>结构体所表示的目录，此时文件名就是路径名。</li>
 <li>利用<code>dirent</code>结构体中获取的文件名，结合<code>dirent</code>结构体目录路径名，拼接得到一个绝对路径。</li>
 </ol>
@@ -233,110 +235,122 @@
 <p>函数的第二个形参是<code>*buf</code>指针，需要传入一个指向stat结构体对象的指针。该形参没有被const修饰，传入stat函数后，显然函数内部会修改指向的内容，也就是在函数内部会修改stat结构体对象。</p>
 <p>1.3</p>
 <p>通过man 2 stat命令，可以找到stat结构体的定义</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> stat <span class="op">&#123;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    mode_t    st_mode<span class="op">;</span>          <span class="co">// 包含文件的类型以及权限信息</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    nlink_t   st_nlink<span class="op">;</span>         <span class="co">// 文件的硬链接数量 </span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    uid_t     st_uid<span class="op">;</span>           <span class="co">// 文件所有者的用户ID</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    gid_t     st_gid<span class="op">;</span>           <span class="co">// 文件所有者组的组ID</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    off_t     st_size<span class="op">;</span>          <span class="co">// 文件的实际大小, 以字节为单位</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> timespec st_mtim<span class="op">;</span>  <span class="co">/* 包含文件最后修改时间的结构体对象 */</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;;</span></span></code></pre></div>
+<pre><code class="language-c">struct stat &#123;
+    mode_t    st_mode;          // 包含文件的类型以及权限信息
+    nlink_t   st_nlink;         // 文件的硬链接数量 
+    uid_t     st_uid;           // 文件所有者的用户ID
+    gid_t     st_gid;           // 文件所有者组的组ID
+    off_t     st_size;          // 文件的实际大小, 以字节为单位
+
+    struct timespec st_mtim;  /* 包含文件最后修改时间的结构体对象 */
+&#125;;
+</code></pre>
 <p>这些字段的类型都是使用别名来定义的，在64位Linux操作系统上，这些别名的类型一般是：</p>
-<ol type="1">
-<li><p><code>mode_t</code>：一般是一个32位无符号整数。</p></li>
-<li><p><code>nlink_t</code>：一般是一个64位无符号整数。</p></li>
-<li><p><code>uid_t</code>：一般是一个32位无符号整数。</p></li>
-<li><p><code>off_t</code>：一般是一个64位无符号整数。</p></li>
-<li><div class="sourceCode" id="cb3"><pre
-class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>   <span class="co">// 最后修改时间</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">struct</span> timespec <span class="op">&#123;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>       __time_t tv_sec<span class="op">;</span>  <span class="co">// 时间戳，秒为单位。此类型别名一般就是long类型</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       __syscall_slong_t   tv_nsec<span class="op">;</span>            <span class="co">// 纳秒 - 存储时间戳当中不足秒的部分，用于精准表示时间。此类型别名一般就是long类型</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">&#125;;</span></span></code></pre></div></li>
+<ol>
+<li>
+<p><code>mode_t</code>：一般是一个32位无符号整数。</p>
+</li>
+<li>
+<p><code>nlink_t</code>：一般是一个64位无符号整数。</p>
+</li>
+<li>
+<p><code>uid_t</code>：一般是一个32位无符号整数。</p>
+</li>
+<li>
+<p><code>off_t</code>：一般是一个64位无符号整数。</p>
+</li>
+<li>
+<pre><code class="language-c">// 最后修改时间
+struct timespec &#123;
+    __time_t tv_sec;  // 时间戳，秒为单位。此类型别名一般就是long类型
+    __syscall_slong_t   tv_nsec;            // 纳秒 - 存储时间戳当中不足秒的部分，用于精准表示时间。此类型别名一般就是long类型
+&#125;;
+</code></pre>
+</li>
 </ol>
 <p>综上，这里给出一个stat 函数的简单调用</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 省略了错误处理</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>DIR <span class="op">*</span>dirp <span class="op">=</span> opendir<span class="op">(</span>argv<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>chdir<span class="op">(</span>dir_name<span class="op">);</span>        <span class="co">// 切换当前进程的工作目录为dir_name目录</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> dirent<span class="op">*</span> pdirent <span class="op">=</span> readdir<span class="op">(</span>dirp<span class="op">));</span>        <span class="co">// 目录项结构体, dirp是打开的dir_name目录流指针</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> stat stat_buf<span class="op">;</span>       <span class="co">// 预先申请一个stat结构体对象</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ret <span class="op">=</span> stat<span class="op">(</span>pdirent<span class="op">-&gt;</span>d_name<span class="op">,</span> <span class="op">&amp;</span>stat_buf<span class="op">);</span> <span class="co">// 获取文件的相关信息，相当于给stat_buf结构体对象初始化</span></span></code></pre></div>
-<h1 id="实现青春版ls">2. 实现青春版ls</h1>
-<p>当我们拿到<code>stat_buf</code>
-这个对象时，需要解析各个成员变量，其中的<code>st_mode</code>
-的低九位存储文件的读写权限， 分别与0400 0200 0100
-，如果为1，则说明有对应的<code>rwx</code> 权限</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> set_type_mode<span class="op">(</span>mode_t mode<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>tm_str<span class="op">)&#123;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 处理第一个字符，即文件类型 </span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">switch</span> <span class="op">(</span>mode <span class="op">&amp;</span> S_IFMT<span class="op">)</span> <span class="op">&#123;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> S_IFBLK<span class="op">:</span>   tm_str<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;b&#39;</span><span class="op">;</span>        <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> S_IFCHR<span class="op">:</span>   tm_str<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;c&#39;</span><span class="op">;</span>        <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> S_IFDIR<span class="op">:</span>   tm_str<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;d&#39;</span><span class="op">;</span>        <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> S_IFIFO<span class="op">:</span>   tm_str<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;p&#39;</span><span class="op">;</span>        <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> S_IFLNK<span class="op">:</span>   tm_str<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;l&#39;</span><span class="op">;</span>        <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> S_IFREG<span class="op">:</span>   tm_str<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;-&#39;</span><span class="op">;</span>        <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> S_IFSOCK<span class="op">:</span>  tm_str<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;s&#39;</span><span class="op">;</span>        <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">default</span><span class="op">:</span>        tm_str<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;?&#39;</span><span class="op">;</span>        <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 处理后续九个字符，即文件的权限信息</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 设置拥有者的权限信息</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    tm_str<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="op">(</span>mode <span class="op">&amp;</span> <span class="bn">0400</span><span class="op">)</span> <span class="op">?</span> <span class="ch">&#39;r&#39;</span> <span class="op">:</span> <span class="ch">&#39;-&#39;</span><span class="op">;</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    tm_str<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> <span class="op">(</span>mode <span class="op">&amp;</span> <span class="bn">0200</span><span class="op">)</span> <span class="op">?</span> <span class="ch">&#39;w&#39;</span> <span class="op">:</span> <span class="ch">&#39;-&#39;</span><span class="op">;</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    tm_str<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> <span class="op">(</span>mode <span class="op">&amp;</span> <span class="bn">0100</span><span class="op">)</span> <span class="op">?</span> <span class="ch">&#39;x&#39;</span> <span class="op">:</span> <span class="ch">&#39;-&#39;</span><span class="op">;</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 设置拥有者组的权限                          </span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    tm_str<span class="op">[</span><span class="dv">4</span><span class="op">]</span> <span class="op">=</span> <span class="op">(</span>mode <span class="op">&amp;</span> <span class="bn">0040</span><span class="op">)</span> <span class="op">?</span> <span class="ch">&#39;r&#39;</span> <span class="op">:</span> <span class="ch">&#39;-&#39;</span><span class="op">;</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    tm_str<span class="op">[</span><span class="dv">5</span><span class="op">]</span> <span class="op">=</span> <span class="op">(</span>mode <span class="op">&amp;</span> <span class="bn">0020</span><span class="op">)</span> <span class="op">?</span> <span class="ch">&#39;w&#39;</span> <span class="op">:</span> <span class="ch">&#39;-&#39;</span><span class="op">;</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    tm_str<span class="op">[</span><span class="dv">6</span><span class="op">]</span> <span class="op">=</span> <span class="op">(</span>mode <span class="op">&amp;</span> <span class="bn">0010</span><span class="op">)</span> <span class="op">?</span> <span class="ch">&#39;x&#39;</span> <span class="op">:</span> <span class="ch">&#39;-&#39;</span><span class="op">;</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 设置其他人的权限</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    tm_str<span class="op">[</span><span class="dv">7</span><span class="op">]</span> <span class="op">=</span> <span class="op">(</span>mode <span class="op">&amp;</span> <span class="bn">0004</span><span class="op">)</span> <span class="op">?</span> <span class="ch">&#39;r&#39;</span> <span class="op">:</span> <span class="ch">&#39;-&#39;</span><span class="op">;</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    tm_str<span class="op">[</span><span class="dv">8</span><span class="op">]</span> <span class="op">=</span> <span class="op">(</span>mode <span class="op">&amp;</span> <span class="bn">0002</span><span class="op">)</span> <span class="op">?</span> <span class="ch">&#39;w&#39;</span> <span class="op">:</span> <span class="ch">&#39;-&#39;</span><span class="op">;</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    tm_str<span class="op">[</span><span class="dv">9</span><span class="op">]</span> <span class="op">=</span> <span class="op">(</span>mode <span class="op">&amp;</span> <span class="bn">0001</span><span class="op">)</span> <span class="op">?</span> <span class="ch">&#39;x&#39;</span> <span class="op">:</span> <span class="ch">&#39;-&#39;</span><span class="op">;</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    tm_str<span class="op">[</span><span class="dv">10</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;</span><span class="sc">\0</span><span class="ch">&#39;</span><span class="op">;</span> <span class="co">// 确保字符串以 null 结尾</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span></code></pre></div>
-<p>对于时间，其用<code>struct timespec st_mtim</code>
-变量存储，这是一个结构体对象，具体的时间存在<code>st_mtim.tv_sec</code>中，单位是毫秒，我们需要一个时间转换函数，传参时可直接传入<code>stat_buf.st_mtime</code>
-,这是一个对前者的宏，即</p>
+<pre><code class="language-c">// 省略了错误处理
+DIR *dirp = opendir(argv[1]);
+chdir(dir_name);        // 切换当前进程的工作目录为dir_name目录
+struct dirent* pdirent = readdir(dirp));        // 目录项结构体, dirp是打开的dir_name目录流指针
+struct stat stat_buf;       // 预先申请一个stat结构体对象
+int ret = stat(pdirent-&gt;d_name, &amp;stat_buf); // 获取文件的相关信息，相当于给stat_buf结构体对象初始化
+</code></pre>
+<h1>2. 实现青春版ls</h1>
+<p>当我们拿到<code>stat_buf</code> 这个对象时，需要解析各个成员变量，其中的<code>st_mode</code> 的低九位存储文件的读写权限， 分别与0400 0200 0100 ，如果为1，则说明有对应的<code>rwx</code> 权限</p>
+<pre><code class="language-c">void set_type_mode(mode_t mode, char *tm_str)&#123;
+    // 处理第一个字符，即文件类型 
+    switch (mode &amp; S_IFMT) &#123;
+    case S_IFBLK:   tm_str[0] = 'b';        break;
+    case S_IFCHR:   tm_str[0] = 'c';        break;
+    case S_IFDIR:   tm_str[0] = 'd';        break;
+    case S_IFIFO:   tm_str[0] = 'p';        break;
+    case S_IFLNK:   tm_str[0] = 'l';        break;
+    case S_IFREG:   tm_str[0] = '-';        break;
+    case S_IFSOCK:  tm_str[0] = 's';        break;
+    default:        tm_str[0] = '?';        break;
+    &#125;
+
+    // 处理后续九个字符，即文件的权限信息
+    // 设置拥有者的权限信息
+    tm_str[1] = (mode &amp; 0400) ? 'r' : '-';
+    tm_str[2] = (mode &amp; 0200) ? 'w' : '-';
+    tm_str[3] = (mode &amp; 0100) ? 'x' : '-';
+    // 设置拥有者组的权限                          
+    tm_str[4] = (mode &amp; 0040) ? 'r' : '-';
+    tm_str[5] = (mode &amp; 0020) ? 'w' : '-';
+    tm_str[6] = (mode &amp; 0010) ? 'x' : '-';
+    // 设置其他人的权限
+    tm_str[7] = (mode &amp; 0004) ? 'r' : '-';
+    tm_str[8] = (mode &amp; 0002) ? 'w' : '-';
+    tm_str[9] = (mode &amp; 0001) ? 'x' : '-';
+    tm_str[10] = '\0'; // 确保字符串以 null 结尾
+&#125;
+</code></pre>
+<p>对于时间，其用<code>struct timespec st_mtim</code> 变量存储，这是一个结构体对象，具体的时间存在<code>st_mtim.tv_sec</code>中，单位是毫秒，我们需要一个时间转换函数，传参时可直接传入<code>stat_buf.st_mtime</code> ,这是一个对前者的宏，即</p>
 <p><code>#define st_mtime st_mtim.tv_sec</code></p>
 <p>这里要介绍一个C语言标准库函数</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;time.h&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> tm <span class="op">*</span>localtime<span class="op">(</span><span class="dt">const</span> <span class="dt">time_t</span> <span class="op">*</span>timer<span class="op">);</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">// timer ：指向时间戳变量的指针</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">//返回值时指向struct tm 结构体的指针</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> tm <span class="op">&#123;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> tm_sec<span class="op">;</span>    <span class="co">/* 秒 – 取值区间为[0,59] */</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> tm_min<span class="op">;</span>    <span class="co">/* 分 - 取值区间为[0,59] */</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> tm_hour<span class="op">;</span>   <span class="co">/* 时 - 取值区间为[0,23] */</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> tm_mday<span class="op">;</span>   <span class="co">/* 一个月中的日期 - 取值区间为[1,31] */</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> tm_mon<span class="op">;</span>    <span class="co">/* 月份（从一月开始，0代表一月）- 取值区间为[0,11] */</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> tm_year<span class="op">;</span>   <span class="co">/* 年份，其值从1900开始 */</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> tm_wday<span class="op">;</span>   <span class="co">/* 星期 – 取值区间为[0,6]，星期日为0 */</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> tm_yday<span class="op">;</span>   <span class="co">/* 从每年的1月1日开始的天数 – 取值区间为[0,365]，1月1日为0 */</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> tm_isdst<span class="op">;</span>  <span class="co">/* 夏令时标识符，夏令时时为正，不是夏令时时为0，不了解情况时为负 */</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;;</span></span></code></pre></div>
+<pre><code class="language-c">#include &lt;time.h&gt;
+struct tm *localtime(const time_t *timer);
+// timer ：指向时间戳变量的指针
+//返回值时指向struct tm 结构体的指针
+struct tm &#123;
+    int tm_sec;    /* 秒 – 取值区间为[0,59] */
+    int tm_min;    /* 分 - 取值区间为[0,59] */
+    int tm_hour;   /* 时 - 取值区间为[0,23] */
+    int tm_mday;   /* 一个月中的日期 - 取值区间为[1,31] */
+    int tm_mon;    /* 月份（从一月开始，0代表一月）- 取值区间为[0,11] */
+    int tm_year;   /* 年份，其值从1900开始 */
+    int tm_wday;   /* 星期 – 取值区间为[0,6]，星期日为0 */
+    int tm_yday;   /* 从每年的1月1日开始的天数 – 取值区间为[0,365]，1月1日为0 */
+    int tm_isdst;  /* 夏令时标识符，夏令时时为正，不是夏令时时为0，不了解情况时为负 */
+&#125;;
+</code></pre>
 <p>对上面的函数封装一下，让它在内部<strong>组合一个好的</strong>时间字符串</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 获取格式化的时间字符串</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> set_time<span class="op">(</span><span class="dt">time_t</span> mtime<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>time_str<span class="op">)&#123;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 由于tm结构体中存储的是月份的整数值，我们需要的是月份字符串，所以用一个字符串数组来存储月份字符串</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">const</span> <span class="dt">char</span> month_arr<span class="op">[][</span><span class="dv">10</span><span class="op">]</span> <span class="op">=</span> <span class="op">&#123;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;1月&quot;</span><span class="op">,</span> <span class="st">&quot;2月&quot;</span><span class="op">,</span> <span class="st">&quot;3月&quot;</span><span class="op">,</span> <span class="st">&quot;4月&quot;</span><span class="op">,</span> <span class="st">&quot;5月&quot;</span><span class="op">,</span> <span class="st">&quot;6月&quot;</span><span class="op">,</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;7月&quot;</span><span class="op">,</span> <span class="st">&quot;8月&quot;</span><span class="op">,</span> <span class="st">&quot;9月&quot;</span><span class="op">,</span> <span class="st">&quot;10月&quot;</span><span class="op">,</span> <span class="st">&quot;11月&quot;</span><span class="op">,</span> <span class="st">&quot;12月&quot;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;;</span>  <span class="co">// tm结构体当中的月份范围是[0, 11]，刚好可以适配这个数组</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 调用localtime函数，获取tm结构体指针</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> tm<span class="op">*</span> st_tm <span class="op">=</span> localtime<span class="op">(&amp;</span>mtime<span class="op">);</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 构建时间字符串,格式为：月份 天数 时：分</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    sprintf<span class="op">(</span>time_str<span class="op">,</span> <span class="st">&quot;</span><span class="sc">%s</span><span class="st"> </span><span class="sc">%2d</span><span class="st"> </span><span class="sc">%02d</span><span class="st">:</span><span class="sc">%02d</span><span class="st">&quot;</span><span class="op">,</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>            month_arr<span class="op">[</span>st_tm<span class="op">-&gt;</span>tm_mon<span class="op">],</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>            st_tm<span class="op">-&gt;</span>tm_mday<span class="op">,</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            st_tm<span class="op">-&gt;</span>tm_hour<span class="op">,</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            st_tm<span class="op">-&gt;</span>tm_min<span class="op">);</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span></code></pre></div>
+<pre><code class="language-c">// 获取格式化的时间字符串
+void set_time(time_t mtime, char *time_str)&#123;
+    // 由于tm结构体中存储的是月份的整数值，我们需要的是月份字符串，所以用一个字符串数组来存储月份字符串
+    const char month_arr[][10] = &#123;
+        &quot;1月&quot;, &quot;2月&quot;, &quot;3月&quot;, &quot;4月&quot;, &quot;5月&quot;, &quot;6月&quot;,
+        &quot;7月&quot;, &quot;8月&quot;, &quot;9月&quot;, &quot;10月&quot;, &quot;11月&quot;, &quot;12月&quot;
+    &#125;;  // tm结构体当中的月份范围是[0, 11]，刚好可以适配这个数组
+
+    // 调用localtime函数，获取tm结构体指针
+    struct tm* st_tm = localtime(&amp;mtime);
+    // 构建时间字符串,格式为：月份 天数 时：分
+    sprintf(time_str, &quot;%s %2d %02d:%02d&quot;,
+            month_arr[st_tm-&gt;tm_mon],
+            st_tm-&gt;tm_mday,
+            st_tm-&gt;tm_hour,
+            st_tm-&gt;tm_min);
+&#125;
+</code></pre>
 <p>对于用户和组，我们可以通过两个函数来直接拿到它的名字</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>getpwuid<span class="op">(</span>stat_buf<span class="op">.</span>st_uid<span class="op">)-&gt;</span>pw_name  <span class="co">// 拥有者名</span></span></code></pre></div>
+<pre><code class="language-c">getpwuid(stat_buf.st_uid)-&gt;pw_name  // 拥有者名
+</code></pre>
 <p>and</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>getgrgid<span class="op">(</span>stat_buf<span class="op">.</span>st_gid<span class="op">)-&gt;</span>gr_name  <span class="co">// 拥有者组名</span></span></code></pre></div>
+<pre><code class="language-c">getgrgid(stat_buf.st_gid)-&gt;gr_name  // 拥有者组名
+</code></pre>
 <p>最后使用格式字符串打印即可</p>
 
     </div>

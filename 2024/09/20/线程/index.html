@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/Linux/" style="color: #00a596">
+                <a href="/tags/Linux/" style="color: #03a9f4">
                     Linux
                 </a>
             </span>
@@ -200,13 +200,11 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="基本概念">基本概念</h1>
-<p><strong>linux</strong>中线程又叫做轻量级进程（light-weight process
-LWP），也有PCB，创建线程使用的底层函数和进程底层一样，都是clone，但没有独立的地址空间；而进程有独立地址空间，拥有PCB。
-Linux下：线程是最小的执行单位，调度的基本单位。进程是最小分配资源单位，可看成是只有一个线程的进程。
+        <h1>基本概念</h1>
+<p><strong>linux</strong>中线程又叫做轻量级进程（light-weight process LWP），也有PCB，创建线程使用的底层函数和进程底层一样，都是clone，但没有独立的地址空间；而进程有独立地址空间，拥有PCB。<br>
+Linux下：线程是最小的执行单位，调度的基本单位。进程是最小分配资源单位，可看成是只有一个线程的进程。<br>
 线程是一个进程内部的控制序列。控制序列可以理解为一个执行流。进程内部是指虚拟地址空间。</p>
-<h3 id="pthread_create">1.
-<strong><code>pthread_create()</code></strong></h3>
+<h3 id="1-pthread-create">1. <strong><code>pthread_create()</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：创建一个新线程。</li>
 <li><strong>参数</strong>：
@@ -215,99 +213,99 @@ Linux下：线程是最小的执行单位，调度的基本单位。进程是最
 <li>线程属性（可以为 <code>NULL</code>，表示默认属性）。</li>
 <li>线程函数（线程启动时执行的函数）。</li>
 <li>线程参数（传递给线程函数的参数）。</li>
-</ul></li>
-<li><strong>返回值</strong>：成功时返回
-<code>0</code>，失败时返回错误码。</li>
+</ul>
+</li>
+<li><strong>返回值</strong>：成功时返回 <code>0</code>，失败时返回错误码。</li>
 <li><strong>注意：第三方库, 需要手动链接 -lpthread</strong></li>
 </ul>
 <span id="more"></span>
-<h3 id="pthread_exit">2.
-<strong><code>pthread_exit()</code></strong></h3>
+<h3 id="2-pthread-exit">2. <strong><code>pthread_exit()</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：结束调用线程的执行，并可以返回一个值给其他线程。</li>
 <li><strong>参数</strong>：返回值（可以为 <code>NULL</code>）。</li>
 <li><strong>注意</strong>：如果主线程调用此函数，整个进程会终止。</li>
 </ul>
-<h3 id="pthread_joinpthread_t-thread-void-retval">3.
-<strong><code>pthread_join(pthread_t thread, void **retval)</code></strong></h3>
+<h3 id="3-pthread-join-pthread-t-thread-void-retval">3. <strong><code>pthread_join(pthread_t thread, void **retval)</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：等待指定线程结束，获取其返回值。</li>
 <li><strong>参数</strong>：
 <ul>
 <li>线程ID（<code>pthread_t</code>）。</li>
-<li>指向返回值的指针（可以为 <code>NULL</code>,
-表示不获取返回值）。</li>
-</ul></li>
-<li><strong>返回值</strong>：成功时返回
-<code>0</code>，失败时返回错误码。</li>
+<li>指向返回值的指针（可以为 <code>NULL</code>, 表示不获取返回值）。</li>
+</ul>
+</li>
+<li><strong>返回值</strong>：成功时返回 <code>0</code>，失败时返回错误码。</li>
 <li>使用<strong>二级指针</strong>的场景：
 <ul>
 <li>传递，被调函数修改主调方的指针指向</li>
 <li>偏移， 主调函数存在一个指针数组，传递时退化</li>
-</ul></li>
 </ul>
-<h3 id="pthread_detach">4.
-<strong><code>pthread_detach()</code></strong></h3>
+</li>
+</ul>
+<h3 id="4-pthread-detach">4. <strong><code>pthread_detach()</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：将线程设置为“分离状态”，使其在结束时自动释放资源。</li>
 <li><strong>参数</strong>：线程ID（<code>pthread_t</code>）。</li>
-<li><strong>注意</strong>：一旦线程被分离，无法再调用
-<code>pthread_join()</code>。</li>
+<li><strong>注意</strong>：一旦线程被分离，无法再调用 <code>pthread_join()</code>。</li>
 </ul>
-<h3 id="pthread_cancel">5.
-<strong><code>pthread_cancel()</code></strong></h3>
+<h3 id="5-pthread-cancel">5. <strong><code>pthread_cancel()</code></strong></h3>
 <ul>
-<li><strong>功能</strong>：请求取消指定的线程(Send a cancelation request
-to a thread)。</li>
+<li><strong>功能</strong>：请求取消指定的线程(Send a cancelation request to a thread)。</li>
 <li><strong>参数</strong>：线程ID（<code>pthread_t</code>）。</li>
 <li><strong>注意</strong>：线程必须在可取消状态下，才能被取消。</li>
 <li>线程会在取消点（IO操作）取消，而非立刻取消</li>
 <li>可以调用<code>pthread_testcancel()</code> ,手动添加取消点</li>
 <li>取消机制可能会引起<strong>资源泄露</strong></li>
 </ul>
-<hr />
-<p>补充知识：资源清理栈，我们可以手动给资源擦屁股，即在申请资源之后，调用<code>pthread_cleanup_push((void *routine)(void*), void*arg)</code>
-, 包装函数routine是一个返回值void，参数类型void*
-的统一函数，我们在其中将传入的（各种）<em>参数</em>强转，再作相应处理</p>
-<p>它本身不是取消点，所以一个资源被创建后，一定会入栈，注意每一个cleanup都必须搭配一个<code>pthread_cleanup_pop(1)</code>
-表示出栈，这样线程在pop之前挂掉的话，资源会自动出栈，并调用相应的包装函数
-，如果线程正常结束，pop也会按顺序执行，完成资源清理，此函数参数为零表示只出栈，不清理资源</p>
-<hr />
-<p>在 <code>pthread</code>
-库中，锁是用于同步多线程访问共享资源的重要工具，如果一个线程尝试获取已被其他线程持有的锁，它将被阻塞，直到锁被释放😀</p>
-<h3
-id="pthread_mutex_t"><strong><code>pthread_mutex_t</code></strong></h3>
+<hr>
+<h3 id="补充知识：">补充知识：</h3>
+<p>资源清理栈，我们可以手动给资源擦屁股，即在申请资源之后，调用<code>pthread_cleanup_push((void *routine)(void*), void*arg)</code> , 包装函数routine是一个返回值void，参数类型void* 的统一函数，我们在其中将传入的（各种）<em>参数</em>强转，再作相应处理</p>
+<p>它本身不是取消点，所以一个资源被创建后，一定会入栈，注意每一个cleanup都必须搭配一个<code>pthread_cleanup_pop(1)</code> 表示出栈，这样线程在pop之前挂掉的话，资源会自动出栈，并调用相应的包装函数 ，如果线程正常结束，pop也会按顺序执行，完成资源清理，此函数参数为零表示只出栈，不清理资源</p>
+<p>常见的取消点包括</p>
+<pre><code class="language-c">pthread_testcancel()
+pthread_join()
+pthread_exit()
+阻塞性系统调用（如 `sleep()`、`recv()`、`read()` 等）
+</code></pre>
+<hr>
+<p>在 <code>pthread</code> 库中，锁是用于同步多线程访问共享资源的重要工具，如果一个线程尝试获取已被其他线程持有的锁，它将被阻塞，直到锁被释放😀</p>
+<h3 id="pthread-mutex-t"><strong><code>pthread_mutex_t</code></strong></h3>
 <p>☝🏻这是用于创建互斥锁的基本数据结构。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> pthread_mutex_init<span class="op">(</span>pthread_mutex_t <span class="op">*</span>mutex<span class="op">,</span> <span class="dt">const</span> pthread_mutexattr_t <span class="op">*</span>attr<span class="op">);</span></span></code></pre></div>
+<pre><code class="language-c">int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);
+</code></pre>
 <ul>
 <li><strong>功能</strong>：初始化一个互斥锁。</li>
 <li><strong>参数</strong>：
 <ul>
 <li><code>mutex</code>：指向要初始化的互斥锁。</li>
-<li><code>attr</code>：锁的属性，可以为 <code>NULL</code>
-表示使用默认属性。</li>
-</ul></li>
+<li><code>attr</code>：锁的属性，可以为 <code>NULL</code> 表示使用默认属性。</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> pthread_mutex_lock<span class="op">(</span>pthread_mutex_t <span class="op">*</span>mutex<span class="op">);</span></span></code></pre></div>
+</li>
+</ul>
+<pre><code class="language-c">int pthread_mutex_lock(pthread_mutex_t *mutex);
+</code></pre>
 <ul>
 <li><strong>功能</strong>：锁定互斥锁。</li>
 <li><strong>参数</strong>：指向要加锁的互斥锁。</li>
 <li><strong>返回值</strong>：成功时返回 0，失败时返回错误码。</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> pthread_mutex_unlock<span class="op">(</span>pthread_mutex_t <span class="op">*</span>mutex<span class="op">);</span></span></code></pre></div>
+<pre><code class="language-c">int pthread_mutex_unlock(pthread_mutex_t *mutex);
+</code></pre>
 <ul>
 <li><strong>功能</strong>：解锁互斥锁。</li>
 <li><strong>参数</strong>：指向要解锁的互斥锁。</li>
 <li><strong>返回值</strong>：成功时返回 0，失败时返回错误码。</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> pthread_mutex_destroy<span class="op">(</span>pthread_mutex_t <span class="op">*</span>mutex<span class="op">);</span></span></code></pre></div>
+<pre><code class="language-c">int pthread_mutex_destroy(pthread_mutex_t *mutex);
+</code></pre>
 <ul>
 <li><strong>功能</strong>：销毁互斥锁。</li>
 <li><strong>参数</strong>：指向要销毁的互斥锁。</li>
 <li><strong>返回值</strong>：成功时返回 0，失败时返回错误码。</li>
 <li><strong>注意</strong>：在销毁之前，确保没有线程持有该锁。</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> pthread_mutex_trylock<span class="op">(</span>pthread_mutex_t <span class="op">*</span>mutex<span class="op">);</span></span></code></pre></div>
+<pre><code class="language-c">int pthread_mutex_trylock(pthread_mutex_t *mutex);
+</code></pre>
 <ul>
 <li><strong>功能</strong>：尝试锁定互斥锁，若锁已被其他线程锁定则立即返回。</li>
 <li><strong>参数</strong>：指向要尝试加锁的互斥锁。</li>
@@ -315,372 +313,383 @@ id="pthread_mutex_t"><strong><code>pthread_mutex_t</code></strong></h3>
 <ul>
 <li>成功时返回 0。</li>
 <li>若锁已被其他线程持有，则返回 <code>EBUSY</code>。</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <h3 id="使用示例">使用示例</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;pthread.h&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>pthread_mutex_t lock<span class="op">;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> shared_data <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span><span class="op">*</span> thread_function<span class="op">(</span><span class="dt">void</span><span class="op">*</span> arg<span class="op">)</span> <span class="op">&#123;</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    pthread_mutex_lock<span class="op">(&amp;</span>lock<span class="op">);</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    shared_data<span class="op">++;</span> <span class="co">// 访问共享数据</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    pthread_mutex_unlock<span class="op">(&amp;</span>lock<span class="op">);</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> NULL<span class="op">;</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">&#123;</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    pthread_t threads<span class="op">[</span><span class="dv">5</span><span class="op">];</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    pthread_mutex_init<span class="op">(&amp;</span>lock<span class="op">,</span> NULL<span class="op">);</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">5</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">&#123;</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        pthread_create<span class="op">(&amp;</span>threads<span class="op">[</span>i<span class="op">],</span> NULL<span class="op">,</span> thread_function<span class="op">,</span> NULL<span class="op">);</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">5</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">&#123;</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        pthread_join<span class="op">(</span>threads<span class="op">[</span>i<span class="op">],</span> NULL<span class="op">);</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;Final shared_data: </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> shared_data<span class="op">);</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    pthread_mutex_destroy<span class="op">(&amp;</span>lock<span class="op">);</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span></code></pre></div>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;pthread.h&gt;
+
+pthread_mutex_t lock;
+int shared_data = 0;
+
+void* thread_function(void* arg) &#123;
+    pthread_mutex_lock(&amp;lock);
+    shared_data++; // 访问共享数据
+    pthread_mutex_unlock(&amp;lock);
+    return NULL;
+&#125;
+
+int main() &#123;
+    pthread_t threads[5];
+    pthread_mutex_init(&amp;lock, NULL);
+
+    for (int i = 0; i &lt; 5; i++) &#123;
+        pthread_create(&amp;threads[i], NULL, thread_function, NULL);
+    &#125;
+
+    for (int i = 0; i &lt; 5; i++) &#123;
+        pthread_join(threads[i], NULL);
+    &#125;
+
+    printf(&quot;Final shared_data: %d\n&quot;, shared_data);
+    pthread_mutex_destroy(&amp;lock);
+    return 0;
+&#125;
+</code></pre>
 <h3 id="总结">总结</h3>
 <ul>
-<li><p>使用互斥锁可以有效防止数据竞争和不一致性。</p></li>
-<li><p>确保在解锁之前每次加锁都成功，并在使用完后销毁锁。</p></li>
-<li><p>尽量避免长时间持有锁，以提高系统性能。</p></li>
+<li>
+<p>使用互斥锁可以有效防止数据竞争和不一致性。</p>
+</li>
+<li>
+<p>确保在解锁之前每次加锁都成功，并在使用完后销毁锁。</p>
+</li>
+<li>
+<p>尽量避免长时间持有锁，以提高系统性能。</p>
+</li>
 </ul>
 <table>
-<colgroup>
-<col style="width: 12%" />
-<col style="width: 50%" />
-<col style="width: 37%" />
-</colgroup>
 <thead>
 <tr>
-<th style="text-align: left;">锁类型</th>
-<th style="text-align: left;">特点</th>
-<th style="text-align: left;">使用场景</th>
+<th style="text-align:left">锁类型</th>
+<th style="text-align:left">特点</th>
+<th style="text-align:left">使用场景</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">互斥锁</td>
-<td style="text-align: left;">保护临界区，阻止多个线程同时访问</td>
-<td style="text-align: left;">一般临界区保护</td>
+<td style="text-align:left">互斥锁</td>
+<td style="text-align:left">保护临界区，阻止多个线程同时访问</td>
+<td style="text-align:left">一般临界区保护</td>
 </tr>
 <tr>
-<td style="text-align: left;">读写锁</td>
-<td style="text-align: left;">多读单写，适合读多写少的场景</td>
-<td style="text-align: left;">数据库查询、共享配置读取</td>
+<td style="text-align:left">读写锁</td>
+<td style="text-align:left">多读单写，适合读多写少的场景</td>
+<td style="text-align:left">数据库查询、共享配置读取</td>
 </tr>
 <tr>
-<td style="text-align: left;">自旋锁</td>
-<td style="text-align: left;">轻量级锁，适合短时间持有</td>
-<td style="text-align: left;">多核处理器，短时间锁操作</td>
+<td style="text-align:left">自旋锁</td>
+<td style="text-align:left">轻量级锁，适合短时间持有</td>
+<td style="text-align:left">多核处理器，短时间锁操作</td>
 </tr>
 <tr>
-<td style="text-align: left;">可重入锁</td>
-<td style="text-align: left;">同一线程可多次获取</td>
-<td style="text-align: left;">递归调用或复杂对象操作</td>
+<td style="text-align:left">可重入锁</td>
+<td style="text-align:left">同一线程可多次获取</td>
+<td style="text-align:left">递归调用或复杂对象操作</td>
 </tr>
 <tr>
-<td style="text-align: left;">条件变量</td>
-<td style="text-align: left;">线程等待某个条件</td>
-<td style="text-align: left;">生产者-消费者模型</td>
+<td style="text-align:left">条件变量</td>
+<td style="text-align:left">线程等待某个条件</td>
+<td style="text-align:left">生产者-消费者模型</td>
 </tr>
 <tr>
-<td style="text-align: left;">信号量</td>
-<td style="text-align: left;">控制并发访问数量</td>
-<td style="text-align: left;">限制资源访问、线程池等</td>
+<td style="text-align:left">信号量</td>
+<td style="text-align:left">控制并发访问数量</td>
+<td style="text-align:left">限制资源访问、线程池等</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h3 id="pthread_mutex_lock-和-pthread_mutex_unlock">6.
-<strong><code>pthread_mutex_lock()</code> 和
-<code>pthread_mutex_unlock()</code></strong></h3>
+<hr>
+<h3 id="6-pthread-mutex-lock-和-pthread-mutex-unlock">6. <strong><code>pthread_mutex_lock()</code> 和 <code>pthread_mutex_unlock()</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：用于加锁和解锁互斥量，确保对共享资源的安全访问。</li>
-<li><strong>参数</strong>：互斥量（<code>pthread_mutex_t</code>
-*mutex）。</li>
-<li><strong>返回值</strong>：成功时返回
-<code>0</code>，失败时返回错误码。</li>
+<li><strong>参数</strong>：互斥量（<code>pthread_mutex_t</code> *mutex）。</li>
+<li><strong>返回值</strong>：成功时返回 <code>0</code>，失败时返回错误码。</li>
 </ul>
-<hr />
-<p>在 <code>pthread</code>
-库中，条件变量（<code>pthread_cond_t</code>）用于线程间的同步，允许线程在某个条件发生变化时进行等待和通知。条件变量的使用场景通常与共享资源的状态变化有关，尤其是在生产者-消费者问题等多线程场景中。😀</p>
-<h3 id="条件变量的基本概念">1. 条件变量的基本概念</h3>
-<p>条件变量的本质是提供一种线程间的协调机制，使得一个线程能够在某个条件不满足时挂起，并在条件满足时被其他线程唤醒。它们通常与互斥锁（<code>pthread_mutex_t</code>）结合使用，以确保在检查条件和修改共享资源时的线程安全。它允许线程等待某个条件的发生（例如，某个资源可用），而不占用
-CPU 资源</p>
-<h3 id="主要函数">2. 主要函数</h3>
+<hr>
+<p>在 <code>pthread</code> 库中，条件变量（<code>pthread_cond_t</code>）用于线程间的同步，允许线程在某个条件发生变化时进行等待和通知。条件变量的使用场景通常与共享资源的状态变化有关，尤其是在生产者-消费者问题等多线程场景中。😀</p>
+<h3 id="1-条件变量的基本概念">1. 条件变量的基本概念</h3>
+<p>条件变量的本质是提供一种线程间的协调机制，使得一个线程能够在某个条件不满足时挂起，并在条件满足时被其他线程唤醒。它们通常与互斥锁（<code>pthread_mutex_t</code>）结合使用，以确保在检查条件和修改共享资源时的线程安全。它允许线程等待某个条件的发生（例如，某个资源可用），而不占用 CPU 资源</p>
+<h3 id="2-主要函数">2. 主要函数</h3>
 <p>以下是条件变量的主要函数及其用途：</p>
 <ul>
-<li><p><strong>初始化</strong></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pthread_cond_t cond <span class="op">=</span> PTHREAD_COND_INITIALIZER<span class="op">;</span></span></code></pre></div>
+<li>
+<p><strong>初始化</strong></p>
+<pre><code class="language-c">pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+</code></pre>
 <p>或使用：</p>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pthread_cond_init<span class="op">(&amp;</span>cond<span class="op">,</span> NULL<span class="op">);</span></span></code></pre></div></li>
-<li><p><strong>等待</strong></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pthread_cond_wait<span class="op">(&amp;</span>cond<span class="op">,</span> <span class="op">&amp;</span>mutex<span class="op">);</span></span></code></pre></div>
+<pre><code class="language-c">pthread_cond_init(&amp;cond, NULL);
+</code></pre>
+</li>
+<li>
+<p><strong>等待</strong></p>
+<pre><code class="language-c">pthread_cond_wait(&amp;cond, &amp;mutex);
+</code></pre>
 <ul>
-<li>该函数使当前线程等待，直到接收到一个信号。它在等待之前会<strong>自动释放互斥锁</strong>
-<code>mutex</code>，并在被唤醒后重新获得该锁。</li>
-</ul></li>
-<li><p><strong>通知</strong></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pthread_cond_signal<span class="op">(&amp;</span>cond<span class="op">);</span></span></code></pre></div>
+<li>该函数使当前线程等待，直到接收到一个信号。它在等待之前会<strong>自动释放互斥锁</strong> <code>mutex</code>，并在被唤醒后重新获得该锁。</li>
+</ul>
+</li>
+<li>
+<p><strong>通知</strong></p>
+<pre><code class="language-c">pthread_cond_signal(&amp;cond);
+</code></pre>
 <ul>
 <li>唤醒一个等待该条件变量的线程。☝🏻</li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pthread_cond_broadcast<span class="op">(&amp;</span>cond<span class="op">);</span></span></code></pre></div>
+<pre><code class="language-c">pthread_cond_broadcast(&amp;cond);
+</code></pre>
 <ul>
 <li>唤醒所有等待该条件变量的线程。☝🏻</li>
-</ul></li>
-<li><p><strong>销毁</strong></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pthread_cond_destroy<span class="op">(&amp;</span>cond<span class="op">);</span></span></code></pre></div>
+</ul>
+</li>
+<li>
+<p><strong>销毁</strong></p>
+<pre><code class="language-c">pthread_cond_destroy(&amp;cond);
+</code></pre>
 <ul>
 <li>销毁条件变量，释放相关资源。</li>
-</ul></li>
 </ul>
-<h3 id="使用场景">3. 使用场景</h3>
+</li>
+</ul>
+<h3 id="3-使用场景">3. 使用场景</h3>
 <h4 id="生产者-消费者问题">生产者-消费者问题</h4>
 <p>典型的使用场景是生产者-消费者问题，其中一个或多个线程（生产者）生产数据，而另一些线程（消费者）消费数据。消费者在队列为空时等待，生产者在队列满时等待。</p>
-<h3 id="示例代码">4. 示例代码</h3>
+<h3 id="4-示例代码">4. 示例代码</h3>
 <p>下面是一个简单的示例，展示了如何使用条件变量：</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;my_header.h&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define RANDOM_SIDE </span><span class="dv">100</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define DEFAULT_CAPCITY </span><span class="dv">10</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> node <span class="op">&#123;</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> node <span class="op">*</span>next<span class="op">;</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> val<span class="op">;</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span> node_t<span class="op">;</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> list <span class="op">&#123;</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> node <span class="op">*</span>rear<span class="op">;</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> node <span class="op">*</span>front<span class="op">;</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> size<span class="op">;</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span>list_t<span class="op">;</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> isFull<span class="op">(</span>list_t <span class="op">*</span>li<span class="op">)&#123;</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> li<span class="op">-&gt;</span>size <span class="op">&gt;=</span> DEFAULT_CAPCITY<span class="op">;</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>list_t <span class="op">*</span>creatList<span class="op">()&#123;</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    list_t <span class="op">*</span>li <span class="op">=</span> <span class="op">(</span>list_t<span class="op">*)</span> calloc<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>list_t<span class="op">));</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> li<span class="op">;</span></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> enQ<span class="op">(</span>list_t <span class="op">*</span>li<span class="op">,</span> <span class="dt">int</span> val<span class="op">)&#123;</span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>isFull<span class="op">(</span>li<span class="op">))</span> <span class="cf">return</span><span class="op">;</span></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    node_t <span class="op">*</span>new1 <span class="op">=</span> <span class="op">(</span>node_t<span class="op">*)</span>calloc<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">int</span><span class="op">));</span></span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    new1<span class="op">-&gt;</span>val <span class="op">=</span> val<span class="op">;</span></span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>li<span class="op">-&gt;</span>size <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">&#123;</span></span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>        li<span class="op">-&gt;</span>front <span class="op">=</span> new1<span class="op">;</span></span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>        li<span class="op">-&gt;</span>rear <span class="op">=</span> new1<span class="op">;</span></span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span><span class="cf">else</span> <span class="op">&#123;</span></span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>        li<span class="op">-&gt;</span>rear<span class="op">-&gt;</span>next <span class="op">=</span> new1<span class="op">;</span></span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>        li<span class="op">-&gt;</span>rear <span class="op">=</span> new1<span class="op">;</span></span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>    li<span class="op">-&gt;</span>size<span class="op">++;</span></span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
-<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printList<span class="op">(</span>list_t <span class="op">*</span>li<span class="op">)&#123;</span></span>
-<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>    node_t <span class="op">*</span>cur <span class="op">=</span> li<span class="op">-&gt;</span>front<span class="op">;</span></span>
-<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span><span class="op">(</span>cur<span class="op">)&#123;</span></span>
-<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span><span class="op">,</span> cur<span class="op">-&gt;</span>val<span class="op">);</span></span>
-<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> cur<span class="op">-&gt;</span>next<span class="op">;</span></span>
-<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
-<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> deQ<span class="op">(</span>list_t <span class="op">*</span>li<span class="op">)&#123;</span></span>
-<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>li<span class="op">-&gt;</span>size <span class="op">==</span> <span class="dv">0</span><span class="op">)&#123;</span></span>
-<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>        perror<span class="op">(</span><span class="st">&quot;empty q</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>        exit<span class="op">(-</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> val <span class="op">=</span> li<span class="op">-&gt;</span>front<span class="op">-&gt;</span>val<span class="op">;</span></span>
-<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>    node_t <span class="op">*</span>tmp <span class="op">=</span> li<span class="op">-&gt;</span>front<span class="op">;</span></span>
-<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>    li<span class="op">-&gt;</span>front <span class="op">=</span> li<span class="op">-&gt;</span>front<span class="op">-&gt;</span>next<span class="op">;</span></span>
-<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>    free<span class="op">(</span>tmp<span class="op">);</span></span>
-<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a>    li<span class="op">-&gt;</span>size<span class="op">--;</span></span>
-<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> val<span class="op">;</span></span>
-<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
-<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a><span class="co">/* Usage:  */</span></span>
-<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> resource <span class="op">&#123;</span></span>
-<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>    pthread_cond_t instock<span class="op">;</span> <span class="co">// 表示货架变动</span></span>
-<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a>    pthread_mutex_t mutex<span class="op">;</span></span>
-<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a>    list_t <span class="op">*</span>commodities<span class="op">;</span></span>
-<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span> resource_t<span class="op">;</span></span>
-<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="op">*</span>producer<span class="op">(</span><span class="dt">void</span> <span class="op">*</span>arg<span class="op">)&#123;</span></span>
-<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a>    srand<span class="op">(</span>time<span class="op">(</span>NULL<span class="op">));</span></span>
-<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a>    resource_t <span class="op">*</span>re <span class="op">=</span> <span class="op">(</span>resource_t<span class="op">*)</span>arg<span class="op">;</span></span>
-<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span><span class="op">(</span><span class="dv">1</span><span class="op">)&#123;</span></span>
-<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a>        pthread_mutex_lock<span class="op">(&amp;</span>re<span class="op">-&gt;</span>mutex<span class="op">);</span></span>
-<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span><span class="op">(</span>re<span class="op">-&gt;</span>commodities<span class="op">-&gt;</span>size <span class="op">&gt;=</span> DEFAULT_CAPCITY<span class="op">)&#123;</span></span>
-<span id="cb13-79"><a href="#cb13-79" aria-hidden="true" tabindex="-1"></a>            printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%ld</span><span class="st"> : 当前货架已满</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> pthread_self<span class="op">());</span></span>
-<span id="cb13-80"><a href="#cb13-80" aria-hidden="true" tabindex="-1"></a>            <span class="co">//线程在条件不满足时调用 pthread_cond_wait 等待条件变量，并释放关联的锁。</span></span>
-<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a>            pthread_cond_wait<span class="op">(&amp;</span>re<span class="op">-&gt;</span>instock<span class="op">,</span> <span class="op">&amp;</span>re<span class="op">-&gt;</span>mutex<span class="op">);</span></span>
-<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
-<span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> val <span class="op">=</span> rand<span class="op">()</span> <span class="op">%</span> RANDOM_SIDE<span class="op">;</span></span>
-<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%ld</span><span class="st"> 生产者生产了 </span><span class="sc">%d</span><span class="st"> 号商品</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> pthread_self<span class="op">(),</span> val<span class="op">);</span></span>
-<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a>        enQ<span class="op">(</span>re<span class="op">-&gt;</span>commodities<span class="op">,</span> val<span class="op">);</span></span>
-<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;当前货架 ：&quot;</span><span class="op">);</span></span>
-<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a>        printList<span class="op">(</span>re<span class="op">-&gt;</span>commodities<span class="op">);</span></span>
-<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a>        <span class="co">//当条件满足时，调用 pthread_cond_signal来唤醒等待的线程</span></span>
-<span id="cb13-90"><a href="#cb13-90" aria-hidden="true" tabindex="-1"></a>        pthread_cond_signal<span class="op">(&amp;</span>re<span class="op">-&gt;</span>instock<span class="op">);</span></span>
-<span id="cb13-91"><a href="#cb13-91" aria-hidden="true" tabindex="-1"></a>        pthread_mutex_unlock<span class="op">(&amp;</span>re<span class="op">-&gt;</span>mutex<span class="op">);</span></span>
-<span id="cb13-92"><a href="#cb13-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-93"><a href="#cb13-93" aria-hidden="true" tabindex="-1"></a>        sleep<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
-<span id="cb13-94"><a href="#cb13-94" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb13-95"><a href="#cb13-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-96"><a href="#cb13-96" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
-<span id="cb13-97"><a href="#cb13-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-98"><a href="#cb13-98" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="op">*</span>consumer<span class="op">(</span><span class="dt">void</span> <span class="op">*</span>arg<span class="op">)&#123;</span></span>
-<span id="cb13-99"><a href="#cb13-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-100"><a href="#cb13-100" aria-hidden="true" tabindex="-1"></a>    sleep<span class="op">(</span><span class="dv">5</span><span class="op">);</span></span>
-<span id="cb13-101"><a href="#cb13-101" aria-hidden="true" tabindex="-1"></a>    resource_t <span class="op">*</span>re <span class="op">=</span> <span class="op">(</span>resource_t<span class="op">*)</span>arg<span class="op">;</span></span>
-<span id="cb13-102"><a href="#cb13-102" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span><span class="op">(</span><span class="dv">1</span><span class="op">)&#123;</span></span>
-<span id="cb13-103"><a href="#cb13-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-104"><a href="#cb13-104" aria-hidden="true" tabindex="-1"></a>        pthread_mutex_lock<span class="op">(&amp;</span>re<span class="op">-&gt;</span>mutex<span class="op">);</span></span>
-<span id="cb13-105"><a href="#cb13-105" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span><span class="op">(</span>re<span class="op">-&gt;</span>commodities<span class="op">-&gt;</span>size <span class="op">&lt;</span> <span class="dv">1</span><span class="op">)&#123;</span></span>
-<span id="cb13-106"><a href="#cb13-106" aria-hidden="true" tabindex="-1"></a>            printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%ld</span><span class="st"> : 当前货架为空</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> pthread_self<span class="op">());</span></span>
-<span id="cb13-107"><a href="#cb13-107" aria-hidden="true" tabindex="-1"></a>            pthread_cond_wait<span class="op">(&amp;</span>re<span class="op">-&gt;</span>instock<span class="op">,</span> <span class="op">&amp;</span>re<span class="op">-&gt;</span>mutex<span class="op">);</span></span>
-<span id="cb13-108"><a href="#cb13-108" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
-<span id="cb13-109"><a href="#cb13-109" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb13-110"><a href="#cb13-110" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%ld</span><span class="st"> 消费者消费了 </span><span class="sc">%d</span><span class="st"> 号商品</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span>pthread_self<span class="op">()</span> <span class="op">,</span> deQ<span class="op">(</span>re<span class="op">-&gt;</span>commodities<span class="op">));</span></span>
-<span id="cb13-111"><a href="#cb13-111" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;当前货架 ：&quot;</span><span class="op">);</span></span>
-<span id="cb13-112"><a href="#cb13-112" aria-hidden="true" tabindex="-1"></a>        printList<span class="op">(</span>re<span class="op">-&gt;</span>commodities<span class="op">);</span></span>
-<span id="cb13-113"><a href="#cb13-113" aria-hidden="true" tabindex="-1"></a>        pthread_cond_signal<span class="op">(&amp;</span>re<span class="op">-&gt;</span>instock<span class="op">);</span></span>
-<span id="cb13-114"><a href="#cb13-114" aria-hidden="true" tabindex="-1"></a>        pthread_mutex_unlock<span class="op">(&amp;</span>re<span class="op">-&gt;</span>mutex<span class="op">);</span></span>
-<span id="cb13-115"><a href="#cb13-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-116"><a href="#cb13-116" aria-hidden="true" tabindex="-1"></a>        sleep<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb13-117"><a href="#cb13-117" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb13-118"><a href="#cb13-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-119"><a href="#cb13-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-120"><a href="#cb13-120" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
-<span id="cb13-121"><a href="#cb13-121" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>argv<span class="op">[])&#123;</span>                                  </span>
-<span id="cb13-122"><a href="#cb13-122" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb13-123"><a href="#cb13-123" aria-hidden="true" tabindex="-1"></a>    list_t <span class="op">*</span>li <span class="op">=</span> creatList<span class="op">();</span></span>
-<span id="cb13-124"><a href="#cb13-124" aria-hidden="true" tabindex="-1"></a>    srand<span class="op">(</span>time<span class="op">(</span>NULL<span class="op">));</span></span>
-<span id="cb13-125"><a href="#cb13-125" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 初始化商品</span></span>
-<span id="cb13-126"><a href="#cb13-126" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">8</span><span class="op">;</span> i<span class="op">++)&#123;</span></span>
-<span id="cb13-127"><a href="#cb13-127" aria-hidden="true" tabindex="-1"></a>        enQ<span class="op">(</span>li<span class="op">,</span> rand<span class="op">()%</span><span class="dv">100</span><span class="op">);</span>    </span>
-<span id="cb13-128"><a href="#cb13-128" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
-<span id="cb13-129"><a href="#cb13-129" aria-hidden="true" tabindex="-1"></a>    printList<span class="op">(</span>li<span class="op">);</span></span>
-<span id="cb13-130"><a href="#cb13-130" aria-hidden="true" tabindex="-1"></a>    resource_t re<span class="op">;</span></span>
-<span id="cb13-131"><a href="#cb13-131" aria-hidden="true" tabindex="-1"></a>    re<span class="op">.</span>commodities <span class="op">=</span> li<span class="op">;</span></span>
-<span id="cb13-132"><a href="#cb13-132" aria-hidden="true" tabindex="-1"></a>    pthread_mutex_init<span class="op">(&amp;</span>re<span class="op">.</span>mutex<span class="op">,</span> NULL<span class="op">);</span></span>
-<span id="cb13-133"><a href="#cb13-133" aria-hidden="true" tabindex="-1"></a>    pthread_cond_init<span class="op">(&amp;</span>re<span class="op">.</span>instock<span class="op">,</span> NULL<span class="op">);</span></span>
-<span id="cb13-134"><a href="#cb13-134" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-135"><a href="#cb13-135" aria-hidden="true" tabindex="-1"></a>    pthread_t tid1<span class="op">,</span>tid2<span class="op">;</span></span>
-<span id="cb13-136"><a href="#cb13-136" aria-hidden="true" tabindex="-1"></a>    pthread_create<span class="op">(&amp;</span>tid1<span class="op">,</span> NULL<span class="op">,</span> consumer<span class="op">,</span> <span class="op">&amp;</span>re<span class="op">);</span></span>
-<span id="cb13-137"><a href="#cb13-137" aria-hidden="true" tabindex="-1"></a>    pthread_create<span class="op">(&amp;</span>tid2<span class="op">,</span> NULL<span class="op">,</span> consumer<span class="op">,</span> <span class="op">&amp;</span>re<span class="op">);</span></span>
-<span id="cb13-138"><a href="#cb13-138" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-139"><a href="#cb13-139" aria-hidden="true" tabindex="-1"></a>    pthread_t tid3<span class="op">,</span>tid4<span class="op">,</span>tid5<span class="op">;</span></span>
-<span id="cb13-140"><a href="#cb13-140" aria-hidden="true" tabindex="-1"></a>    pthread_create<span class="op">(&amp;</span>tid3<span class="op">,</span> NULL<span class="op">,</span> producer<span class="op">,</span> <span class="op">&amp;</span>re<span class="op">);</span></span>
-<span id="cb13-141"><a href="#cb13-141" aria-hidden="true" tabindex="-1"></a>    pthread_create<span class="op">(&amp;</span>tid4<span class="op">,</span> NULL<span class="op">,</span> producer<span class="op">,</span> <span class="op">&amp;</span>re<span class="op">);</span></span>
-<span id="cb13-142"><a href="#cb13-142" aria-hidden="true" tabindex="-1"></a>    pthread_create<span class="op">(&amp;</span>tid5<span class="op">,</span> NULL<span class="op">,</span> producer<span class="op">,</span> <span class="op">&amp;</span>re<span class="op">);</span></span>
-<span id="cb13-143"><a href="#cb13-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-144"><a href="#cb13-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-145"><a href="#cb13-145" aria-hidden="true" tabindex="-1"></a>    pthread_join<span class="op">(</span>tid1<span class="op">,</span> NULL<span class="op">);</span> <span class="co">// 都是死循环，象征性的等一下</span></span>
-<span id="cb13-146"><a href="#cb13-146" aria-hidden="true" tabindex="-1"></a>    <span class="co">//，不然主进程关闭，线程都死了</span></span>
-<span id="cb13-147"><a href="#cb13-147" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb13-148"><a href="#cb13-148" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span></code></pre></div>
-<h3 id="总结-1">5. 总结</h3>
+<pre><code class="language-c">#include &lt;my_header.h&gt;
+#define RANDOM_SIDE 100
+#define DEFAULT_CAPCITY 10
+
+typedef struct node &#123;
+    struct node *next;
+    int val;
+&#125; node_t;
+
+typedef struct list &#123;
+    struct node *rear;
+    struct node *front;
+    int size;
+&#125;list_t;
+
+bool isFull(list_t *li)&#123;
+    return li-&gt;size &gt;= DEFAULT_CAPCITY;
+&#125;
+
+list_t *creatList()&#123;
+    list_t *li = (list_t*) calloc(1, sizeof(list_t));
+    return li;
+&#125;
+
+void enQ(list_t *li, int val)&#123;
+    if(isFull(li)) return;
+
+    node_t *new1 = (node_t*)calloc(1, sizeof(int));
+    new1-&gt;val = val;
+
+    if(li-&gt;size == 0) &#123;
+        li-&gt;front = new1;
+        li-&gt;rear = new1;
+    &#125;else &#123;
+        li-&gt;rear-&gt;next = new1;
+        li-&gt;rear = new1;
+    &#125;
+    li-&gt;size++;
+
+    return;
+&#125;
+
+void printList(list_t *li)&#123;
+    node_t *cur = li-&gt;front;
+    while(cur)&#123;
+        printf(&quot;%d &quot;, cur-&gt;val);
+        cur = cur-&gt;next;
+    &#125;
+    printf(&quot;\n&quot;);
+&#125;
+
+int deQ(list_t *li)&#123;
+    if(li-&gt;size == 0)&#123;
+        perror(&quot;empty q\n&quot;);
+        exit(-1);
+    &#125;
+    
+    int val = li-&gt;front-&gt;val;
+    node_t *tmp = li-&gt;front;
+    li-&gt;front = li-&gt;front-&gt;next;
+    free(tmp);
+    li-&gt;size--;
+    return val;
+&#125;
+/* Usage:  */
+typedef struct resource &#123;
+    pthread_cond_t instock; // 表示货架变动
+    pthread_mutex_t mutex;
+    list_t *commodities;
+&#125; resource_t;
+
+void *producer(void *arg)&#123;
+    srand(time(NULL));
+    resource_t *re = (resource_t*)arg;
+    while(1)&#123;
+
+        pthread_mutex_lock(&amp;re-&gt;mutex);
+        while(re-&gt;commodities-&gt;size &gt;= DEFAULT_CAPCITY)&#123;
+            printf(&quot;%ld : 当前货架已满\n&quot;, pthread_self());
+            //线程在条件不满足时调用 pthread_cond_wait 等待条件变量，并释放关联的锁。
+            pthread_cond_wait(&amp;re-&gt;instock, &amp;re-&gt;mutex);
+        &#125;
+        
+        int val = rand() % RANDOM_SIDE;
+        printf(&quot;%ld 生产者生产了 %d 号商品\n&quot;, pthread_self(), val);
+        enQ(re-&gt;commodities, val);
+        printf(&quot;当前货架 ：&quot;);
+        printList(re-&gt;commodities);
+        //当条件满足时，调用 pthread_cond_signal来唤醒等待的线程
+        pthread_cond_signal(&amp;re-&gt;instock);
+        pthread_mutex_unlock(&amp;re-&gt;mutex);
+
+        sleep(3);
+    &#125;
+
+&#125;
+
+void *consumer(void *arg)&#123;
+
+    sleep(5);
+    resource_t *re = (resource_t*)arg;
+    while(1)&#123;
+
+        pthread_mutex_lock(&amp;re-&gt;mutex);
+        while(re-&gt;commodities-&gt;size &lt; 1)&#123;
+            printf(&quot;%ld : 当前货架为空\n&quot;, pthread_self());
+            pthread_cond_wait(&amp;re-&gt;instock, &amp;re-&gt;mutex);
+        &#125;
+        
+        printf(&quot;%ld 消费者消费了 %d 号商品\n&quot;,pthread_self() , deQ(re-&gt;commodities));
+        printf(&quot;当前货架 ：&quot;);
+        printList(re-&gt;commodities);
+        pthread_cond_signal(&amp;re-&gt;instock);
+        pthread_mutex_unlock(&amp;re-&gt;mutex);
+
+        sleep(1);
+    &#125;
+
+
+&#125;
+int main(int argc, char *argv[])&#123;                                  
+        
+    list_t *li = creatList();
+    srand(time(NULL));
+    // 初始化商品
+    for(int i=0; i &lt; 8; i++)&#123;
+        enQ(li, rand()%100);    
+    &#125;
+    printList(li);
+    resource_t re;
+    re.commodities = li;
+    pthread_mutex_init(&amp;re.mutex, NULL);
+    pthread_cond_init(&amp;re.instock, NULL);
+    
+    pthread_t tid1,tid2;
+    pthread_create(&amp;tid1, NULL, consumer, &amp;re);
+    pthread_create(&amp;tid2, NULL, consumer, &amp;re);
+    
+    pthread_t tid3,tid4,tid5;
+    pthread_create(&amp;tid3, NULL, producer, &amp;re);
+    pthread_create(&amp;tid4, NULL, producer, &amp;re);
+    pthread_create(&amp;tid5, NULL, producer, &amp;re);
+
+
+    pthread_join(tid1, NULL); // 都是死循环，象征性的等一下
+    //，不然主进程关闭，线程都死了
+    return 0;
+&#125;
+</code></pre>
+<h3 id="5-总结">5. 总结</h3>
 <ul>
 <li><strong>本质</strong>：条件变量是线程同步机制，允许线程在某个条件不满足时挂起，并在条件满足时唤醒。</li>
 <li><strong>何时使用</strong>：当线程需要等待某个条件（如资源可用性）时使用条件变量，通常与互斥锁一起使用来确保线程安全。</li>
 </ul>
-<hr />
-<h3 id="pthread_cond_wait条件量-锁-和-pthread_cond_signal条件量">7.
-<strong><code>pthread_cond_wait(条件量， 锁)</code> 和
-<code>pthread_cond_signal(条件量)</code></strong>💕</h3>
-<p><code>pthread_cond_wait</code>
-是一个用于线程同步的函数，它允许一个线程在某个条件不满足时进入等待状态。</p>
-<p>①检查mutex ②入队 ③解锁并陷入等待 ④ 被唤醒并出队 ⑤加锁</p>
-<h3 id="pthread_cond_wait-流程"><code>pthread_cond_wait</code> 流程</h3>
-<ol type="1">
-<li><strong>获取互斥锁</strong>：
+<hr>
+<h3 id="7-pthread-cond-wait-条件量，-锁-和-pthread-cond-signal-条件量-💕">7. **<code>pthread_cond_wait(条件量， 锁)</code> 和 <code>pthread_cond_signal(条件量)</code>**💕</h3>
+<p><code>pthread_cond_wait</code> 是一个用于线程同步的函数，它允许一个线程在某个条件不满足时进入等待状态。</p>
+<p>①检查mutex ②入队 ③解锁并陷入等待 ④ 被唤醒并出队  ⑤加锁</p>
+<h3 id="pthread-cond-wait-流程"><code>pthread_cond_wait</code> 流程</h3>
+<ol>
+<li>
+<p><strong>获取互斥锁</strong>：</p>
 <ul>
-<li>在调用 <code>pthread_cond_wait</code>
-之前，线程必须先获取一个互斥锁（<code>pthread_mutex_t</code>）。这确保了对共享资源的安全访问。</li>
-</ul></li>
-<li><strong>检查条件</strong>：
+<li>在调用 <code>pthread_cond_wait</code> 之前，线程必须先获取一个互斥锁（<code>pthread_mutex_t</code>）。这确保了对共享资源的安全访问。</li>
+</ul>
+</li>
+<li>
+<p><strong>检查条件</strong>：</p>
 <ul>
 <li>线程检查某个条件是否满足。如果条件不满足，则进入等待状态。</li>
-</ul></li>
-<li><strong>释放互斥锁</strong>：
+</ul>
+</li>
+<li>
+<p><strong>释放互斥锁</strong>：</p>
 <ul>
-<li>在进入等待状态之前，<code>pthread_cond_wait</code>
-会自动释放所持有的互斥锁。这是为了允许其他线程在条件满足时对共享资源进行修改。</li>
-</ul></li>
-<li><strong>进入等待状态</strong>：
+<li>在进入等待状态之前，<code>pthread_cond_wait</code> 会自动释放所持有的互斥锁。这是为了允许其他线程在条件满足时对共享资源进行修改。</li>
+</ul>
+</li>
+<li>
+<p><strong>进入等待状态</strong>：</p>
 <ul>
-<li>线程进入等待状态，直到被其他线程通过
-<code>pthread_cond_signal</code> 或 <code>pthread_cond_broadcast</code>
-唤醒。</li>
-</ul></li>
-<li><strong>重新获得互斥锁</strong>：
+<li>线程进入等待状态，直到被其他线程通过 <code>pthread_cond_signal</code> 或 <code>pthread_cond_broadcast</code> 唤醒。</li>
+</ul>
+</li>
+<li>
+<p><strong>重新获得互斥锁</strong>：</p>
 <ul>
-<li>当线程被唤醒后，<code>pthread_cond_wait</code>
-会重新获得之前释放的互斥锁。</li>
-</ul></li>
-<li><strong>返回并检查条件</strong>：
+<li>当线程被唤醒后，<code>pthread_cond_wait</code> 会重新获得之前释放的互斥锁。</li>
+</ul>
+</li>
+<li>
+<p><strong>返回并检查条件</strong>：</p>
 <ul>
 <li>线程返回后，通常需要再次检查条件，因为在被唤醒后，条件可能依然不满足。</li>
-</ul></li>
+</ul>
+</li>
 </ol>
 <h3 id="原子操作">原子操作</h3>
-<p>在 <code>pthread_cond_wait</code>
-的流程中，以下步骤被视为原子操作：</p>
-<ol type="1">
-<li><strong>释放互斥锁并进入等待状态</strong>：
+<p>在 <code>pthread_cond_wait</code> 的流程中，以下步骤被视为原子操作：</p>
+<ol>
+<li>
+<p><strong>释放互斥锁并进入等待状态</strong>：</p>
 <ul>
-<li><code>pthread_cond_wait</code>
-会在进入等待状态时自动释放互斥锁，这个过程是原子的。也就是说，线程在释放锁的瞬间，其他线程无法同时获得该锁。</li>
-</ul></li>
-<li><strong>重新获得互斥锁</strong>：
+<li><code>pthread_cond_wait</code> 会在进入等待状态时自动释放互斥锁，这个过程是原子的。也就是说，线程在释放锁的瞬间，其他线程无法同时获得该锁。</li>
+</ul>
+</li>
+<li>
+<p><strong>重新获得互斥锁</strong>：</p>
 <ul>
-<li>当条件满足且线程被唤醒时，<code>pthread_cond_wait</code>
-会在返回时自动重新获得互斥锁，这也是一个原子操作。</li>
-</ul></li>
+<li>当条件满足且线程被唤醒时，<code>pthread_cond_wait</code> 会在返回时自动重新获得互斥锁，这也是一个原子操作。</li>
+</ul>
+</li>
 </ol>
 <h3 id="注意事项">注意事项</h3>
 <ul>
-<li>在调用 <code>pthread_cond_wait</code>
-之前，必须确保互斥锁已被锁住。</li>
+<li>在调用 <code>pthread_cond_wait</code> 之前，必须确保互斥锁已被锁住。</li>
 <li>在被唤醒后，线程应再次检查条件，这个检查是必要的，因为可能存在虚假唤醒（即线程在没有条件满足的情况下被唤醒）。</li>
 </ul>
-<hr />
-<h3 id="pthread_self">8.
-<strong><code>pthread_self()</code></strong></h3>
+<hr>
+<h3 id="8-pthread-self">8. <strong><code>pthread_self()</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：获取当前线程的线程ID。</li>
-<li><strong>返回值</strong>：返回当前线程的
-<code>pthread_t</code>。</li>
+<li><strong>返回值</strong>：返回当前线程的 <code>pthread_t</code>。</li>
 </ul>
-<h3 id="pthread_getschedparam-和-pthread_setschedparam">9.
-<strong><code>pthread_getschedparam()</code> 和
-<code>pthread_setschedparam()</code></strong></h3>
+<h3 id="9-pthread-getschedparam-和-pthread-setschedparam">9. <strong><code>pthread_getschedparam()</code> 和 <code>pthread_setschedparam()</code></strong></h3>
 <ul>
 <li><strong>功能</strong>：获取或设置线程的调度策略和优先级。</li>
 <li><strong>参数</strong>：
 <ul>
 <li>线程ID（<code>pthread_t</code>）。</li>
 <li>指向调度参数的结构体。</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
     </div>

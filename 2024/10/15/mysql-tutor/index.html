@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>use npm | Kola&#39;s nest</title>
+    <title>MySQL的一行记录是如何存储的 | Kola&#39;s nest</title>
     <meta name="author" content="wxd666" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -162,22 +162,22 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>use npm</h1>
+        <h1>MySQL的一行记录是如何存储的</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/9/10
+            2024/10/15
         </span>
         
         <span class="category">
-            <a href="/categories/%E7%8E%AF%E5%A2%83/">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                环境
+                理论
             </a>
         </span>
         
@@ -190,15 +190,8 @@
             
             <span class="tag">
                 
-                <a href="/tags/npm/" style="color: #00a596">
-                    npm
-                </a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/SSL/" style="color: #03a9f4">
-                    SSL
+                <a href="/tags/Mysql/" style="color: #ff7d73">
+                    Mysql
                 </a>
             </span>
             
@@ -207,50 +200,138 @@
     </div>
     
     <div class="content" v-pre>
-        <h3 id="使用npm注意事项">使用npm注意事项</h3>
+        <hr>
+<h5 id="MySQL的数据存放在哪个文件？">MySQL的数据存放在哪个文件？</h5>
+<hr>
+<p>大家都知道mysql的数据时存在磁盘的，那具体时保存在哪个文件呢？它的存储行为是由存储引擎实现的，mysql支持多种引擎，不同的引擎保存的文件自然也不同，本次主要讨论InnoDB的存储方式</p>
+<p>先来看mysql数据库的文件存放在哪个目录？</p>
+<pre><code class="language-mysql">mysql&gt; show variables like 'datadir';
++---------------+-----------------+
+| Variable_name | Value           |
++---------------+-----------------+
+| datadir       | /var/lib/mysql/ |
++---------------+-----------------+
+1 row in set (0.35 sec)
+</code></pre>
+<p>我们每创建一个database，都会在这个目录里面创建同名的目录，然后保存表结构和表数据的文件都会存放在这里，每个数据库下的各表都有对应的<strong>独占表空间文件</strong>---- xxx.ibd 文件，表数据就存在这里（5.6.6开始）</p>
+<h5 id="表空间文件的结构是怎么样的？">表空间文件的结构是怎么样的？</h5>
+<p>表空间是由 <strong>段segment，区extent，页page，行row</strong>组成，InnoDB存储引擎的逻辑存储结构如图<img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84.drawio.png" alt=""></p>
+<h6 id="1-行-row">1.行 row</h6>
+<p>数据库表中的记录都是按行进行存放的，每行记录根据不同的行格式，有不同的存储结构</p>
+<h6 id="2-页-page">2. 页 page</h6>
+<p>记录是按照行来存储的，但是数据库的读取并不以【行】为单位，否则一次读取（也就是一次I/O）只能处理一行数据，效率会非常低。因此innodb<strong>的数据是按照页为单位读写的</strong>， 即需要读一条记录时，并不是将这个行记录从磁盘读出来，而是以页为单位，将其整体读入内存。默认每个页的大小为16kb，也就是最多能保证16kb的连续存储空间，页是innodb存储引擎磁盘管理的最小单元，这意味着一次IO最少操作16kb的内容，页的类型有很多，常见的有数据页，undo日志页，溢出页等，数据表中的行记录是用【数据页】来管理的，( •̀ ω •́ )也就是说，表中的记录存储在【数据页】里面</p>
+<h6 id="3-区-extent">3. 区 extent</h6>
+<p>我们知道innodb是用B+树来组织数据的。</p>
+<p>B+树中每一层都是通过双向链表连接起来的，如果以页为单位来分配存储空间，那么链表中相邻的两个页之间的物理位置并不是连续的，可能离得非常远，那么磁盘查询时就会有大量的随机IO，随机IO是非常慢的。</p>
+<p>如何解决这个问题呢？只需让链表中相邻的页的物理位置也相邻，这样就可以使用顺序IO了，那么在范围查询（扫描叶子结点）的时候性能就会很高</p>
+<p>那具体怎么解决呢？</p>
+<p><strong>在表中数据量大的时候，为某个索引分配空间的时候不再按照页为单位分配了。而是按照区（extent）为单位分配，每个区的大小为1MB，对于16kb的页来说，连续的64个页会被划为一个区，这样就使得链表中相邻的页的物理位置也相邻</strong></p>
+<h6 id="4-段-segment">4. 段 segment</h6>
+<p>表空间是由各个段 segment组成的，段是由多个区extent组成的，段一般分为数据段，索引段和回滚段等。</p>
 <ul>
-<li><p>安装后注意更换源</p>
-<p><code>npm config set registry https://registry.npm.taobao.org</code></p></li>
-<li><p>安装依赖时，使用<code>--verbose</code>来获取详细信息</p></li>
-<li><p>待解决</p>
-<p>当本地开启代理时，可能会遇到SSL证书问题，开发环境下使用</p>
-<p><code>npm config set strict-ssl false</code> 来临时忽略证书问题</p>
-<h4 id="补充-关于ssl">补充： 关于SSL</h4>
-<p>SSL
-证书（安全套接层证书）是一种数字证书，用于在互联网上建立安全的通信通道。它通过加密数据来保护用户与网站之间的通信，确保数据的机密性和完整性。</p>
-<h5 id="ssl-证书的作用">SSL 证书的作用</h5>
-<ol type="1">
-<li><strong>数据加密</strong>：确保在用户和服务器之间传输的数据是加密的，防止被第三方窃取。</li>
-<li><strong>身份验证</strong>：验证网站的身份，确保用户连接的是合法的网站，而不是伪装的钓鱼网站。</li>
-<li><strong>数据完整性</strong>：确保数据在传输过程中没有被篡改。</li>
-</ol>
-<h5 id="为什么会出现-ssl-证书错误">为什么会出现 SSL 证书错误？</h5>
-<ol type="1">
-<li><strong>证书过期</strong>：SSL
-证书有有效期，如果过期将导致连接失败。</li>
-<li><strong>证书不受信任</strong>：如果证书是自签名的或来自不受信任的证书颁发机构，浏览器或应用程序将拒绝该连接。</li>
-<li><strong>网络问题</strong>：某些网络环境（如公司网络）可能会干扰 SSL
-连接。</li>
-<li><strong>错误的系统时间</strong>：如果计算机的系统时间不正确，可能会导致
-SSL 证书验证失败。</li>
-</ol>
-<h5 id="代理设置与-ssl-证书">代理设置与 SSL 证书</h5>
-<p>如果你设置了代理，并且代理服务器的 SSL 证书有问题，可能会导致连接到
-GitHub 或其他网站失败。常见情况包括：</p>
-<ul>
-<li>代理服务器使用了过期或不受信任的 SSL 证书。</li>
-<li>代理设置不正确，导致请求未能正确转发。</li>
+<li>索引段：存放B+树的非叶子节点的区的集合</li>
+<li>数据段：存放B+树的叶子节点的区的集合</li>
+<li>回滚段：存放的时回滚数据的区的集合，MVCC就是利用了回滚段实现了多版本查询数据。</li>
 </ul>
-<h5 id="解决方法">解决方法</h5>
-<ol type="1">
-<li><strong>检查代理设置</strong>：确保代理设置正确，或尝试移除代理并直接连接。</li>
-<li><strong>忽略 SSL 错误</strong>：在某些情况下，可以临时忽略 SSL
-错误（但不推荐在生产环境中使用）。</li>
-<li><strong>更新证书</strong>：如果你控制代理服务器，确保它的 SSL
-证书是有效的。</li>
-<li><strong>检查网络环境</strong>：尝试在不同的网络环境下进行连接，看是否仍然出现问题。</li>
-</ol></li>
-</ul>
+<h5 id="INNODB行格式有哪些？">INNODB行格式有哪些？</h5>
+<p>Innodb提供了四种行格式 row_format：分别是 Redundant, Compact, Dynamic, Compressed 行格式</p>
+<p>这里我们只介绍一种 ，COMPACT格式，它和Dynamic格式非常像，后者是Mysql默认的行格式，弄懂了compact，其他格式也能很快看懂</p>
+<p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/COMPACT.drawio.png" alt=""></p>
+<p>可以看到，一条完整的记录分为 【记录的额外信息】和【记录的真实数据】两部分</p>
+<hr>
+<span id="more"></span>
+<p>Mysql模块 使用CAPI</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;mysql/mysql.h&gt;
+
+#define HOST &quot;localhost&quot;
+#define USER &quot;your_username&quot;
+#define PASSWORD &quot;your_password&quot;
+#define DATABASE &quot;your_database&quot;
+
+// 数据库连接结构
+typedef struct &#123;
+    MYSQL *conn;
+&#125; Database;
+
+// 初始化数据库连接
+Database* db_init() &#123;
+    Database *db = malloc(sizeof(Database));
+    db-&gt;conn = mysql_init(NULL);
+    if (db-&gt;conn == NULL) &#123;
+        fprintf(stderr, &quot;mysql_init() failed\n&quot;);
+        free(db);
+        return NULL;
+    &#125;
+
+    if (mysql_real_connect(db-&gt;conn, HOST, USER, PASSWORD, DATABASE, 0, NULL, 0) == NULL) &#123;
+        fprintf(stderr, &quot;mysql_real_connect() failed\n&quot;);
+        mysql_close(db-&gt;conn);
+        free(db);
+        return NULL;
+    &#125;
+
+    return db;
+&#125;
+
+// 执行查询
+MYSQL_RES* db_query(Database *db, const char *query) &#123;
+    if (mysql_query(db-&gt;conn, query)) &#123;
+        fprintf(stderr, &quot;mysql_query() failed: %s\n&quot;, mysql_error(db-&gt;conn));
+        return NULL;
+    &#125;
+    return mysql_store_result(db-&gt;conn);
+&#125;
+
+// 释放结果集
+void db_free_result(MYSQL_RES *result) &#123;
+    if (result) &#123;
+        mysql_free_result(result);
+    &#125;
+&#125;
+
+// 关闭数据库连接
+void db_close(Database *db) &#123;
+    if (db) &#123;
+        mysql_close(db-&gt;conn);
+        free(db);
+    &#125;
+&#125;
+
+// 打印查询结果
+void db_print_results(MYSQL_RES *result) &#123;
+    MYSQL_ROW row;
+    unsigned int num_fields = mysql_num_fields(result);
+    
+    while ((row = mysql_fetch_row(result))) &#123;
+        for (unsigned int i = 0; i &lt; num_fields; i++) &#123;
+            printf(&quot;%s &quot;, row[i] ? row[i] : &quot;NULL&quot;);
+        &#125;
+        printf(&quot;\n&quot;);
+    &#125;
+&#125;
+
+// 示例使用
+int main() &#123;
+    Database *db = db_init();
+    if (db == NULL) &#123;
+        return EXIT_FAILURE;
+    &#125;
+
+    // 示例查询
+    const char *query = &quot;SELECT * FROM users&quot;; // 修改为您的查询
+    MYSQL_RES *result = db_query(db, query);
+    if (result) &#123;
+        db_print_results(result);
+        db_free_result(result);
+    &#125;
+
+    db_close(db);
+    return EXIT_SUCCESS;
+&#125;
+</code></pre>
 
     </div>
     

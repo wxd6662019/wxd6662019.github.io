@@ -196,6 +196,78 @@
         
 
 <div class="post">
+    <a href="/2024/09/19/%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">
+        <h2 class="post-title">进程相关系统调用</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                理论
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/9/19
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1>系统调用</h1>
+<h3 id="1-fork">1. <strong><code>fork()</code></strong></h3>
+<ul>
+<li><strong>作用</strong>：创建一个新进程，复制当前进程的所有属性。</li>
+<li><strong>返回值</strong>：在父进程中返回新创建的子进程的 PID，在子进程中返回 0，失败时返回 -1。</li>
+<li>在fork之前打开的文件对象是共享的，pc指针和代码段也是相同的</li>
+</ul>
+<h3 id="2-exec">2. <strong><code>exec()</code></strong></h3>
+<ul>
+<li><strong>作用</strong>：用新程序替换当前进程的映像。</li>
+<li><strong>常用变体</strong>：<code>execl()</code>, <code>execp()</code>, <code>execv()</code> 等。</li>
+<li><strong>返回值</strong>：成功时不返回，失败时返回 -1。</li>
+</ul>
+<h3 id="3-wait-waitpid">3. <strong><code>wait()</code> / <code>waitpid()</code></strong></h3>
+<ul>
+<li><strong>作用</strong>：让父进程等待子进程结束，并获取子进程的退出状态。</li>
+<li><strong>返回值</strong>：成功时返回结束的子进程的 PID，失败时返回 -1。</li>
+<li>参数NULL表示父进程不关心子进程的退出状态信息</li>
+</ul>
+<h3 id="4-exit">4. <strong><code>exit()</code></strong></h3>
+<ul>
+<li><strong>作用</strong>：终止当前进程，并返回状态给父进程。</li>
+<li><strong>返回值</strong>：不返回。</li>
+<li>其它退出方式：_exit() : 不清理缓冲， return清理缓冲区，被信号中止， 主动调用 abort()</li>
+</ul>
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Linux/" style="color: #03a9f4">Linux</a>
+        </span>
+        
+    </div>
+    <a href="/2024/09/19/%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2024/09/18/%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4/">
         <h2 class="post-title">进程相关命令</h2>
     </a>
@@ -300,7 +372,7 @@ CLONE_THREAD, 类似 NPTL pthreads）； + //位于后台的进程组；</p>
         
         <span class="tag">
             
-            <a href="/tags/Linux/" style="color: #ff7d73">Linux</a>
+            <a href="/tags/Linux/" style="color: #ffa2c4">Linux</a>
         </span>
         
     </div>
@@ -352,7 +424,7 @@ CLONE_THREAD, 类似 NPTL pthreads）； + //位于后台的进程组；</p>
         
         <span class="tag">
             
-            <a href="/tags/C/" style="color: #00a596">C</a>
+            <a href="/tags/C/" style="color: #00bcd4">C</a>
         </span>
         
     </div>
@@ -406,7 +478,7 @@ CLONE_THREAD, 类似 NPTL pthreads）； + //位于后台的进程组；</p>
         
         <span class="tag">
             
-            <a href="/tags/Linux/" style="color: #00bcd4">Linux</a>
+            <a href="/tags/Linux/" style="color: #00a596">Linux</a>
         </span>
         
     </div>
@@ -495,7 +567,7 @@ CLONE_THREAD, 类似 NPTL pthreads）； + //位于后台的进程组；</p>
         
         <span class="tag">
             
-            <a href="/tags/npm/" style="color: #03a9f4">npm</a>
+            <a href="/tags/npm/" style="color: #ffa2c4">npm</a>
         </span>
         
         <span class="tag">
@@ -505,55 +577,6 @@ CLONE_THREAD, 类似 NPTL pthreads）； + //位于后台的进程组；</p>
         
     </div>
     <a href="/2024/09/10/2024-9-10-use-npm/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/08/2024-9-8-vim-plus/">
-        <h2 class="post-title">vim-plus</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/%E7%8E%AF%E5%A2%83/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                环境
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/8
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>配置vim-plus</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/vim/" style="color: #00bcd4">vim</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/08/2024-9-8-vim-plus/" class="go-post">阅读全文</a>
 </div>
 
 
