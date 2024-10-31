@@ -196,6 +196,81 @@
         
 
 <div class="post">
+    <a href="/2024/09/20/IPC%E4%B9%8B%E4%BF%A1%E5%8F%B7/">
+        <h2 class="post-title">IPC之信号</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                理论
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/9/20
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <hr>
+<h3 id="1-信号的定义">1. <strong>信号的定义</strong></h3>
+<ul>
+<li>信号是一种异步通知机制，用于向进程发送事件通知。这些事件可以是外部事件（如用户按键、定时器到期）或内核事件（如进程错误）。</li>
+</ul>
+<blockquote>
+<p>Each signal has a current disposition, which determines how the process behaves when it is delivered the signal.</p>
+</blockquote>
+<h3 id="2-信号的类型">2. <strong>信号的类型</strong></h3>
+<ul>
+<li>常见的信号包括：
+<ul>
+<li><code>SIGINT</code>：中断信号，通常由 Ctrl+C 发送。</li>
+<li><code>SIGTERM</code>：终止信号，要求进程终止。</li>
+<li><code>SIGKILL</code>：强制终止信号，不能被捕获或忽略。</li>
+<li><code>SIGUSR1</code> 和 <code>SIGUSR2</code>：用户定义的信号，可以用于自定义事件处理。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-信号的发送">3. <strong>信号的发送</strong></h3>
+<ul>
+<li>信号可以由以下方式发送：
+<ul>
+<li><strong>命令行</strong>：使用 <code>kill</code> 命令发送信号。kill -l 查看所有信号</li>
+<li><strong>系统调用</strong>：使用 <code>kill()</code> , <code>abort()</code> <code>raise()</code> 函数在程序内部发送信号。</li>
+</ul>
+</li>
+</ul>
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Linux/" style="color: #03a9f4">Linux</a>
+        </span>
+        
+    </div>
+    <a href="/2024/09/20/IPC%E4%B9%8B%E4%BF%A1%E5%8F%B7/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2024/09/19/%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">
         <h2 class="post-title">进程相关系统调用</h2>
     </a>
@@ -260,7 +335,7 @@
         
         <span class="tag">
             
-            <a href="/tags/Linux/" style="color: #03a9f4">Linux</a>
+            <a href="/tags/Linux/" style="color: #00bcd4">Linux</a>
         </span>
         
     </div>
@@ -372,7 +447,7 @@ CLONE_THREAD, 类似 NPTL pthreads）； + //位于后台的进程组；</p>
         
         <span class="tag">
             
-            <a href="/tags/Linux/" style="color: #ffa2c4">Linux</a>
+            <a href="/tags/Linux/" style="color: #00bcd4">Linux</a>
         </span>
         
     </div>
@@ -424,7 +499,7 @@ CLONE_THREAD, 类似 NPTL pthreads）； + //位于后台的进程组；</p>
         
         <span class="tag">
             
-            <a href="/tags/C/" style="color: #00bcd4">C</a>
+            <a href="/tags/C/" style="color: #03a9f4">C</a>
         </span>
         
     </div>
@@ -473,12 +548,12 @@ CLONE_THREAD, 类似 NPTL pthreads）； + //位于后台的进程组；</p>
         
         <span class="tag">
             
-            <a href="/tags/C/" style="color: #03a9f4">C</a>
+            <a href="/tags/C/" style="color: #ffa2c4">C</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Linux/" style="color: #00a596">Linux</a>
+            <a href="/tags/Linux/" style="color: #03a9f4">Linux</a>
         </span>
         
     </div>
@@ -518,65 +593,11 @@ CLONE_THREAD, 类似 NPTL pthreads）； + //位于后台的进程组；</p>
         
         <span class="tag">
             
-            <a href="/tags/tutor/" style="color: #00a596">tutor</a>
+            <a href="/tags/tutor/" style="color: #ffa2c4">tutor</a>
         </span>
         
     </div>
     <a href="/2024/09/10/hello-world/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/10/2024-9-10-use-npm/">
-        <h2 class="post-title">use npm</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/%E7%8E%AF%E5%A2%83/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                环境
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/10
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>使用npm命令进度缓慢</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/npm/" style="color: #ffa2c4">npm</a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/SSL/" style="color: #ff7d73">SSL</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/10/2024-9-10-use-npm/" class="go-post">阅读全文</a>
 </div>
 
 

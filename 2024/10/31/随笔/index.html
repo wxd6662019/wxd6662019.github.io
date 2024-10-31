@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Categories | Kola&#39;s nest</title>
+    <title>随笔 | Kola&#39;s nest</title>
     <meta name="author" content="wxd666" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -42,6 +42,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -156,47 +160,20 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        
-        <span>
-            <a href="/categories/%E7%8E%AF%E5%A2%83/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                环境
-            </a>
+            <div class="article">
+    <div>
+        <h1>随笔</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/10/31
         </span>
         
-        
-        
-        <span>
-            <a href="/categories/%E8%AF%AD%E6%B3%95/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                语法
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E5%91%BD%E4%BB%A4/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                命令
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E7%90%86%E8%AE%BA/" style="background: #00a596">
+        <span class="category">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -205,18 +182,45 @@
         </span>
         
         
-        
-        <span>
-            <a href="/categories/%E5%AE%9E%E8%B7%B5/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                实践
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/C/" style="color: #03a9f4">
+                    C++
+                </a>
+            </span>
+            
         </span>
         
-        
     </div>
+    
+    <div class="content" v-pre>
+        <h2 id="概念区分">概念区分</h2>
+<p>重载
+overload：发生在同一个类中，当函数名称相同时，函数参数类型，顺序，个数任一不同</p>
+<p>隐藏
+oversee：发生在基类和派生类之间，函数名称相同时，就构成隐藏（参数不同也能构成隐藏）</p>
+<p>覆盖
+override：发生在基类和派生类之间，基类和派生类中同时定义相同的虚函数，覆盖的是虚函数表中的入口地址，并不知覆盖函数本身</p>
+<hr />
+<p>c</p>
+
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
     
 </div>
 
@@ -248,6 +252,29 @@
         
     </div>
     <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="wxd6662019/wxd6662019.github.io"
+    data-repo-id="R_kgDOMv_QXw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMv_QX84CiZrp"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
     
 </body>
 </html>
