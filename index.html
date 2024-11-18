@@ -196,6 +196,169 @@
         
 
 <div class="post">
+    <a href="/2024/11/18/%E7%AE%97%E6%B3%95%E5%BA%93/">
+        <h2 class="post-title">算法库</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                理论
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/11/18
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <hr />
+<ol type="1">
+<li><h3
+id="头文件include-algorithm">头文件<code>include &lt;algorithm&gt;</code></h3>
+<p>算法库中的算法均为非成员函数</p></li>
+<li><h3 id="分类">分类</h3>
+<ul>
+<li>非修改式的算法 for_each</li>
+<li>修改式 remove_if</li>
+<li>排序</li>
+<li>二分搜索</li>
+<li>集合操作</li>
+<li>堆操作</li>
+<li>最值</li>
+<li>数值操作</li>
+<li>未初始化的内存操作</li>
+</ul></li>
+<li><h3 id="for_each-算法">for_each 算法</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Apply a function to every element of a sequence. </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>for_each<span class="op">(</span>v<span class="op">.</span>begin<span class="op">(),</span> v<span class="op">.</span>end<span class="op">(),</span> <span class="op">[</span>a<span class="op">](</span><span class="dt">int</span> v<span class="op">)</span><span class="at">mutable</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#123;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">--</span>a<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        cout <span class="op">&lt;&lt;</span> <span class="st">&quot;a=&quot;</span> <span class="op">&lt;&lt;</span> a <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        v<span class="op">=</span>v<span class="op">*</span><span class="dv">2</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        cout <span class="op">&lt;&lt;</span> v <span class="op">&lt;&lt;</span> <span class="st">&quot; &quot;</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;);</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">//对容器内的所有元素执行此匿名函数</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">//[] 为捕获列表，默认空表示不捕获， = 表示捕获所有变量（按值）</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">//&amp; 表示捕获所有变量（按引用）。 mutable 表 你可以修改按值捕获的变量（read-only）的副本</span></span></code></pre></div></li>
+<li><h3 id="remove_if-算法">remove_if 算法</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> v<span class="op">&#123;</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">6</span><span class="op">&#125;;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 移除所有大于 3 的元素</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> it <span class="op">=</span> <span class="bu">std::</span>remove_if<span class="op">(</span>v<span class="op">.</span>begin<span class="op">(),</span> v<span class="op">.</span>end<span class="op">(),</span> <span class="op">[](</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">&#123;</span> <span class="cf">return</span> x <span class="op">&gt;</span> <span class="dv">3</span><span class="op">;</span> <span class="op">&#125;);</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>v<span class="op">.</span>erase<span class="op">(</span>it<span class="op">,</span> v<span class="op">.</span>end<span class="op">());</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">// 注意</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">//1.不是真正删除：</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">//std::remove_if 仅重新排列容器中的元素，逻辑上删除的元素仍然存在于容器中，必须使用 erase 方法来真正删除它们。</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">//2.返回迭代器：</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">//remove_if 返回一个指向新逻辑结尾的迭代器，后续的 erase 调用应使用该迭代器。</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">//3.适用容器：</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">//remove_if 可以与所有支持随机访问迭代器的容器（如 vector、deque 和 array）结合使用，但不适用于 list，因为 remove_if 只能使用随机访问迭代器。</span></span></code></pre></div></li>
+</ol>
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/C/" style="color: #00a596">C++</a>
+        </span>
+        
+    </div>
+    <a href="/2024/11/18/%E7%AE%97%E6%B3%95%E5%BA%93/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2024/11/12/Container-Overview/">
+        <h2 class="post-title">Container Overview</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                理论
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/11/12
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h3 id="标准模板库概述">标准模板库概述</h3>
+<h2 id="stl的六大组件">STL的六大组件</h2>
+<ol type="1">
+<li><p>容器：用来存放数据的，数据结构</p>
+<ul>
+<li>序列式容器 vector, list, deque</li>
+<li>关联式容器 set, map</li>
+<li>无序关联式容器 unordered_set, unordered_map</li>
+</ul></li>
+<li><p>迭代器：看成是一种指针，广义指针（具备指针的功能）。可以访问容器中的元素</p></li>
+<li><p>算法：操作容器中的元素</p></li>
+<li><p>适配器：起到适配的作用</p>
+<ul>
+<li><p>容器适配器 stack，queue, priority_queue</p>
+<p>(容器适配器是对其他容器（如
+<code>std::deque</code>、<code>std::list</code>）的封装，它们提供了不同的接口，以实现特定的数据结构行为。适配器不直接存储数据，而是通过组合已有的容器来实现某种数据结构的特性。)</p></li>
+<li><p>迭代器适配器 front_inserter, back_inserter</p>
+<p>(迭代器适配器可以改变基本迭代器的行为，使其能够适应不同的需求。例如，<code>front_inserter</code>
+将元素插入到容器的前端，而普通的迭代器可能只是用于访问或修改元素)</p></li>
+<li><p>函数适配器</p></li>
+</ul></li>
+<li><p>函数对象（仿函数）：定制化操作</p></li>
+<li><p>空间配置器：进行空间的申请与释放操作 （使用+原理+源码）</p></li>
+</ol>
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/C/" style="color: #03a9f4">C++</a>
+        </span>
+        
+    </div>
+    <a href="/2024/11/12/Container-Overview/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2024/10/31/%E9%9A%8F%E7%AC%94/">
         <h2 class="post-title">随笔</h2>
     </a>
@@ -229,8 +392,37 @@ overload：发生在同一个类中，当函数名称相同时，函数参数类
 oversee：发生在基类和派生类之间，函数名称相同时，就构成隐藏（参数不同也能构成隐藏）</p>
 <p>覆盖
 override：发生在基类和派生类之间，基类和派生类中同时定义相同的虚函数，覆盖的是虚函数表中的入口地址，并不知覆盖函数本身</p>
+<p>C++中有哪几种多态？请详细说明一下</p>
+<ol type="1">
+<li>静态多态：包括函数重载，运算符重载，模板，在编译时发生</li>
+<li>动态多态：使用虚函数实现，在运行时发生，当类中定义了虚函数之后，在对象的存储开始位置，多一个虚函数指针，指向一张虚函数表，表中存储的是虚函数入口地址，如果此类有派生类，且派生类中对虚函数进行了覆盖，对于派生类而言，将会覆盖表中的虚函数入口地址</li>
+</ol>
 <hr />
-<p>c</p>
+<h2
+id="智能指针的实现原理是什么用到了什么技术该技术有哪些特征">智能指针的实现原理是什么？用到了什么技术？该技术有哪些特征？</h2>
+<p>智能指针是 C++ 中一种用于管理动态内存的对象，智能指针利用 RAII
+技术，确保资源在对象的生命周期内得到管理。对象的构造和析构与资源的获取和释放紧密相连。还使用了模板，以支持不同类型的资源。</p>
+<p>C++ 标准库提供了几种智能指针的实现，最常用的有：</p>
+<ul>
+<li><strong><code>std::unique_ptr</code></strong>：独占所有权，不能被复制，但可以被移动。</li>
+<li><strong><code>std::shared_ptr</code></strong>：共享所有权，多个指针可以指向同一个对象，通过引用计数来管理对象的生命周期。当引用计数为零时，资源被释放。</li>
+<li><strong><code>std::weak_ptr</code></strong>：与
+<code>shared_ptr</code>
+结合使用，持有对对象的弱引用，不增加引用计数，避免循环引用。</li>
+</ul>
+<h4 id="移动语义">移动语义</h4>
+<ul>
+<li><code>std::unique_ptr</code>
+支持移动语义，意味着它的所有权可以被转移，但不能被复制。</li>
+<li>移动构造函数和移动赋值运算符被实现为简单的指针转移，并将原对象的指针置为
+<code>nullptr</code>，确保不会双重释放内存。</li>
+</ul>
+<h2
+id="什么是右值引用c11为什么要引入右值引用">什么是右值引用？C++11为什么要引入右值引用？</h2>
+<p>在c++中，右值是指哪些没有持久地址的临时对象，通常出现在表达式的右侧。右值引用则是一个新的引用类型，用于绑定到右值，其语法为
+&amp;&amp; ，与左值引用的&amp; 相对。</p>
+<p>因为要优化资源管理和提高性能，在之前我们把一个临时的类对象赋值给变量时，通常会调用类的构造与赋值函数，这样做就涉及到对象的创建和销毁，浪费性能，所以引入右值和移动语义，移动语义指的是通过“移动”而非“复制”的方式来管理资源。这意味着可以将资源的所有权从一个对象转移到另一个对象，而不需要复制资源本身。其实现依赖于右值引用，允许开发者定义移动构造函数和移动赋值运算符，从而在对象间安全地转移资源。</p>
+<p><code>int&amp;&amp; rvalueRef = 42; // 42 是一个右值，rvalueRef 是一个右值引用</code></p>
 
             
         </div>
@@ -245,7 +437,7 @@ override：发生在基类和派生类之间，基类和派生类中同时定义
         
         <span class="tag">
             
-            <a href="/tags/C/" style="color: #00bcd4">C++</a>
+            <a href="/tags/C/" style="color: #ffa2c4">C++</a>
         </span>
         
     </div>
@@ -331,7 +523,7 @@ override：发生在基类和派生类之间，基类和派生类中同时定义
         
         <span class="tag">
             
-            <a href="/tags/Mysql/" style="color: #ffa2c4">Mysql</a>
+            <a href="/tags/Mysql/" style="color: #03a9f4">Mysql</a>
         </span>
         
     </div>
@@ -469,12 +661,12 @@ typedef union &#123;
         
         <span class="tag">
             
-            <a href="/tags/Linux/" style="color: #ffa2c4">Linux</a>
+            <a href="/tags/Linux/" style="color: #ff7d73">Linux</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/IO/" style="color: #ff7d73">IO</a>
+            <a href="/tags/IO/" style="color: #ffa2c4">IO</a>
         </span>
         
     </div>
@@ -524,142 +716,11 @@ typedef union &#123;
         
         <span class="tag">
             
-            <a href="/tags/Linux/" style="color: #00bcd4">Linux</a>
+            <a href="/tags/Linux/" style="color: #03a9f4">Linux</a>
         </span>
         
     </div>
     <a href="/2024/09/27/%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/25/TCP/">
-        <h2 class="post-title">TCP</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/%E7%90%86%E8%AE%BA/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                理论
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/25
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="tcp基本认识">TCP基本认识</h1>
-<h2 id="看一看tcp的头">1. 看一看TCP的头</h2>
-<p><img
-src="https://cdn.xiaolincoding.com//mysql/other/format,png-20230309230534096.png" /></p>
-<p><strong>Sequence_Number</strong>:
-在建立连接时由计算机生成的随机数作为初始值，通过SYN包传给接收端主机，每发送一次数据，<em>累加</em>
-一次该 <em>数据字节数</em>
-的大小。<strong>用来解决网络包乱序问题。</strong></p>
-<p><strong>Ackonwledge_Number:</strong> 指下一次 <em>期望</em>
-收到的数据的序列号，发送端收到这个确认应答以后可以认为这个序号以前的数据都已经被正常接收。<strong>用来解决丢包的问题。</strong></p>
-<p><strong>flag：</strong></p>
-<ul>
-<li>ACK：该位为1时，<em>确认应答</em>
-的字段变为有效，TCP规定处理最初建立连接时的SYN包之外该位必须设置为1</li>
-<li>RST： 该位为1时，表示TCP连接中出现异常必须强制断开连接</li>
-<li>SYN：该位为1时，表示希望建立连接，并在其 <em>序列号</em>
-的字段进行序列号初始值的设定</li>
-<li>FIN：该位为1时，表示今后不会再有数据发送，希望断开连接。当通信结束希望断开连接时，通信双方的主机之间就可以相互交换FIN位为1的TCP段。</li>
-</ul>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/Network/" style="color: #ffa2c4">Network</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/25/TCP/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/09/20/%E7%BA%BF%E7%A8%8B/">
-        <h2 class="post-title">线程</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/%E7%90%86%E8%AE%BA/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                理论
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/9/20
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1>基本概念</h1>
-<p><strong>linux</strong>中线程又叫做轻量级进程（light-weight process LWP），也有PCB，创建线程使用的底层函数和进程底层一样，都是clone，但没有独立的地址空间；而进程有独立地址空间，拥有PCB。<br>
-Linux下：线程是最小的执行单位，调度的基本单位。进程是最小分配资源单位，可看成是只有一个线程的进程。<br>
-线程是一个进程内部的控制序列。控制序列可以理解为一个执行流。进程内部是指虚拟地址空间。</p>
-<h3 id="1-pthread-create">1. <strong><code>pthread_create()</code></strong></h3>
-<ul>
-<li><strong>功能</strong>：创建一个新线程。</li>
-<li><strong>参数</strong>：
-<ul>
-<li>线程ID（<code>&amp;pthread_t</code>）。传入线程id的指针</li>
-<li>线程属性（可以为 <code>NULL</code>，表示默认属性）。</li>
-<li>线程函数（线程启动时执行的函数）。</li>
-<li>线程参数（传递给线程函数的参数）。</li>
-</ul>
-</li>
-<li><strong>返回值</strong>：成功时返回 <code>0</code>，失败时返回错误码。</li>
-<li><strong>注意：第三方库, 需要手动链接 -lpthread</strong></li>
-</ul>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/Linux/" style="color: #00bcd4">Linux</a>
-        </span>
-        
-    </div>
-    <a href="/2024/09/20/%E7%BA%BF%E7%A8%8B/" class="go-post">阅读全文</a>
 </div>
 
 

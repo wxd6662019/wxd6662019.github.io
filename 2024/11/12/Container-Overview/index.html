@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Tags: vim | Kola&#39;s nest</title>
+    <title>Container Overview | Kola&#39;s nest</title>
     <meta name="author" content="wxd666" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -42,6 +42,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -156,184 +160,84 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div id="archives">
-    
-    <div class="categories-tags">
+            <div class="article">
+    <div>
+        <h1>Container Overview</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/11/12
+        </span>
         
-        
-        
-        <span>
-            <a href="/tags/npm/" style="background: #ffa2c4">
+        <span class="category">
+            <a href="/categories/%E7%90%86%E8%AE%BA/">
                 <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                npm
+                理论
             </a>
         </span>
         
         
-        
-        <span>
-            <a href="/tags/SSL/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                SSL
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/C/" style="color: #03a9f4">
+                    C++
+                </a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/tags/Github/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Github
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/SSH/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                SSH
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/C/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                C
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/Linux/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Linux
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/vim/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                vim
-            </a>
-        </span>
-        
-        
-        
-        
-        
-        <span>
-            <a href="/tags/tutor/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                tutor
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/Network/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Network
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/IO/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                IO
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/Mysql/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Mysql
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/C/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                C++
-            </a>
-        </span>
-        
         
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2024/9/8</div>
-            <a href="/2024/09/08/2024-9-8-vim-plus/">
-                <h3>vim-plus</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/%E7%8E%AF%E5%A2%83/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        环境
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/vim/" style="color: #00bcd4">
-                            vim
-                        </a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
+    <div class="content" v-pre>
+        <h3 id="标准模板库概述">标准模板库概述</h3>
+<h2 id="stl的六大组件">STL的六大组件</h2>
+<ol type="1">
+<li><p>容器：用来存放数据的，数据结构</p>
+<ul>
+<li>序列式容器 vector, list, deque</li>
+<li>关联式容器 set, map</li>
+<li>无序关联式容器 unordered_set, unordered_map</li>
+</ul></li>
+<li><p>迭代器：看成是一种指针，广义指针（具备指针的功能）。可以访问容器中的元素</p></li>
+<li><p>算法：操作容器中的元素</p></li>
+<li><p>适配器：起到适配的作用</p>
+<ul>
+<li><p>容器适配器 stack，queue, priority_queue</p>
+<p>(容器适配器是对其他容器（如
+<code>std::deque</code>、<code>std::list</code>）的封装，它们提供了不同的接口，以实现特定的数据结构行为。适配器不直接存储数据，而是通过组合已有的容器来实现某种数据结构的特性。)</p></li>
+<li><p>迭代器适配器 front_inserter, back_inserter</p>
+<p>(迭代器适配器可以改变基本迭代器的行为，使其能够适应不同的需求。例如，<code>front_inserter</code>
+将元素插入到容器的前端，而普通的迭代器可能只是用于访问或修改元素)</p></li>
+<li><p>函数适配器</p></li>
+</ul></li>
+<li><p>函数对象（仿函数）：定制化操作</p></li>
+<li><p>空间配置器：进行空间的申请与释放操作 （使用+原理+源码）</p></li>
+</ol>
+<span id="more"></span>
+<h2 id="序列式容器">序列式容器</h2>
+
     </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
     
 </div>
 
@@ -365,6 +269,29 @@
         
     </div>
     <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="wxd6662019/wxd6662019.github.io"
+    data-repo-id="R_kgDOMv_QXw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMv_QX84CiZrp"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
     
 </body>
 </html>
